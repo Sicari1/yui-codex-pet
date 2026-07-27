@@ -8,13 +8,15 @@ bubbles with the current task, and merges several concurrent sessions by priorit
 Built with **PySide6** (Qt) on Windows, driven by Claude Code hooks running in WSL.
 
 <p align="center">
-  <img src="preview/all-states.gif" width="240" alt="animation states"/>
-  &nbsp;&nbsp;
-  <img src="preview/16-directions.gif" width="240" alt="sixteen look directions"/>
+  <img src="preview/overlay-demo.gif" width="480" alt="the pet showing the agent's current task in a speech bubble"/>
 </p>
-
-> These clips are the sprite animation itself. To see the overlay live on a desktop,
-> run it (below) — it renders larger and smoothly scaled than these raw sprite loops.
+<p align="center">
+  <img src="preview/all-states.gif" width="150" alt="animation states"/>
+  &nbsp;
+  <img src="preview/16-directions.gif" width="150" alt="sixteen look directions"/>
+</p>
+<p align="center"><sub>Top: the pet surfaces your agent's current task in a speech bubble and animates its phase
+(illustrative composite of the overlay UI, built from the real sprites). Bottom: the animation states and the 16 look directions.</sub></p>
 
 ---
 
