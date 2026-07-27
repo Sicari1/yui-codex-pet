@@ -1,17 +1,47 @@
 # Yui Codex Pet — a Claude Code desktop pet (engine)
 
-A transparent **PySide6 desktop overlay** that shows your Claude Code agent's live
-status as an animated character — idle, working, waiting for you, or done — driven by
-Claude Code hooks. It tracks your cursor with its gaze, can be dragged around, shows
-speech bubbles, and aggregates multiple concurrent sessions by priority.
+A transparent, always-on-top **desktop pet** that reacts to what your **Claude Code**
+agent is doing *right now* — idle, working, waiting for your input, reviewing, or
+failed. It follows your cursor with its gaze, can be dragged anywhere, pops speech
+bubbles with the current task, and merges several concurrent sessions by priority.
 
-This repository is the **engine + sprite spec** — the runtime, hooks, and tooling.
-The character artwork is intentionally **not** included (see *License & assets*).
+Built with **PySide6** (Qt) on Windows, driven by Claude Code hooks running in WSL.
 
-## Preview
+<p align="center">
+  <img src="preview/all-states.gif" width="240" alt="animation states"/>
+  &nbsp;&nbsp;
+  <img src="preview/16-directions.gif" width="240" alt="sixteen look directions"/>
+</p>
 
-![All animation states](preview/all-states.gif)
-![Sixteen look directions](preview/16-directions.gif)
+> These clips are the sprite animation itself. To see the overlay live on a desktop,
+> run it (below) — it renders larger and smoothly scaled than these raw sprite loops.
+
+---
+
+## What it does — it mirrors your agent's live status
+
+Each Claude Code session writes its phase through a hook; the overlay picks it up and
+animates the matching state:
+
+| When your agent is… | Yui… | |
+|---|---|:---:|
+| **idle / no session** | relaxes | <img src="preview/states/00-idle.gif" width="90"/> |
+| **actively working** | works away | <img src="preview/states/07-active-work.gif" width="90"/> |
+| **waiting for your input** | looks over and waits | <img src="preview/states/06-waiting.gif" width="90"/> |
+| **reviewing / wrapping up** | reads through | <img src="preview/states/08-review.gif" width="90"/> |
+| **hit an error** | reacts | <img src="preview/states/05-failed.gif" width="90"/> |
+| **switching tasks** | runs across | <img src="preview/states/01-running-right.gif" width="90"/> |
+| **greeting you** | waves | <img src="preview/states/03-waving.gif" width="90"/> |
+
+## Features
+
+- **Live agent status** — hooks report each session's phase; the pet animates it in real time.
+- **Multi-session priority** — with several Claude Code sessions open, it shows the one that
+  needs you most: `waiting > failed > working > done > idle`.
+- **Speech bubbles** — surfaces the current task's title/detail so you can glance and know.
+- **Cursor-follow gaze** — sixteen look directions track your mouse around the screen.
+- **Drag-to-move · transparent · always-on-top · system tray** — stays out of the way.
+- **Swappable pets** — right-click to switch characters (Codex Pet v2 package format).
 
 ## How it works
 
@@ -27,35 +57,44 @@ Claude Code hook ──▶ sessions/<source>/<session_id>.json   (a small PetSta
 
 `PetState = {source, session_id, phase, title, detail, transcript, ts, expires_at?}`
 
+## Run it
+
+```bash
+./install.sh          # deploys the overlay + registers the Claude Code hooks
+./install.sh --dry-run
+```
+
+The overlay needs Python + PySide6 on the Windows side; the hooks run in WSL. See
+`claude-overlay/README.md` for details.
+
 ## What's in here
 
-- `claude-overlay/yui_pet.py` — the PySide6 transparent overlay (renderer): sprite
-  animation, cursor-follow gaze, drag-to-move, speech bubbles.
+- `claude-overlay/yui_pet.py` — the PySide6 transparent overlay (renderer).
 - `claude-overlay/config.json`, `lines.json` — display settings and editable dialogue.
 - `hooks/` — the Claude Code hooks that record per-session `PetState`.
-- `tools/` — hook registration helper, a `yui` notification CLI, and a sprite upscaler.
+- `tools/` — hook registration helper, a `yui` notification CLI, a sprite upscaler.
 - `pets/*/pet.json` — pet package manifests (Codex Pet v2 format).
-- `SPRITE_SPEC.md` — the full sprite-atlas specification so you can **draw your own**
-  character (1536×2288 atlas, 8×11 cells, 9 states, 16 look directions).
-- `install.sh` — one-command deployment.
+- `SPRITE_SPEC.md` — the full sprite-atlas spec so you can **draw your own** character.
+- `install.sh` — one-command deploy.
 
 ## Bring your own sprite
 
-The runtime loads a Codex Pet v2 atlas (`spritesheet.webp`) referenced by `pet.json`.
-That art is not shipped here — follow `SPRITE_SPEC.md` to make your own, or point it at
-any Codex Pet v2 sprite sheet you have the rights to use.
+The runtime loads a Codex Pet v2 atlas (`spritesheet.webp`) named in `pet.json`. That
+art is **not shipped here** — follow `SPRITE_SPEC.md` to make your own (1536×2288 atlas,
+8×11 cells, 9 states, 16 look directions), or point it at any sheet you have rights to.
 
 ## Inspiration
 
 Inspired by **Codex Pet v2** and the classic desktop-mascot tradition (Shimeji and
-friends), with my own overlay/hook architecture and animation set built on top.
+friends). The overlay, the hook-driven live-status architecture, and the animation set
+are my own work on top of that idea.
 
 ## License & assets
 
 - **Source code** — MIT © 2026 SeongJin Kim (see `LICENSE`). Please keep the credit.
-- **Bundled font** — `PretendardVariable.ttf` by Kil Hyung-jin, under the SIL Open Font
-  License (freely redistributable).
-- **Preview images** — © 2026 SeongJin Kim. They illustrate my own sprite work and are
-  **not** licensed for reuse; please make your own art.
-- **Hirasawa Yui / K-ON!** are © Kakifly · Houbunsha · TBS · Kyoto Animation. This is a
-  **non-commercial fan project** and is not affiliated with or endorsed by the rights holders.
+- **Font** — `PretendardVariable.ttf` by Kil Hyung-jin, under the SIL Open Font License.
+- **Character art (previews & sprites)** — these depict **Hirasawa Yui** from *K-ON!*,
+  a character owned by its rights holders (© Kakifly · Houbunsha · TBS · Kyoto Animation).
+  The drawings here are **fan-made and non-commercial**, are **not offered under any
+  license**, and shouldn't be reused — please make your own character instead. This
+  project is unaffiliated with and not endorsed by the rights holders.
