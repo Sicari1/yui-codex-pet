@@ -8,12 +8,9 @@ bubbles with the current task, and merges several concurrent sessions by priorit
 Built with **PySide6** (Qt) on Windows, driven by Claude Code hooks running in WSL.
 
 <p align="center">
-  <img src="preview/overlay-states.gif" width="440" alt="pet reacting to agent status: working, waiting, error"/>
+  <img src="preview/overlay-states.gif" width="420" alt="pet reacting to agent status: working, waiting, error"/>
 </p>
-<p align="center">
-  <img src="preview/desktop-wander.gif" width="600" alt="pet wandering the Windows desktop when idle"/>
-</p>
-<p align="center"><sub>Real screen capture on Windows. <b>Top</b> — the pet mirrors your Claude Code agent: <b>working</b> (with the project name and how long it has been running), <b>waiting</b> for you (orange), an <b>error</b> (red), and it shows the session count (<code>≡ N</code>) when several tasks run at once. <b>Bottom</b> — when idle, it wanders your desktop.</sub></p>
+<p align="center"><sub>Real capture. The pet mirrors your Claude Code agent: <b>working</b> (with the project name and how long it has been running), <b>waiting</b> for you (orange), an <b>error</b> (red), and it shows the session count (<code>≡ N</code>) when several tasks run at once.</sub></p>
 <p align="center">
   <img src="preview/all-states.gif" width="130" alt="animation states"/>
   &nbsp;
@@ -45,7 +42,7 @@ animates the matching state:
   needs you most: `waiting > failed > working > done > idle`.
 - **Speech bubbles** — surfaces the current task's title/detail so you can glance and know.
 - **Cursor-follow gaze** — sixteen look directions track your mouse around the screen.
-- **Drag-to-move · transparent · always-on-top · system tray** — stays out of the way.
+- **Wander · drag-and-throw · transparent · always-on-top · system tray** — it strolls around when idle, and you can grab and fling it.
 - **Swappable pets** — right-click to switch characters (Codex Pet v2 package format).
 
 ## How it works
@@ -96,7 +93,7 @@ are my own work on top of that idea.
 
 ## License & assets
 
-- **Source code** — MIT © 2026 SeongJin Kim (see `LICENSE`). Please keep the credit.
+- **Source code** — MIT © 2026 SeongJin Kim (see `LICENSE`).
 - **Font** — `PretendardVariable.ttf` by Kil Hyung-jin, under the SIL Open Font License.
 - **Character art (previews & sprites)** — these depict **Hirasawa Yui** from *K-ON!*,
   a character owned by its rights holders (© Kakifly · Houbunsha · TBS · Kyoto Animation).
