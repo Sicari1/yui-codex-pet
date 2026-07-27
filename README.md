@@ -8,15 +8,18 @@ bubbles with the current task, and merges several concurrent sessions by priorit
 Built with **PySide6** (Qt) on Windows, driven by Claude Code hooks running in WSL.
 
 <p align="center">
-  <img src="preview/overlay-demo.gif" width="480" alt="the pet showing the agent's current task in a speech bubble"/>
+  <img src="preview/overlay-states.gif" width="440" alt="pet reacting to agent status: working, waiting, error"/>
 </p>
 <p align="center">
-  <img src="preview/all-states.gif" width="150" alt="animation states"/>
-  &nbsp;
-  <img src="preview/16-directions.gif" width="150" alt="sixteen look directions"/>
+  <img src="preview/desktop-wander.gif" width="600" alt="pet wandering the Windows desktop when idle"/>
 </p>
-<p align="center"><sub>Top: the pet surfaces your agent's current task in a speech bubble and animates its phase
-(illustrative composite of the overlay UI, built from the real sprites). Bottom: the animation states and the 16 look directions.</sub></p>
+<p align="center"><sub>Real screen capture on Windows. <b>Top</b> — the pet mirrors your Claude Code agent: <b>working</b> (with the project name and how long it has been running), <b>waiting</b> for you (orange), an <b>error</b> (red), and it shows the session count (<code>≡ N</code>) when several tasks run at once. <b>Bottom</b> — when idle, it wanders your desktop.</sub></p>
+<p align="center">
+  <img src="preview/all-states.gif" width="130" alt="animation states"/>
+  &nbsp;
+  <img src="preview/16-directions.gif" width="130" alt="sixteen look directions"/>
+  <br><sub>The nine animation states and the sixteen look directions.</sub>
+</p>
 
 ---
 
