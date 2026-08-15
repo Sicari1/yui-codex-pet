@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# 유이 펫 배치 스크립트 — repo에서 실행 위치로 파일을 옮기고 훅을 등록한다.
+# 유이 펫 배치 스크립트. repo의 파일을 실행 위치로 옮기고 훅을 등록합니다.
 #
 #   ./install.sh              배치 + 훅 등록
-#   ./install.sh --dry-run    무엇을 할지만 보여준다
+#   ./install.sh --dry-run    무엇을 할지만 보여줍니다
 #   ./install.sh --no-hooks   파일만 배치(훅 등록 생략)
-#   ./install.sh --uninstall  훅 해제 + 설치한 파일 제거(개인 설정·스프라이트는 남긴다)
+#   ./install.sh --uninstall  훅 해제 + 설치한 파일 제거(개인 설정·스프라이트는 남깁니다)
 #
-# 배치 위치는 YUI_PET_DIR로 지정할 수 있다. 없으면 /mnt/c/Users/*/.yui-pet 를 찾고,
-# 그것도 없으면 Windows 사용자 폴더 아래에 만든다. 파이썬 경로도 자동으로 찾는다.
+# 배치 위치는 YUI_PET_DIR로 지정할 수 있습니다. 없으면 /mnt/c/Users/*/.yui-pet 를 찾고,
+# 그것도 없으면 Windows 사용자 폴더 아래에 만듭니다. 파이썬 경로도 알아서 찾습니다.
 #
-# 여러 번 실행해도 안전하다. 개인 설정(config.json)과 스프라이트, 세션 기록은
-# 이미 있으면 건드리지 않는다.
+# 여러 번 실행해도 안전합니다. 개인 설정(config.json)과 스프라이트, 세션 기록은
+# 이미 있으면 건드리지 않습니다.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -34,7 +34,7 @@ DIR="${YUI_PET_DIR:-}"
 if [ -z "$DIR" ]; then
   win_home="$(ls -d /mnt/c/Users/* 2>/dev/null \
              | grep -vE '/(Public|Default|Default User|All Users)$' | head -1 || true)"
-  [ -z "$win_home" ] && { echo "Windows 사용자 폴더를 찾지 못했다. YUI_PET_DIR를 지정해라." >&2; exit 1; }
+  [ -z "$win_home" ] && { echo "Windows 사용자 폴더를 찾지 못했습니다. YUI_PET_DIR로 지정해 주세요." >&2; exit 1; }
   DIR="$win_home/.yui-pet"
 fi
 CLAUDE_DIR="$HOME/.claude"
@@ -45,7 +45,7 @@ PYW="$( { ls -d /mnt/c/Users/*/AppData/Local/Programs/Python/Python3*/pythonw.ex
           ls -d '/mnt/c/Program Files/Python3'*/pythonw.exe 2>/dev/null || true; } | head -1 )"
 
 echo "배치 위치: $DIR"
-[ "$DRY" = 1 ] && echo "(dry-run — 실제로 바꾸지 않는다)"
+[ "$DRY" = 1 ] && echo "(dry-run — 실제로 바꾸지 않습니다)"
 
 # ---- 제거 ----
 if [ "$UNINSTALL" = 1 ]; then
@@ -58,9 +58,9 @@ if [ "$UNINSTALL" = 1 ]; then
   [ -d "$DIR/pets" ] && run rm -rf "$DIR/pets"
   run rm -f "$CLAUDE_DIR/yui-pet-status.py" "$CLAUDE_DIR/yui-pet-status.sh" "$BIN_DIR/yui"
   say "훅 · CLI 제거"
-  say "config.json · 스프라이트 · sessions 는 남겨 뒀다"
+  say "config.json · 스프라이트 · sessions 는 남겨 뒀습니다"
   [ "$DRY" = 0 ] && YUI_SETTINGS="$SETTINGS" python3 "$REPO/tools/_hookreg.py" remove
-  echo; echo "제거 완료. 펫이 떠 있으면 트레이에서 종료해라."
+  echo; echo "제거했습니다. 펫이 떠 있으면 트레이에서 종료해 주세요."
   exit 0
 fi
 
@@ -75,7 +75,7 @@ run mkdir -p "$DIR/icons"
 run cp -r "$REPO/claude-overlay/icons/." "$DIR/icons/"; say "icons/"
 
 if [ -e "$DIR/config.json" ]; then
-  say "config.json — 이미 있어 그대로 둔다(크기 등 개인 설정)"
+  say "config.json — 이미 있어 그대로 둡니다(크기 등 개인 설정)"
 else
   run cp "$REPO/claude-overlay/config.json" "$DIR/config.json"; say "config.json (새로)"
 fi
@@ -83,7 +83,7 @@ fi
 # ---- 스프라이트 ----
 echo "스프라이트"
 if [ -e "$DIR/spritesheet.webp" ]; then
-  say "spritesheet.webp — 이미 있어 그대로 둔다"
+  say "spritesheet.webp — 이미 있어 그대로 둡니다"
 elif [ -e "$REPO/pets/current-yui/spritesheet.webp" ]; then
   run cp "$REPO/pets/current-yui/spritesheet.webp" "$DIR/spritesheet.webp"; say "spritesheet.webp"
 else
@@ -102,16 +102,16 @@ for pd in "$REPO"/pets/*/; do
 done
 
 if ls "$DIR"/spritesheet-*x.png >/dev/null 2>&1; then
-  say "고해상 시트 있음 — 그대로 쓴다"
+  say "고해상 시트 있음 — 그대로 씁니다"
 else
-  say "고해상 시트 없음 — 원본으로 동작한다(확대 상한 1.7배)"
+  say "고해상 시트 없음 — 원본으로 동작합니다(확대 상한 1.7배)"
   say "  만들려면 tools/upscale_spritesheet.py (CUDA 필요). 자세한 건 ROADMAP 참고"
 fi
 
 # ---- 실행 스크립트 (파이썬 경로가 기기마다 달라 설치 시점에 만든다) ----
 echo "실행 스크립트"
 if [ -z "$PYW" ]; then
-  say "주의: pythonw.exe 를 찾지 못했다. Python 설치 후 다시 실행해라"
+  say "주의: pythonw.exe 를 찾지 못했습니다. Python 설치 후 다시 실행해 주세요"
 elif [ "$DRY" = 1 ]; then
   say "[dry] 유이펫-시작.bat · restart.sh 생성 (python: $PYW)"
 else
@@ -140,7 +140,7 @@ run cp "$REPO/tools/yui" "$BIN_DIR/yui"; say "~/.local/bin/yui"
 run chmod +x "$BIN_DIR/yui"
 case ":$PATH:" in
   *":$BIN_DIR:"*) ;;
-  *) say "주의: $BIN_DIR 가 PATH에 없다. .bashrc에 추가해라" ;;
+  *) say "주의: $BIN_DIR 가 PATH에 없습니다. .bashrc에 추가해 주세요" ;;
 esac
 
 # ---- settings.json 훅 등록 ----
@@ -155,9 +155,9 @@ fi
 
 echo
 if [ "$DRY" = 1 ]; then
-  echo "dry-run 끝. 실제로 하려면 옵션 없이 다시 실행해라."
+  echo "dry-run을 마쳤습니다. 실제로 적용하려면 옵션 없이 다시 실행해 주세요."
 else
   echo "완료."
   echo "  실행: $DIR/restart.sh   (또는 유이펫-시작.bat 더블클릭)"
-  echo "  훅은 새 Claude 세션부터 적용된다."
+  echo "  훅은 새 Claude 세션부터 적용됩니다."
 fi
