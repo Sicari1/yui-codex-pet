@@ -1,205 +1,239 @@
-# Claude Code 오버레이 (유이 데스크톱 펫)
+# The overlay (Yui desktop pet)
 
-Codex Pet v2 스프라이트를 그대로 쓰면서, **Claude Code의 작업 상태를 Windows 데스크톱에 띄우는 투명 오버레이**다. PySide6로 렌더링하고, WSL의 Claude 훅이 상태를 파일로 남기면 오버레이가 폴링해 애니메이션과 말풍선으로 보여준다.
+A transparent overlay that draws a Codex Pet v2 sprite on the Windows desktop and
+**shows what your Claude Code agent is doing**. Rendering is PySide6; the hooks that
+feed it run in WSL and write status to files, which the overlay polls and turns into
+animation and speech bubbles.
 
-## 구성
+## Files
 
-- `yui_pet.py` — PySide6 투명 오버레이(렌더러). 스프라이트 애니, 커서 시선 추적, 드래그 이동, 말풍선.
-- `config.json` — 표시 설정.
-- `lines.json` — 대사 목록(고쳐 써도 된다).
-- `유이펫-시작.bat` — 콘솔 없이 실행(pythonw).
-- `../hooks/yui-pet-status.py`, `../hooks/yui-pet-status.sh` — Claude 훅이 부르는 상태 기록기.
+- `yui_pet.py` — the PySide6 transparent overlay: sprite animation, cursor-following
+  gaze, drag-to-move, speech bubbles.
+- `config.json` — display settings.
+- `lines.json` — the dialogue list. Edit it freely.
+- `유이펫-시작.bat` — launches without a console window (via `pythonw`).
+- `../hooks/yui-pet-status.py`, `../hooks/yui-pet-status.sh` — the status writers the
+  hooks call.
 
-## 동작 구조
+## How it works
 
 ```
-Claude Code 훅 ──▶ sessions/<source>/<session_id>.json (공통 PetState)
-                              │  (여러 세션이 각자 기록)
+Claude Code hook ──▶ sessions/<source>/<session_id>.json   (a shared PetState)
+                              │  (each session writes its own)
                               ▼
-                    오버레이가 우선순위로 집계
+                    overlay aggregates by priority
              (waiting > failed > working > done > idle)
                               ▼
-                        유이 애니 + 말풍선
+                      pet animation + speech bubble
 ```
 
-`PetState = {source, session_id, phase, title, detail, transcript, ts, expires_at?}`
-`phase`: `idle | working | waiting | done | failed`
+```
+PetState = {source, session_id, phase, title, detail, transcript, ts, expires_at?}
+phase    = idle | working | waiting | done | failed
+```
 
-말풍선 왼쪽에는 **어느 도구가 낸 상태인지** 배지로 붙는다 — Claude는 공식 로고 + `Claude`,
-`yui` CLI는 `CLI`. 아이콘은 `icons/claude.png`(VS Code 확장의 로고)를 쓰고, 없으면 글자만 나온다.
-펫이 스스로 하는 대사에는 배지가 붙지 않는다.
+A badge on the left of the bubble says **which tool produced the status** — Claude Code
+gets its logo plus `Claude`, the `yui` CLI gets `CLI`. The icon comes from
+`icons/claude.png`; without it you get the text alone. Things the pet says on its own
+carry no badge.
 
-상태 → 애니 매핑: working→집중작업 / waiting→대기(주황) / done→검토+녹색체크→손흔들기→idle / failed→실패(붉은점) / idle→호흡+커서 시선 추적.
+Phase to animation: working → heads-down work / waiting → waiting, orange / done →
+review, green check, wave, back to idle / failed → failure, red dot / idle → breathing
+plus cursor-following gaze.
 
-## 설치
+## Setup
 
-1. **에셋·앱 배치** — 배포 폴더(예 `C:\Users\<user>\.yui-pet\`)에 다음을 둔다.
+1. **Lay out the app and assets** in a deployment folder, e.g. `C:\Users\<user>\.yui-pet\`:
    - `yui_pet.py`, `config.json`, `fonts/`
-   - `spritesheet.png`(또는 `.webp`) — **이 저장소에는 없다.** `SPRITE_SPEC.md`를 보고
-     직접 그리거나, 권리를 가진 v2 규격 시트를 가져다 둔다
-   - (선택) 고해상 시트 `spritesheet-4x.png` — 크게 띄워도 선명하다. `tools/upscale_spritesheet.py`로 생성.
-     시트가 있으면 `-4x` → `-3x` → `-2x` → 원본 순으로 자동 선택한다.
-2. **PySide6 설치** — `"%LOCALAPPDATA%\Programs\Python\Python312\python.exe" -m pip install PySide6`
-3. **Claude 훅 등록** — `~/.claude/settings.json`의 각 이벤트에 상태 기록기를 추가(기존 훅은 보존).
+   - `spritesheet.png` (or `.webp`) — **not in this repository.** Follow `SPRITE_SPEC.md`
+     and draw your own, or supply a v2-format sheet you hold the rights to.
+   - optional high-resolution `spritesheet-4x.png`, which stays sharp when scaled up.
+     Generate it with `tools/upscale_spritesheet.py`. When present, the loader prefers
+     `-4x` → `-3x` → `-2x` → the base sheet.
+2. **Install PySide6** for the Windows Python you plan to run it with, e.g.
+   `"%LOCALAPPDATA%\Programs\Python\Python312\python.exe" -m pip install PySide6`
+3. **Register the Claude Code hooks** in `~/.claude/settings.json`, one status writer per
+   event. Existing hooks are preserved.
    - `UserPromptSubmit`, `PreToolUse`, `PostToolUse` → `bash <hooks>/yui-pet-status.sh working`
-   - `Notification`(matcher `permission_prompt`, `elicitation_dialog`) → `... needs_input`
-   - `Stop` → `... done` / `StopFailure` → `... error` / `SessionStart` → `... idle`
-   - 배포 폴더는 스크립트 인자 2 또는 `YUI_PET_DIR` 환경변수로 준다. 둘 다 없으면 `/mnt/c/Users/*/.yui-pet`를 찾는다.
-4. **실행** — `유이펫-시작.bat` 더블클릭. 또는 WSL에서 `setsid pythonw.exe "C:\...\yui_pet.py" </dev/null >/dev/null 2>&1 &`
-   (그냥 `&`로 띄우면 셸이 끝날 때 같이 죽는다. 분리 실행이 필요하다.)
+   - `Notification` (matchers `permission_prompt`, `elicitation_dialog`) → `… needs_input`
+   - `Stop` → `… done` / `StopFailure` → `… error` / `SessionStart` → `… idle`
+   - Point the writer at the deployment folder with the script's second argument or the
+     `YUI_PET_DIR` environment variable. With neither, it looks for `/mnt/c/Users/*/.yui-pet`.
+4. **Run it** — double-click `유이펫-시작.bat`, or from WSL:
+   `setsid pythonw.exe "C:\…\yui_pet.py" </dev/null >/dev/null 2>&1 &`.
+   A plain `&` dies with the shell, so it has to be detached.
 
-## 자율 행동
+## Wandering
 
-`idle`일 때(클로드가 일하고 있지 않을 때) 스스로 돌아다닌다. 쉬다가 방향을 정해 걷고, 도착하면 다시 쉰다.
-가끔 점프하거나 손을 흔든다. 눈 깜빡임 간격도 2~5.5초 사이로 흔들어 기계처럼 규칙적이지 않게 했다.
+While `idle` — that is, when the agent isn't working — the pet moves around on its own:
+rest, pick a direction, walk, arrive, rest again. Now and then it jumps or waves. The
+blink interval is jittered between 2 and 5.5 seconds so it doesn't look mechanical.
 
-**작업을 방해하지 않는 게 우선이라 사용자 입력을 보고 두 가지로 움직인다.**
+**Not interrupting you comes first, so it reads your input and behaves two different ways.**
 
-| 상황 | 판단 기준 | 행동 |
+| Situation | Test | Behaviour |
 | --- | --- | --- |
-| 사용 중 | 최근 25초 안에 키보드·마우스 입력 | 쉬는 시간 40~110초, 걸어도 짧게(60~170px). 걷기 확률 26% |
-| 손을 멈춤 | 25초 넘게 입력 없음 | 쉬는 시간 9~30초, 90~340px. 걷기 확률 55% |
+| You're working | Keyboard or mouse input within the last 25 s | Rests 40–110 s, walks only short hops (60–170 px), 26% chance of walking at all |
+| Your hands stopped | No input for over 25 s | Rests 9–30 s, walks 90–340 px, 55% chance |
 
-작업 표시 중이거나 잡혀 있을 때, 숨겨져 있을 때는 아예 움직이지 않는다.
-끄려면 우클릭이나 트레이에서 **자유롭게 돌아다니기** 체크 해제(`config.json`의 `wander`에 저장).
+It doesn't move at all while showing agent status, while held, or while hidden.
+Turn it off from the right-click menu or the tray — **자유롭게 돌아다니기** (*Wander freely*),
+stored as `wander` in `config.json`.
 
-## 대사
+## Dialogue
 
-`idle`일 때 가끔 한마디 한다. 켜지고 4초 뒤에 시간대에 맞는 인사를 하고, 그 뒤로는 자율 행동의 하나로
-낮은 확률로 말한다. 10분 넘게 입력이 없으면 심심해하는 쪽 대사를 고른다.
+While `idle` the pet occasionally says something. Four seconds after launch it greets you
+according to the time of day; after that, talking is just one of the things wandering can
+pick, at low probability. With no input for over ten minutes it switches to the bored lines.
 
-대사는 `lines.json`에 있고 직접 고쳐 쓰면 된다(없으면 기본값으로 새로 만든다).
-한 줄은 `{"ko": "한국어", "ja": "일본어"}` 형태이고, 말풍선에 한국어를 굵게·일본어를 회색으로 같이 띄운다.
-`config.json`의 `showJapanese`를 `false`로 하면 한국어만 나온다.
+Lines live in `lines.json` and are yours to edit — delete it and the defaults are written
+back. Each entry is `{"ko": "…", "ja": "…"}`, and the bubble shows the Korean in bold with
+the Japanese under it in grey. Set `showJapanese` to `false` in `config.json` for Korean only.
 
-| 카테고리 | 내용 |
+| Category | Contents |
 | --- | --- |
-| `morning` `afternoon` `evening` `night` `lateNight` | 시간대 인사 |
-| `bored` | 10분 넘게 입력이 없을 때 |
-| `idleChat` | 평소 일상 대사 |
-| `quotes` | **애니 실제 명대사.** 평소 대사와 4:6으로 섞어 나온다 |
-| `special` | `"MM-DD"` 키로 기념일 — 유이 생일 11-27, 크리스마스, 새해 |
+| `morning` `afternoon` `evening` `night` `lateNight` | Time-of-day greetings |
+| `bored` | No input for over ten minutes |
+| `idleChat` | Ordinary day-to-day lines |
+| `quotes` | **Actual lines from the show.** Mixed with the ordinary ones at roughly 4:6 |
+| `special` | Anniversaries, keyed `"MM-DD"` — the character's birthday on 11-27, Christmas, New Year |
 
-대사와 페르소나는 애니 원작을 조사해 맞췄고, 한국어는 더빙판·팬 번역 표현을 우선했다.
-음성은 아직 없다 — 설계는 `ROADMAP.md` 2-D에 정리해 뒀다.
+The dialogue and persona were written against the source material, and the Korean prefers
+the dub and established fan translations. There is no voice playback in this build; the
+design for it is in `ROADMAP.md` §2-D.
 
- `_persona` 항목에 성격 요약을 적어 뒀으니
-대사를 추가할 때 참고하면 된다. 비영리 팬 프로젝트이며 인용은 짧은 대사에 한정한다.
+The `_persona` entry holds a summary of the character to write against when you add lines.
+This is a non-commercial fan project, and quotation is limited to short lines.
 
-시간대 구분: 05~11 아침 / 11~17 낮 / 17~21 저녁 / 21~02 밤 / 02~05 새벽.
-작업 상태 말풍선이 떠 있을 때는 끼어들지 않는다.
+Time-of-day bands: 05–11 morning, 11–17 afternoon, 17–21 evening, 21–02 night,
+02–05 late night. The pet stays quiet while an agent-status bubble is up.
 
-## 뽀모도로
+## Pomodoro
 
-트레이 메뉴의 **뽀모도로 시작**으로 켠다. 25분 집중 → 5분 휴식을 번갈아 돈다
-(`config.json`의 `pomodoroFocusMin`·`pomodoroBreakMin`).
+Start it from the tray menu — **뽀모도로 시작** (*Start Pomodoro*). It alternates 25 minutes
+of focus with a 5-minute break (`pomodoroFocusMin` and `pomodoroBreakMin` in `config.json`).
 
-집중하는 동안에는 아무 말도 하지 않는다. 남은 시간은 **트레이 툴팁**으로만 보여준다
-— 말풍선을 계속 띄우면 그게 방해가 된다. 구간이 끝날 때만 손을 흔들며 한마디 한다.
+During focus the pet says nothing at all. The remaining time appears **only in the tray
+tooltip** — a bubble that never goes away is exactly the interruption you were avoiding.
+It speaks and waves only when an interval ends.
 
-## 알림 CLI
+## Notification CLI
 
-`tools/yui`를 `~/.local/bin/yui`에 두면 아무 스크립트나 끝날 때 유이가 알려준다.
-`sessions/cli/`에 같은 `PetState`를 쓰는 얇은 래퍼라 오버레이가 자동으로 집계한다.
+Drop `tools/yui` at `~/.local/bin/yui` and any script can tell the pet it finished. It is a
+thin wrapper that writes the same `PetState` into `sessions/cli/`, so the overlay picks it up
+with no extra wiring.
 
 ```bash
-yui run -t "학습" -- python train.py   # 실행 중 표시 → 끝나면 종료코드로 완료/실패
-yui start "렌더링"                      # 수동으로 상태만
-yui done  "렌더링" "12분 걸림"
-yui fail  "빌드" "테스트 실패"
+yui run -t "training" -- python train.py   # shows working, then done/failed by exit code
+yui start "rendering"                       # set status by hand
+yui done  "rendering" "took 12 minutes"
+yui fail  "build" "tests failed"
 yui clear
 ```
 
-`run`은 종료코드를 그대로 전달하므로 파이프라인 중간에 끼워도 된다.
-여러 개를 동시에 돌리면 `YUI_ID`로 구분한다. 표시 시간은 `YUI_TTL`(초).
+`run` passes the exit code straight through, so it is safe to wedge into a pipeline.
+Running several at once, distinguish them with `YUI_ID`; display duration is `YUI_TTL`
+in seconds.
 
-## 트레이 아이콘
+## Tray icon
 
-펫을 화면 밖이나 다른 창 뒤로 놓쳐도 되돌릴 수 있게 트레이에 상주한다.
-아이콘 더블클릭으로 숨김/보임 토글, 우클릭 메뉴에 **펫 보이기 · 자유롭게 돌아다니기 · 부팅 시 자동 실행 · 종료**.
+The pet lives in the tray so you can get it back after losing it off-screen or behind a
+window. Double-click the icon to toggle hidden/shown; the right-click menu has
+**펫 보이기** (*Show pet*), **자유롭게 돌아다니기** (*Wander freely*),
+**부팅 시 자동 실행** (*Start with Windows*) and **종료** (*Quit*).
 
-자동 실행은 레지스트리를 건드리지 않고 시작프로그램 폴더에 배치파일 하나를 넣고 뺀다
-(`%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\유이펫.bat`).
+Start-with-Windows touches no registry key — it adds and removes a single batch file in the
+startup folder (`%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\유이펫.bat`).
 
-## 전체화면 앱
+## Fullscreen apps
 
-게임·영상처럼 화면을 통째로 덮는 창이 앞에 오면 1.5초 안에 스스로 숨고, 빠져나오면 다시 나타난다.
-바탕화면·작업표시줄은 전체화면으로 치지 않는다.
+When a window covers the whole screen — a game, a video — the pet hides itself within
+1.5 seconds and comes back when you leave. The desktop and the taskbar don't count as
+fullscreen.
 
-## 작업 목록
+## Task list
 
-작업이 여러 개 돌면 말풍선 오른쪽에 **☰ N** 이 뜬다. **펫을 클릭하면** 목록이 열린다
-(기본 클릭 동작). 출처(Claude 로고 / CLI), 제목, 지금 하는 일, 상태가 한 줄씩 나오고,
-줄을 누르면 그 작업의 창을 띄우거나 내린다.
+With several jobs running, **☰ N** appears to the right of the bubble. **Click the pet** to
+open the list (that's the default click action). Each row shows the source (Claude logo or
+CLI), the title, what it's doing right now, and its status; clicking a row raises or lowers
+that job's window.
 
-다시 클릭하거나 펫·목록에서 커서가 멀어지면 접힌다. 열려 있는 동안 내용은 계속 갱신된다.
-도는 작업이 없을 때 클릭하면 빈 목록 대신 한마디 한다.
+Click again, or move the cursor away from both the pet and the list, and it folds away.
+It keeps updating while open. Clicking with nothing running gets you a remark instead of an
+empty list.
 
-창은 제목이 맞는 것을 먼저 찾고, 없으면 편집기·터미널 창으로 떨어진다.
-클로드 세션 여러 개가 편집기 창 하나의 터미널들인 경우가 많아 세션마다 창이 따로 있지는 않다.
+Window lookup matches on title first and falls back to an editor or terminal window.
+Several Claude Code sessions are often terminals inside one editor window, so sessions do
+not necessarily have a window each.
 
-## 상호작용
+## Interaction
 
-| 동작 | 결과 |
+| Action | Result |
 | --- | --- |
-| 클릭 | `clickAction` 에 따라 — `panel`(작업 목록, 기본) · `app`(앱 창 띄우기) · `talk`(한마디) · `none`. 클릭으로 나오는 대사는 **작업 표시 중에도** 뜬다 |
-| 대사 중 다시 클릭 | 대사를 즉시 끝내고 작업 표시로 돌아간다. 기다릴 필요 없다 |
-| 클릭(기본) | 작업 목록을 연다. 다시 누르면 닫힌다 |
-| 1.4초 안에 3번 클릭 | 좋아하며 점프한다 |
-| 커서를 아주 가까이 | 놀란다. 25초 쿨다운이 있어 성가시지 않다 |
-| 드래그해서 던지기 | **확 뿌렸을 때만** 날아간다(1400px/s 이상 + 놓기 직전까지 움직이는 중). 그냥 옮기는 속도로는 발동하지 않는다. 우클릭 메뉴에서 끌 수 있다 |
-| 우클릭 | 메뉴 — 손 흔들기 · 점프 · 배회 · 크기 · 투명도 · 펫 바꾸기 · 클릭 동작 · 클릭 통과 · 종료 |
+| Click | Depends on `clickAction` — `panel` (task list, default), `app` (raise the app window), `talk` (say something), `none`. A line triggered by clicking appears **even while agent status is showing** |
+| Click again mid-line | Ends the line immediately and returns to the status display. No waiting |
+| Three clicks within 1.4 s | Delighted, jumps |
+| Cursor arriving very close | Startled. A 25-second cooldown keeps it from being annoying |
+| Drag and throw | Only flies **if you really fling it** — over 1400 px/s and still moving when you let go. Ordinary repositioning won't trigger it. Can be disabled from the right-click menu |
+| Right-click | Menu — wave, jump, wander, size, opacity, change pet, click action, click-through, quit |
 
-**클릭 통과**를 켜면 펫이 완전히 장식이 된다. 마우스가 통과하므로 우클릭 메뉴도 안 열린다 —
-되돌리려면 트레이 아이콘을 써야 한다.
+Turning on **클릭 통과** (*click-through*) makes the pet pure decoration. The mouse passes
+through it, which means the right-click menu is gone too — the tray icon is the only way back.
 
-## 펫 바꾸기
+## Changing pets
 
-`.yui-pet/pets/<id>/` 에 `pet.json` 과 스프라이트를 두면 우클릭 메뉴에 자동으로 뜬다.
-`install.sh` 가 `pets/chibi-yui` 를 같이 배치하므로 기본 유이 ↔ 치비 유이를 오갈 수 있다.
-`pet.json` 의 `displayName` 이 서로 같을 수 있어(둘 다 "유이") 메뉴에는 폴더 이름을 괄호로 붙인다
-— "유이 (기본)", "유이 (치비)". 읽기 좋은 이름은 `yui_pet.py` 의 `PET_LABELS` 에 추가하면 된다.
-밴드 멤버가 추가되면 같은 방식으로 붙는다.
+Put a `pet.json` and a sprite sheet in `.yui-pet/pets/<id>/` and the pet appears in the
+right-click menu automatically. `pet.json` files whose `displayName` collide (two entries
+both called "유이", say) are disambiguated in the menu with the folder name in parentheses —
+"유이 (기본)", "유이 (치비)". Add a friendlier label to `PET_LABELS` in `yui_pet.py`.
 
-## 날씨 대사
+## Weather lines
 
-`config.json` 에서 `weatherEnabled` 를 `true` 로 하면 켜진다. 비·눈·더위·추위에 반응하는 대사가
-평소 대사에 섞인다. Open-Meteo를 쓰고 API 키가 필요 없다. 한 시간에 한 번만 부르고 실패하면
-조용히 넘어간다. `weatherLat`·`weatherLon` 기본값은 창원이니 사는 곳에 맞게 바꿔라.
+Set `weatherEnabled` to `true` in `config.json`. Lines that react to rain, snow, heat and
+cold are then mixed into the ordinary dialogue. It uses Open-Meteo, which needs no API key,
+calls once an hour, and fails silently. **Set `weatherLat` and `weatherLon` to your own
+location** — the shipped values are the author's.
 
-## 크기 조절
+## Resizing
 
-펫 우클릭 → **크기 바**를 끌면 실시간으로 커지고 작아진다. 손을 떼면 `config.json`에 저장돼 다음 실행에도 유지된다.
-발밑을 고정한 채 자라나므로 화면 밖으로 밀려나지 않는다.
+Right-click the pet and drag the **size bar**; it grows and shrinks live. Release and the
+value is saved to `config.json` and survives a restart. It grows from a fixed foot line, so
+it never gets pushed off screen.
 
-상한은 시트 배율까지다 — 원본(1x)만 있으면 1.7배, `spritesheet-4x.png`가 있으면 4배(832px)까지 선명하다.
+The ceiling is whatever the sheet supports — 1.7× with only the base (1×) sheet, up to 4×
+(832 px) with `spritesheet-4x.png` present.
 
-클릭 판정은 캐릭터 실루엣만 받는다. 창은 셀 비율(192×208) 그대로라 유이 좌우로 투명한 여백이 넓은데,
-832px로 키우면 좌우 180px씩이 빈 공간이면서 클릭을 먹어 뒤쪽 화면을 못 누르게 된다.
-알파에서 만든 마스크를 씌워 여백은 통과시킨다(축소본으로 만들어 캐시하므로 크기와 무관하게 4ms 안쪽).
+Clicks are only accepted on the character silhouette. The window keeps the cell aspect
+(192×208), which leaves wide transparent margins on either side; at 832 px that's 180 px a
+side of empty space that would otherwise swallow clicks meant for the window behind. A mask
+built from the alpha channel lets the margin through — it is generated from a downscaled
+copy and cached, so it stays under 4 ms regardless of size.
 
-> **파일명 함정:** 고해상 시트 이름에 `@2x`·`@4x` 같은 접미사를 쓰면 안 된다. Qt가 고밀도 에셋으로 인식해
-> `devicePixelRatio`를 올려 버려서, 창은 커지는데 그림만 1/N 크기로 그려지고 나머지 영역은 미도색으로 남는다.
-> 반드시 `-4x` 형태로 둔다. 코드에서도 로드 직후 `setDevicePixelRatio(1.0)`으로 한 번 더 막는다.
+> **Filename trap:** never suffix the high-resolution sheet `@2x` or `@4x`. Qt reads it as a
+> high-density asset and raises `devicePixelRatio`, so the window grows while the artwork is
+> drawn at 1/N size with the rest left unpainted. Use the `-4x` form. The code also calls
+> `setDevicePixelRatio(1.0)` right after loading as a second guard.
 
 ## config.json
 
-| 키 | 뜻 |
+| Key | Meaning |
 | --- | --- |
-| `petHeight` | 표시 높이(px). 크기 바를 조절하면 이 값이 갱신된다. 시트 배율을 넘기면 흐려짐. |
-| `bubbleWidth` | 말풍선 최대 폭. |
-| `bubbleMaxLines` | 말풍선 최대 줄 수(초과 시 말줄임). |
-| `completedDisplaySeconds` | 완료(녹색 체크) 표시 시간. |
-| `wander` | `true`(기본)면 idle일 때 스스로 돌아다닌다. |
-| `opacity` | 불투명도 0.2~1.0. 우클릭 메뉴의 투명도 바와 연동된다. |
-| `clickAction` | 클릭했을 때 — `panel`(기본) · `app` · `talk` · `none`. |
-| `clickThrough` | `true`면 마우스가 통과한다. 트레이에서만 되돌릴 수 있다. |
-| `pet` | 쓸 펫 id. 빈 값이면 기본 유이. `pets/<id>/` 를 본다. |
-| `throwEnabled` | `false`면 아무리 빨리 뿌려도 던져지지 않는다. |
-| `pomodoroFocusMin` · `pomodoroBreakMin` | 뽀모도로 집중·휴식 분. |
-| `weatherEnabled` · `weatherLat` · `weatherLon` | 날씨 대사. 기본 꺼짐, 좌표 기본값은 창원. |
-| `privacyMode` | `true`(기본)면 제목은 **프로젝트명**, 상세는 **파일명 · 작업 성격**만. 프롬프트 원문·응답·알림 원문·영어 도구 설명은 화면에 올리지 않는다. `false`면 세션 첫 프롬프트를 제목으로 쓰고 진행 문장도 대화에서 보충한다. |
+| `petHeight` | Display height in px. The size bar writes this. Past the sheet's scale it goes soft. |
+| `bubbleWidth` | Maximum bubble width. |
+| `bubbleMaxLines` | Maximum bubble lines; the rest is ellipsised. |
+| `completedDisplaySeconds` | How long the green completion check stays up. |
+| `wander` | `true` (default) lets it walk around while idle. |
+| `opacity` | 0.2–1.0. Tied to the opacity bar in the right-click menu. |
+| `clickAction` | On click — `panel` (default), `app`, `talk`, `none`. |
+| `clickThrough` | `true` lets the mouse pass through. Only the tray can undo it. |
+| `pet` | Which pet to use. Empty means the default sheet at the deploy root; otherwise `pets/<id>/`. |
+| `throwEnabled` | `false` means no fling, however hard you throw. |
+| `pomodoroFocusMin` · `pomodoroBreakMin` | Pomodoro focus and break minutes. |
+| `weatherEnabled` · `weatherLat` · `weatherLon` | Weather lines. Off by default; set the coordinates to your location. |
+| `privacyMode` | `true` (default) shows the **project name** as the title and only **filename plus the kind of work** as detail. Prompt text, responses, raw notification text and English tool descriptions never reach the screen. `false` uses the session's first prompt as the title and fills the progress line from the conversation. |
 
-## 멀티에이전트 확장
+## Other agents
 
-`sessions/<source>/…`에 같은 `PetState` 형식으로 기록하면 Codex·VS Code 등 다른 소스도 자동 집계된다. 캐릭터(펫)를 여러 개 두는 K-ON 밴드 구도(office)는 멤버 스프라이트가 추가되면 확장 예정.
+Anything that writes the same `PetState` into `sessions/<source>/…` is aggregated
+automatically — Codex, an editor extension, a CI job, your own script. The source name is
+what drives the badge.

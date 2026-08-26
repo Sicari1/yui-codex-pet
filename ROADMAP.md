@@ -1,185 +1,198 @@
-# ROADMAP — 데스크톱 펫으로 키우기
+# Roadmap — growing this into a desktop pet
 
-Last Updated: 2026-08-26 (비공개 저장소 참조 정리)
+Last updated: 2026-08-26 (translated to English; private-repo references removed)
 
-Claude Code 상태 표시기에서 **평소에 데리고 사는 데스크톱 펫**으로 넓히기 위한 아이디어 모음.
-지금 구현을 기준으로 **당장 되는 것**과 **스프라이트가 나와야 되는 것**을 갈라 놓았다.
-스프라이트 재제작이 여러 항목의 전제라, 그릴 목록을 여기서 확정한다.
-
----
-
-## 0. 설계 원칙
-
-데스크톱 펫은 대개 거슬려서 지워진다. 귀여움은 그다음 문제라 순서를 이렇게 잡았다.
-
-1. **방해하지 않는다** — 클릭을 막지 않고, 전체화면일 땐 사라지고, 언제든 한 번에 끌 수 있어야 한다.
-2. **살아 있다** — 가만히 서 있으면 배경 이미지와 다를 게 없다. 스스로 움직여야 한다.
-3. **귀엽다** — 반응이 있어야 한다. 건드리면 반응하고, 시간과 상황을 안다.
-4. **쓸모가 있다** — 없어도 되지만 있으면 좋은 정도. 여기서 욕심내면 1번을 해친다.
+Ideas for widening this from a Claude Code status indicator into **a pet you actually keep
+around**. Split by what the current implementation can already reach and what needs new
+artwork first. Redrawing the sprites gates several items, so the drawing list is settled here.
 
 ---
 
-## 1. 지금 당장 되는 것 (스프라이트 불필요)
+## 0. Design principles
 
-### 1-A. 살아 있게 — 코드만으로 체감이 가장 큰 것들
+Desktop pets usually get uninstalled because they're irritating. Cute comes after that,
+which is why the order is:
 
-| 항목 | 내용 | 난이도 |
+1. **Don't interrupt** — never eat a click, disappear during fullscreen, and be one action
+   away from off at any time.
+2. **Be alive** — a pet standing still is a wallpaper decal. It has to move on its own.
+3. **Be cute** — it has to react. Poke it and something happens; it knows the time and the
+   situation.
+4. **Be useful** — nice-to-have, not need-to-have. Push this one and you break rule 1.
+
+---
+
+## 1. Reachable now (no new sprites)
+
+### 1-A. Feeling alive — biggest effect per line of code
+
+| Item | What | Effort |
 |---|---|---|
-| ~~**깜빡임 랜덤화**~~ ✅ | 지금 idle 루프가 `dur = 2800` 고정이라 기계처럼 규칙적으로 눈을 깜빡인다. 2.0~5.5초 사이 지터만 넣어도 훨씬 살아 있어 보인다. 가장 싼 개선. | 5분 |
-| ~~**자율 배회**~~ ✅ | (사용 중일 땐 얌전히, 손을 멈추면 자유롭게 — 입력 유휴 시간으로 구분) 화면 아래를 따라 스스로 걸어다닌다. `running-left`/`running-right` 프레임이 이미 있다. 확률적 상태 머신(서 있기 → 목적지 정하기 → 걷기 → 도착 → 잠시 서 있기)으로 충분하다. | 반나절 |
-| ~~**가끔 딴짓**~~ ✅ | 배회 중 낮은 확률로 점프하거나 손을 흔든다. `jumping`·`waving` 재활용. | 30분 |
-| ~~**던지기 물리**~~ ✅ | 드래그를 놓을 때 마지막 몇 프레임의 이동 속도로 포물선을 만든다. 벽에 튕기고 바닥에 떨어진다. 착지 프레임이 없으니 우선 `jumping` 마지막 프레임으로 대체. | 반나절 |
-| ~~**커서 반응 강화**~~ ✅ | 지금은 멀리 있을 때만 쳐다본다. 커서가 아주 가까이 오면 놀라서 살짝 물러나거나 손을 흔들게. | 1시간 |
+| ~~**Jittered blinking**~~ ✅ | The idle loop was a fixed `dur = 2800`, so it blinked like a metronome. Jitter between 2.0 and 5.5 s alone is a big improvement. Cheapest win available. | 5 min |
+| ~~**Autonomous wandering**~~ ✅ | Quiet while you're typing, free once your hands stop — decided from input-idle time. Walks along the bottom of the screen. `running-left`/`running-right` already exist. A probabilistic state machine (stand → pick a target → walk → arrive → stand) is enough. | half a day |
+| ~~**Occasional idling about**~~ ✅ | Low chance of a jump or a wave while wandering. Reuses `jumping` and `waving`. | 30 min |
+| ~~**Throw physics**~~ ✅ | On release, build an arc from the last few frames of drag velocity. Bounce off walls, land on the floor. No landing frames yet, so the last `jumping` frame stands in. | half a day |
+| ~~**Stronger cursor reaction**~~ ✅ | It only looked at the cursor from a distance. Make it flinch or wave when the cursor comes right up to it. | 1 hour |
 
-### 1-B. 거슬리지 않게 — 실사용에 꼭 필요
+### 1-B. Not being irritating — required for daily use
 
-| 항목 | 내용 |
+| Item | What |
 |---|---|
-| ~~**트레이 아이콘**~~ ✅ | 지금 종료가 우클릭 메뉴뿐이라, 펫을 화면 밖이나 다른 창 뒤로 놓치면 작업 관리자를 열어야 한다. `QSystemTrayIcon`으로 표시/숨김·설정·종료. **우선순위 높음** |
-| ~~**전체화면 감지**~~ ✅ | 게임·영상·발표 중에는 자동으로 숨는다. Win32로 포그라운드 창이 화면 전체를 덮는지 보면 된다. |
-| ~~**클릭 통과 모드**~~ ✅ | `WA_TransparentForMouseEvents`를 켜면 완전 장식용이 된다. 우클릭 메뉴에서 토글(끄면 트레이로만 되돌릴 수 있으니 주의). |
-| ~~**투명도**~~ ✅ | 슬라이더 하나 더. 작업 중엔 흐리게. |
-| ~~**클릭 동작 설정**~~ ✅ | 지금 클릭하면 VSCode 창을 토글한다. 데스크톱 펫으로 쓸 땐 어색하니 `없음 / 앱 토글 / 대사하기` 중에 고르게. |
-| **멀티모니터** | `_screen()`은 있지만 모니터를 옮겼을 때 재배치 동작 확인 필요. |
+| ~~**Tray icon**~~ ✅ | Quit lived only in the right-click menu, so losing the pet off-screen or behind a window meant opening Task Manager. `QSystemTrayIcon` for show/hide, settings and quit. **High priority** |
+| ~~**Fullscreen detection**~~ ✅ | Hide during games, video and presentations. Win32 will tell you whether the foreground window covers the screen. |
+| ~~**Click-through mode**~~ ✅ | `WA_TransparentForMouseEvents` turns it into pure decoration. Toggle from the right-click menu — note that once on, only the tray can turn it back off. |
+| ~~**Opacity**~~ ✅ | One more slider. Fade it while working. |
+| ~~**Configurable click action**~~ ✅ | Clicking used to toggle the VS Code window, which is odd for a desktop pet. Offer none / toggle app / say something. |
+| **Multi-monitor** | `_screen()` exists, but repositioning after the pet moves between monitors needs checking. |
 
-### 1-C. 귀엽게 — 대사와 시간 감각
+### 1-C. Cute — dialogue and a sense of time
 
-| 항목 | 내용 |
+| Item | What |
 |---|---|
-| ~~**시간대 인사**~~ ✅ | 아침 첫 실행 "좋은 아침!", 점심 "밥 먹었어?", 밤 "슬슬 자자~", 새벽 "아직도 안 자?" |
-| ~~**대사 풀**~~ ✅ | 상황별(인사·심심함·칭찬·격려) 대사를 JSON에 여러 개 두고 랜덤. 말풍선 UI를 그대로 쓴다. LLM 필요 없다. |
-| ~~**방치 반응**~~ ✅ | 오래 안 건드리면 심심해하는 대사. 한참 뒤 조용해짐. |
-| ~~**연속 클릭 반응**~~ ✅ | 빠르게 여러 번 누르면 좋아하거나 어지러워한다. 표정 프레임이 없어도 대사와 `jumping`으로 가능. |
-| ~~**기념일**~~ ✅ | 히라사와 유이 생일(11월 27일), 크리스마스, 새해. 그날만 특별 대사. |
-| ~~**날씨**~~ ✅ | 비·눈·폭염에 반응하는 대사. 소품 없이 대사만이면 API 하나로 끝. |
-| **효과음** | 발소리·점프 정도. K-ON 캐릭터 음성은 저작권 문제라 넣지 않는다. |
+| ~~**Time-of-day greetings**~~ ✅ | First launch in the morning, around lunch, late evening, small hours. |
+| ~~**Dialogue pool**~~ ✅ | Several lines per situation (greeting, bored, praise, encouragement) in JSON, picked at random. Reuses the existing bubble. No LLM involved. |
+| ~~**Idle reaction**~~ ✅ | Bored lines when left alone for a while, then quiet again. |
+| ~~**Rapid-click reaction**~~ ✅ | Several fast clicks and it's delighted, or dizzy. Works with dialogue plus `jumping` even without expression frames. |
+| ~~**Anniversaries**~~ ✅ | The character's birthday (27 November), Christmas, New Year. Special lines on the day only. |
+| ~~**Weather**~~ ✅ | Lines reacting to rain, snow and heat. Dialogue only, no props, so one API call covers it. |
+| **Sound effects** | Footsteps and jumps, roughly. No voice clips lifted from the show — that's a rights problem. |
 
-### 1-D. 쓸모 — 말풍선 재활용
+### 1-D. Useful — reusing the speech bubble
 
-| 항목 | 내용 |
+| Item | What |
 |---|---|
-| ~~**뽀모도로**~~ ✅ | 25분 집중 / 5분 휴식. 집중 중엔 조용히 있다가 끝나면 손을 흔든다. 말풍선 UI 그대로. |
-| **휴식 알림** | 오래 앉아 있으면 스트레칭 권유. |
-| **타이머·알람** | "20분 뒤 알려줘" 수준. |
-| ~~**범용 알림 CLI**~~ ✅ | `yui done "학습 끝"` 한 줄로 `sessions/cli/*.json`에 써 넣는 얇은 래퍼. 긴 스크립트·렌더링·빌드 끝날 때 유이가 알려준다. **설계상 공짜에 가깝고 활용도가 높다** |
-| **시스템 경고** | 배터리 부족·디스크 부족·CPU 과열. `failed` 애니 재활용. |
-| **일정 알림** | Google Calendar 연동. |
-| **간단 할 일** | 우클릭에 todo 몇 줄. 완료하면 축하. |
+| ~~**Pomodoro**~~ ✅ | 25 focus / 5 break. Silent during focus, waves when the interval ends. Existing bubble. |
+| **Break reminder** | Suggest a stretch after a long sitting stretch. |
+| **Timers and alarms** | "Tell me in 20 minutes" level. |
+| ~~**General notification CLI**~~ ✅ | `yui done "training finished"` — a thin wrapper writing `sessions/cli/*.json`. Long scripts, renders and builds can all report in. **Nearly free by construction and gets used constantly** |
+| **System warnings** | Low battery, low disk, CPU heat. Reuses the `failed` animation. |
+| **Calendar reminders** | Google Calendar integration. |
+| **Small to-do list** | A few todo lines in the right-click menu; congratulate on completion. |
 
-### 1-E. 상태 소스 확장 — 이미 만들어진 확장점
+### 1-E. More status sources — the extension point already exists
 
-`sessions/<source>/<id>.json`에 같은 `PetState` 형식으로 쓰기만 하면 자동으로 집계된다.
-Codex, Cursor, 크론 작업, CI, 은행PC 뉴스레터·주가 파이프라인 전부 붙일 수 있다.
-소스별 우선순위나 담당 캐릭터를 나누면 밴드 구도로 이어진다.
+Write the same `PetState` into `sessions/<source>/<id>.json` and it is aggregated
+automatically. Codex, an editor extension, cron jobs, CI, any pipeline you run — all of them
+can report in the same way. Splitting priority or assigning a character per source is the
+path toward the band arrangement.
 
-### 1-F. 펫 교체 ✅ (2026-07-25 완료)
+### 1-F. Swapping pets ✅ (done 2026-07-25)
 
-`pets/chibi-yui/`가 이미 있다. 우클릭 메뉴에서 현재 유이 ↔ 치비 유이 전환.
-`pet.json`을 읽어 목록을 만들면 나중에 밴드 멤버도 그대로 붙는다.
+`pets/chibi-yui/` already exists. The right-click menu switches between the current design
+and the chibi one. Building the list from `pet.json` means band members drop in the same way
+later.
 
 ---
 
-## 2. 스프라이트가 나와야 되는 것
+## 2. Needs new artwork first
 
-여기부터는 그림이 있어야 한다. **재제작할 때 한 번에 그려두는 게 훨씬 싸다.**
-나중에 몇 개만 추가로 뽑으면 화풍이 미묘하게 달라져 붕 뜬다.
+Everything below this line needs drawings. **Drawing them in one pass during the redraw is
+far cheaper.** Adding a few later means the style drifts and they never quite sit together.
 
-### 2-A. 그려야 할 동작 (우선순위 순)
+### 2-A. Motions to draw (priority order)
 
-| 동작 | 왜 필요한가 | 프레임 감 |
+| Motion | Why | Frame estimate |
 |---|---|---|
-| **앉기** (앉은 idle + 앉았다 일어서기) | 창 제목표시줄에 걸터앉기. 데스크톱 펫의 대표 동작이고 지금 가장 아쉽다 | 앉은 호흡 4~6, 전환 3~4 |
-| **기타 연주** | 유이의 정체성인데 지금 없다. 가만히 있을 때 가끔 짧게 치면 그것만으로 캐릭터가 산다 | 6~8 |
-| **자기 / 졸기** | 방치·새벽 시간대. 꾸벅꾸벅 → 눕기 → Z | 졸기 4, 자기 4 |
-| **들려있기 (dangle)** | 드래그 중. 지금은 달리는 애니를 쓰는데 실제로는 붙잡혀 대롱거리는 게 자연스럽다 | 4 |
-| **떨어지기 / 착지** | 던지기 물리, 창이 닫혔을 때 | 낙하 2, 착지 3 |
-| **놀람** | 커서가 갑자기 가까이 왔을 때, 창이 사라졌을 때 | 3~4 |
-| **기뻐하기 / 쓰다듬 반응** | 연속 클릭·쓰다듬기. 눈 감고 웃는 표정 | 4~6 |
-| **매달리기 / 기어오르기** | 화면 가장자리, 창 모서리. Shimeji 시그니처지만 위 항목보다는 뒤 | 각 4 |
-| **말하는 입 모양** | 음성을 붙이면 입이 안 움직이는 게 어색해진다(2-D 참고). 립싱크까지는 불필요 | 2~3 |
+| **Sitting** (seated idle + stand↔sit) | Perching on a window title bar. The signature desktop-pet move, and the one most missed today | seated breathing 4–6, transition 3–4 |
+| **Playing guitar** | It's the character's whole identity and it isn't there. An occasional short riff while idle carries her by itself | 6–8 |
+| **Sleeping / dozing** | Idle and small hours. Nodding off → lying down → Z | doze 4, sleep 4 |
+| **Dangling** | While dragged. Currently reuses the running animation; dangling from a grip is what actually happens | 4 |
+| **Falling / landing** | Throw physics, and when a window she was on closes | fall 2, land 3 |
+| **Startled** | Cursor arriving suddenly, or a window vanishing | 3–4 |
+| **Delighted / petting reaction** | Rapid clicks and petting. Eyes shut, smiling | 4–6 |
+| **Hanging / climbing** | Screen edges and window corners. The Shimeji signature, but lower priority than the above | 4 each |
+| **Mouth flaps** | Adding voice makes a motionless mouth jarring (see 2-D). Real lip-sync is not needed | 2–3 |
 
-### 2-B. ⚠ 시트 레이아웃 — Codex 호환을 깨지 말 것
+### 2-B. ⚠ Sheet layout — don't break Codex compatibility
 
-현재 시트는 **8열 × 11행**이고 이게 Codex Pet v2 규격이다(`pet.json`의 `spriteVersionNumber: 2`).
-행을 늘리면 Codex 쪽 검증에 걸릴 수 있다.
+The current sheet is **8 columns × 11 rows**, which is the Codex Pet v2 format
+(`spriteVersionNumber: 2` in `pet.json`). Adding rows can fail Codex's own validation.
 
-**권장: 두 장으로 나눈다.**
+**Recommended: split it across two sheets.**
 
-- `spritesheet.png` — 기존 8×11 그대로. Codex Pet으로도 계속 쓴다.
-- `spritesheet-extra.png` — 위 추가 동작만 모은 별도 시트. 우리 오버레이만 읽는다.
+- `spritesheet.png` — the existing 8×11, unchanged. Still usable as a Codex pet.
+- `spritesheet-extra.png` — a separate sheet holding only the extra motions above. Read by
+  this overlay alone.
 
-오버레이는 셀 크기를 시트 해상도에서 역산하므로 두 장의 셀 크기가 같기만 하면 된다.
-`ROW_DEF`에 시트 구분자를 하나 붙이면 끝난다(예: `("extra", row, durs)`).
+The overlay derives cell size from the sheet resolution, so the only requirement is that
+both sheets use the same cell size. Add a sheet discriminator to `ROW_DEF` and you're done —
+something like `("extra", row, durs)`.
 
-### 2-C. 재제작 시 같이 고칠 것 — 16방향 작붕 실측 (2026-07-25)
+### 2-C. Fix during the redraw — the sixteen-direction failure, measured (2026-07-25)
 
-원본 1:1로 16방향 얼굴만 확대해 확인한 결과. **해상도가 아니라 원본 생성 품질 문제**라
-업스케일로는 못 고친다.
+Checked by cropping each of the sixteen faces at 1:1 against the original. **This is a
+generation-quality problem, not a resolution problem**, so upscaling cannot fix it.
 
-| 프레임 | 의도 | 실제 |
+| Frame | Intended | Actual |
 |---|---|---|
-| 13·14·15 (292.5°/315°/337.5°, 좌상단) | 왼쪽 위 보기 | **거의 정면.** 서로 구분도 안 된다 |
-| 12 (270°, 좌) | 왼쪽 옆모습 | 머리카락에 얼굴이 거의 가림 |
-| 6·7 (135°/157.5°) | 오른쪽 아래 보기 | 뒤통수만 보인다 |
-| 0~4 (위~오른쪽) | | 이쪽은 멀쩡하다 |
+| 13·14·15 (292.5°/315°/337.5°, upper-left) | looking up-left | **nearly front-facing.** Indistinguishable from one another |
+| 12 (270°, left) | left profile | hair covers most of the face |
+| 6·7 (135°/157.5°) | looking down-right | back of the head only |
+| 0–4 (up through right) | | these are fine |
 
-**왼쪽 절반이 유독 나쁘다.** 펫을 화면 오른쪽에 두면 커서는 대부분 왼쪽에 있어서
-가장 망가진 프레임을 제일 자주 보게 된다.
+**The left half is markedly worse.** Park the pet on the right of the screen and the cursor
+spends most of its time to the left, so the worst frames are the ones you see most.
 
-제작 당시의 방향 의미 QA(검사 기록은 비공개)는 이걸 전부 통과시켰다. 4방위는 pass,
-중간 각도는 "blind 검증에서 단서가 미묘함" warning인데 `"ok": true`로 넘어갔다.
-그런데 정작 오버레이에는 13·14·15를 스냅하는
-`LOOK_REMAP`이 들어 있다 — QA는 통과시켰지만 실제로 써 보니 이상해서 코드로 가린 것이다.
-**재제작 QA는 이 사례를 기준으로 warning을 수용하지 말 것.**
+The direction-semantics QA from that production run (the record itself is private) passed
+all of it: the four cardinal directions passed, and the intermediate angles came back with a
+"cues are subtle under blind review" warning that was accepted as `"ok": true`. Meanwhile the
+overlay carries a `LOOK_REMAP` that snaps 13·14·15 away — QA passed them, using it did not,
+and the code quietly covered for it. **The redraw's QA should treat this as the precedent and
+accept no warnings.**
 
-단기 완화안(미적용): 망가진 프레임(6·7·12~15)을 쓰지 않고 멀쩡한 프레임으로만 스냅하도록
-`LOOK_REMAP`을 넓힌다. 시선 정밀도가 떨어지는 대신 작붕이 안 보인다.
+Short-term mitigation (not applied): widen `LOOK_REMAP` so the broken frames (6·7·12–15) are
+never shown and only the good ones are snapped to. Gaze precision drops; the broken artwork
+stops being visible.
 
 ---
 
-## 2-D. 음성 — 설계만, 아직 구현 안 함
+## 2-D. Voice — designed, not built
 
-대사에 목소리를 붙이는 건 구조상 어렵지 않다. 다만 **어떤 목소리를 쓸지가 남은 문제**라
-음원과 무관하게 갈아끼울 수 있는 형태로 설계만 적어 둔다. 소스가 정해지면 붙이기만 하면 된다.
+Attaching a voice to the dialogue is structurally easy. **Which voice to use is the open
+question**, so what follows is a design that stays independent of the audio source. Once a
+source is chosen it is a matter of plugging it in.
 
-### 음원에 대한 입장
+### Position on audio sources
 
-애니에서 성우 목소리를 추출해 복제하는 방식은 이 저장소에서는 쓰지 않는다.
-실존 인물의 목소리라 본인 동의를 확인할 수 없고, 확인할 수 없는 동의를 전제로 만들지 않는다.
+Extracting and cloning a voice actor's performance from the show is out of scope for this
+repository. It is a real person's voice, their consent cannot be verified, and nothing here
+gets built on consent that cannot be verified.
 
-쓸 수 있는 쪽:
+What is usable:
 
-| 방식 | 특징 |
+| Option | Notes |
 |---|---|
-| **VOICEVOX** | 무료·오프라인·로컬 HTTP API. 애초에 남이 쓰라고 만든 캐릭터 음성이라 규약만 지키면 된다. 2026년 현재 유료 플랜 없음, 크레딧 표기가 조건. **캐릭터마다 규약이 다르니 쓰기 전에 해당 캐릭터 페이지 확인 필수** |
-| COEIROINK / AquesTalk | 같은 계열의 대안 |
-| 한국어 TTS | `ko` 텍스트를 그대로 읽힌다. 일본어 음성보다 이질감이 적을 수도 |
-| 효과음만 | 발소리·점프·말풍선 뜰 때 짧은 소리. 제일 가볍고 안전 |
+| **VOICEVOX** | Free, offline, local HTTP API. The character voices exist for other people to use, so following the terms is the whole requirement. No paid tier as of 2026; credit attribution is the condition. **Terms differ per character — check that character's page before use** |
+| COEIROINK / AquesTalk | Same family of alternatives |
+| A Korean TTS | Reads the `ko` text directly. May sit better than a Japanese voice |
+| Sound effects only | Footsteps, jumps, a short sound when the bubble appears. Lightest and safest |
 
-### 붙이는 구조
+### How it attaches
 
-이미 `_say(ko, ja)`가 한 곳에서 대사를 뿌리므로 여기 한 군데만 잡으면 된다.
+`_say(ko, ja)` already funnels every line through one place, so that is the only hook needed.
 
 ```
-_say(ko, ja) ──▶ 말풍선 표시(지금)
-             └─▶ voice.speak(ja 또는 ko)   ← 여기만 추가
+_say(ko, ja) ──▶ show bubble (today)
+             └─▶ voice.speak(ja or ko)   ← the only addition
                     │
-                    ├ 캐시 조회 (텍스트 해시 → wav)
-                    ├ 없으면 엔진 어댑터로 합성 요청 (비동기)
-                    └ QMediaPlayer로 재생
+                    ├ cache lookup (text hash → wav)
+                    ├ on miss, ask the engine adapter to synthesise (async)
+                    └ play through QMediaPlayer
 ```
 
-- **엔진 어댑터** — `voicevox` / `coeiroink` / `custom`(범용 HTTP)로 분리한다.
-  VOICEVOX는 `audio_query` → `synthesis` 2단계라 어댑터 안에서 흡수한다.
-- **비동기 필수** — `QNetworkAccessManager`로 던지고 콜백에서 재생한다.
-  합성이 느려도 UI가 멈추면 안 되고, 늦게 오면 그냥 버린다(말풍선은 이미 사라졌을 테니).
-- **캐시** — 대사 수가 적고 반복되므로 텍스트 해시로 wav를 저장해 두면 두 번째부터는 즉시 재생.
-  `.yui-pet/voice-cache/` 에 두고 대사가 바뀌면 자연히 새 해시가 된다.
-- **실패는 조용히** — TTS가 안 떠 있으면 말풍선만 뜨고 끝. 에러 팝업 금지.
-- **읽을 텍스트** — `lines.json`에 `ja`가 이미 병기돼 있어 그대로 쓸 수 있다.
-  한국어 TTS를 쓸 거면 `ko`를 넘기면 된다.
+- **Engine adapters** — split into `voicevox` / `coeiroink` / `custom` (generic HTTP).
+  VOICEVOX is a two-step `audio_query` → `synthesis`; absorb that inside its adapter.
+- **Async is mandatory** — fire through `QNetworkAccessManager` and play from the callback.
+  Slow synthesis must not freeze the UI, and anything that arrives late is simply dropped
+  (the bubble is long gone).
+- **Cache** — few lines, heavily repeated, so store the wav under a hash of the text and
+  every later playback is instant. Put it in `.yui-pet/voice-cache/`; edited lines naturally
+  produce a new hash.
+- **Fail silently** — no TTS running means bubble only. Never an error popup.
+- **What to read** — `lines.json` already carries `ja` alongside `ko`, so it can be used
+  as-is. Pass `ko` instead if you're using a Korean TTS.
 
-### config 추가안
+### Proposed config
 
 ```json
 "voice": {
@@ -192,41 +205,47 @@ _say(ko, ja) ──▶ 말풍선 표시(지금)
 }
 ```
 
-트레이 메뉴에 **음성 켜기/끄기**와 볼륨을 둔다. 기본은 꺼짐 — 소리는 배회보다 훨씬 거슬리기 쉽다.
-전체화면 앱이 떠 있거나 펫이 숨겨진 상태면 소리도 내지 않는다.
+Put an on/off toggle and a volume control in the tray menu. Default off — sound is far
+easier to find irritating than wandering is. Stay silent while a fullscreen app is up or the
+pet is hidden.
 
-### 스프라이트 쪽 영향
+### Knock-on effect for the sprites
 
-목소리를 넣으면 **입이 움직이지 않는 게 어색해진다.** 재제작할 때 `말하는 입 모양`(2~3프레임)을
-2-A 목록에 같이 넣어야 한다. 정밀한 립싱크까지는 필요 없고, 소리가 나는 동안 입만 여닫으면 충분하다.
-
----
-
-## 3. 창 위에 앉기 — 구현 메모
-
-가장 "데스크톱 펫다운" 기능이라 따로 적어 둔다.
-
-1. `EnumWindows`로 보이는 창들의 사각형을 모은다. `activate_vscode()`에서 이미 쓰고 있어 기반이 있다.
-2. 각 창의 **위쪽 모서리 y좌표**를 "선반"으로 삼는다. 화면 하단(작업표시줄 위)도 선반 하나.
-3. 유이는 선반 위를 걷고, 가끔 앉는다. 선반 끝에 닿으면 돌아서거나 아래 선반으로 뛰어내린다.
-4. 앉아 있던 창이 움직이면 같이 따라가고, 닫히면 떨어진다.
-5. 갱신 주기는 500ms~1s면 충분하다. 매 프레임 창 목록을 훑으면 무겁다.
-
-주의: 창 목록을 자주 훑으면 CPU를 먹는다. 캐시하고, 전체화면 앱이 뜨면 아예 멈춘다.
+Adding a voice makes **a motionless mouth jarring.** The redraw needs `mouth flaps` (2–3
+frames) on the 2-A list. Precise lip-sync is unnecessary; opening and closing the mouth
+while audio plays is enough.
 
 ---
 
-## 4. 추천 순서
+## 3. Sitting on windows — implementation notes
 
-| 단계 | 내용 | 왜 이 순서인가 |
+The most characteristically "desktop pet" feature, so it gets its own section.
+
+1. Collect the rectangles of visible windows with `EnumWindows`. `activate_vscode()` already
+   does this, so the groundwork exists.
+2. Treat each window's **top edge y** as a shelf. The bottom of the screen (above the
+   taskbar) is one more shelf.
+3. The pet walks along shelves and sometimes sits. At the end of a shelf it turns around or
+   drops to the one below.
+4. If the window it's sitting on moves, it rides along; if the window closes, it falls.
+5. A 500 ms–1 s refresh is plenty. Walking the window list every frame is expensive.
+
+Watch out: frequent window enumeration burns CPU. Cache it, and stop entirely when a
+fullscreen app appears.
+
+---
+
+## 4. Suggested order
+
+| Step | What | Why here |
 |---|---|---|
-| ~~**1**~~ ✅ | ~~깜빡임 랜덤화 + 자율 배회 + 가끔 딴짓~~ (2026-07-25 완료) | 스프라이트 없이 "살아 있음"이 생긴다. 가장 싸고 체감이 크다 |
-| ~~**2**~~ ✅ | ~~트레이 아이콘 + 전체화면 감지 + 부팅 자동 실행~~ (2026-07-25 완료) | 며칠 데리고 살려면 이게 없으면 곤란하다 |
-| ~~**3**~~ ✅ | ~~대사 풀 + 시간대 인사 + 방치 반응~~ (2026-07-25 완료) | 코드만으로 귀여움이 붙는다 |
-| ~~**4**~~ ✅ | ~~범용 알림 CLI + 뽀모도로~~ (2026-07-25 완료) | 쓸모가 생긴다. 말풍선 재활용이라 싸다 |
-| **5** | **스프라이트 재제작** (2-A 목록 전부) | 여기서부터가 오래 걸린다. 1~4를 며칠 써 보고 아쉬운 동작을 목록에 추가한 뒤 착수 |
-| **6** | 창 위 앉기 + 던지기 물리 + 자는 연출 | 앉기·낙하 프레임이 나온 뒤 |
-| **7** | 펫 교체 → 밴드 구도 | 멤버 스프라이트가 생기면 |
+| ~~**1**~~ ✅ | ~~Jittered blinking + wandering + occasional idling about~~ (done 2026-07-25) | "Alive" without any new artwork. Cheapest thing with the largest felt difference |
+| ~~**2**~~ ✅ | ~~Tray icon + fullscreen detection + start with Windows~~ (done 2026-07-25) | Living with it for a few days is painful without these |
+| ~~**3**~~ ✅ | ~~Dialogue pool + time-of-day greetings + idle reaction~~ (done 2026-07-25) | Cute, from code alone |
+| ~~**4**~~ ✅ | ~~Notification CLI + Pomodoro~~ (done 2026-07-25) | Becomes useful. Cheap, since it reuses the bubble |
+| **5** | **Sprite redraw** (all of 2-A) | This is where the long part starts. Live with 1–4 for a few days first, add whatever you find yourself missing to the list, then begin |
+| **6** | Sitting on windows + throw physics + sleeping | After the sitting and falling frames exist |
+| **7** | Pet swapping → the band arrangement | Once member sprites exist |
 
-**1~4는 스프라이트를 기다릴 필요가 없다.** 먼저 붙여서 며칠 데리고 살아 보고,
-그동안 어떤 동작이 아쉬운지 겪은 걸 2-A 목록에 보태서 재제작에 들어가는 게 낫다.
+**Steps 1–4 don't have to wait for artwork.** Ship them, live with the pet for a few days,
+and fold whatever you end up missing into the 2-A list before starting the redraw.

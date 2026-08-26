@@ -1,169 +1,189 @@
-# 스프라이트 제작 요구사항
+# Sprite production spec
 
-유이 스프라이트를 **높은 해상도로 다시 만들 때** 지켜야 할 규격. Codex 작업에 그대로 넘길 수 있게 정리했다.
+What a **high-resolution redraw** of the pet sprites has to satisfy. Written so it can be
+handed to an image-generation run as-is.
 
-지금 쓰는 고해상 시트는 192×208 원본을 AI로 늘린 것이라 없는 정보를 만들어낸 그림이다.
-크게 띄울수록 원본과 달라진다. 이 문서는 그걸 대체할 진짜 원단을 만들기 위한 것이다.
+The high-resolution sheet in use today was upscaled by AI from the 192×208 original, so it
+is invented detail — the bigger you draw it, the further it drifts from the source. This
+document exists to replace it with real artwork.
 
 ---
 
-## 1. 산출물 — 세 장
+## 1. Deliverables — three sheets
 
-| 파일 | 규격 | 용도 |
+| File | Size | Purpose |
 |---|---|---|
-| `spritesheet.png` / `.webp` | **1536 × 2288** (셀 192×208, 8열×11행) | Codex Pet v2 규격. 이 크기를 바꾸면 Codex 쪽 검증에 걸린다 |
-| `spritesheet-4x.png` | **6144 × 9152** (셀 768×832, 8열×11행) | 오버레이용. 크게 띄워도 선명하다 |
-| `spritesheet-extra-4x.png` | 셀 768×832, 열은 8 고정, 행은 필요한 만큼 | 추가 동작(2절). **Codex 규격을 깨지 않으려고 따로 뺀다** |
+| `spritesheet.png` / `.webp` | **1536 × 2288** (192×208 cells, 8 cols × 11 rows) | The Codex Pet v2 format. Change this size and Codex's own validation rejects it |
+| `spritesheet-4x.png` | **6144 × 9152** (768×832 cells, 8 × 11) | For the overlay — stays sharp when scaled up |
+| `spritesheet-extra-4x.png` | 768×832 cells, 8 columns fixed, as many rows as needed | Extra motions (§2). **Kept separate so the Codex format stays intact** |
 
-**작업은 4배(셀 768×832)로 그리고, 1536×2288은 거기서 축소해 만든다.** 반대로 하면 못 늘린다.
+**Draw at 4× (768×832 cells) and downscale to 1536×2288.** The other direction does not
+work — you cannot upscale back.
 
-> **파일명에 `@2x`·`@4x` 같은 접미사를 쓰지 말 것.** Qt가 고밀도 에셋으로 인식해
-> devicePixelRatio를 올려버려서, 창은 커지는데 그림만 1/N 크기로 그려진다. 반드시 `-4x` 형태.
+> **Never put an `@2x` / `@4x` suffix in the filename.** Qt reads it as a high-density
+> asset, raises `devicePixelRatio`, and you get a window that grows while the artwork is
+> drawn at 1/N size. Use the `-4x` form.
 
 ---
 
-## 2. 프레임 구성
+## 2. Frame layout
 
-### 2-1. 기본 시트 (8열 × 11행, 73프레임 + 중립 시선 셀)
+### 2-1. Base sheet (8 × 11, 73 frames plus the neutral-look cell)
 
-행 순서와 프레임 수를 바꾸면 오버레이 코드(`ROW_DEF`)도 같이 고쳐야 한다. **가능하면 그대로 유지한다.**
+Changing the row order or the frame counts means changing `ROW_DEF` in the overlay too.
+**Keep them as they are unless you have a reason not to.**
 
-| 행 | 이름 | 프레임 | 프레임별 지속(ms) | 재생 |
+| Row | Name | Frames | Per-frame duration (ms) | Playback |
 |---|---|---|---|---|
-| 0 | `idle` | 6 | 280·110·110·140·140·320 | 루프 (호흡 + 깜빡임) |
-| 1 | `running-right` | 8 | 120×7·220 | 루프 |
-| 2 | `running-left` | 8 | 120×7·220 | 루프 |
-| 3 | `waving` | 4 | 140·140·140·280 | 단발 |
-| 4 | `jumping` | 5 | 140×4·280 | 단발 |
-| 5 | `failed` | 8 | 140×7·240 | 루프 |
-| 6 | `waiting` | 6 | 150×5·260 | 루프 |
-| 7 | `running` | 6 | 120×5·220 | 루프 (집중 작업) |
-| 8 | `review` | 6 | 150×5·280 | 루프 (검토) |
-| 9 | 시선 000°~157.5° | 8 | — | 정지 |
-| 10 | 시선 180°~337.5° | 8 | — | 정지 |
+| 0 | `idle` | 6 | 280·110·110·140·140·320 | loop (breathing + blink) |
+| 1 | `running-right` | 8 | 120×7·220 | loop |
+| 2 | `running-left` | 8 | 120×7·220 | loop |
+| 3 | `waving` | 4 | 140·140·140·280 | one-shot |
+| 4 | `jumping` | 5 | 140×4·280 | one-shot |
+| 5 | `failed` | 8 | 140×7·240 | loop |
+| 6 | `waiting` | 6 | 150×5·260 | loop |
+| 7 | `running` | 6 | 120×5·220 | loop (heads-down work) |
+| 8 | `review` | 6 | 150×5·280 | loop (reviewing) |
+| 9 | look 000°–157.5° | 8 | — | still |
+| 10 | look 180°–337.5° | 8 | — | still |
 
-남는 셀은 완전 투명으로 둔다.
+Leave unused cells fully transparent.
 
-### 2-2. 추가 동작 시트 (새로 필요한 것)
+### 2-2. Extra motion sheet (not drawn yet)
 
-데스크톱 펫으로 쓰려면 있어야 하는 동작들. 우선순위 순.
+Motions a desktop pet really wants, in priority order.
 
-| 동작 | 프레임 | 쓰임 |
+| Motion | Frames | Used for |
 |---|---|---|
-| **앉기(정지)** | 4~6 루프 | 창 제목표시줄에 걸터앉기. **가장 아쉬운 동작** |
-| **앉기 전환** | 3~4 단발 | 서기 ↔ 앉기 |
-| **기타 연주** | 6~8 루프 | 유이의 정체성인데 지금 없다. 가끔 짧게 치는 것만으로 캐릭터가 산다 |
-| **졸기** | 4 루프 | 방치·새벽 |
-| **자기** | 4 루프 | 오래 방치 |
-| **들려있기** | 4 루프 | 드래그 중. 지금은 달리는 애니를 쓰는데 붙잡혀 대롱거리는 게 맞다 |
-| **떨어지기** | 2 루프 | 던지기, 창이 닫혔을 때 |
-| **착지** | 3 단발 | 위와 세트 |
-| **놀람** | 3~4 단발 | 커서가 갑자기 가까이 올 때 |
-| **기뻐하기** | 4~6 단발 | 연속 클릭·쓰다듬기. 눈 감고 웃는 표정 |
-| **말하는 입 모양** | 2~3 루프 | 음성을 붙이면 입이 안 움직이는 게 어색하다. 립싱크까지는 불필요 |
-| **매달리기** | 4 루프 | 화면 가장자리. 위 항목들보다 뒤 |
+| **sitting (hold)** | 4–6 loop | Perching on a window title bar. **The one that's missed most** |
+| **sit transition** | 3–4 one-shot | Standing ↔ sitting |
+| **playing guitar** | 6–8 loop | It's the character's whole identity and it isn't there. Even a short occasional riff carries her |
+| **dozing** | 4 loop | Idle, late night |
+| **sleeping** | 4 loop | Long idle |
+| **held** | 4 loop | While dragged. Currently reuses the running animation, but dangling from a grip is what it should be |
+| **falling** | 2 loop | Throws, and when a window she was on closes |
+| **landing** | 3 one-shot | Pairs with the above |
+| **startled** | 3–4 one-shot | Cursor arriving suddenly |
+| **delighted** | 4–6 one-shot | Rapid clicks, petting. Eyes shut, smiling |
+| **mouth flaps** | 2–3 loop | With voice enabled, a still mouth is jarring. Full lip-sync is not needed |
+| **hanging** | 4 loop | Screen edges. Lower priority than everything above |
 
 ---
 
-## 3. 16방향 시선 — 여기서 지난번에 실패했다
+## 3. Sixteen look directions — this is what failed last time
 
-행 9·10은 커서를 쳐다보는 정지 프레임 16장이다. **0°가 위, 시계방향으로 22.5°씩.**
+Rows 9 and 10 are the sixteen stills of the pet looking toward the cursor.
+**0° is up, then clockwise in 22.5° steps.**
 
 ```
-        0 (위)
+        0 (up)
    14        2
- 12 (좌)      4 (우)
+ 12 (left)    4 (right)
    10        6
-        8 (아래)
+        8 (down)
 ```
 
-### 지난 결과 (원본 1:1로 확인)
+### What came out last time (measured against the original 1:1)
 
-| 프레임 | 의도 | 실제 |
+| Frame | Intended | Actual |
 |---|---|---|
-| 13·14·15 (292.5/315/337.5°, 좌상단) | 왼쪽 위 | **거의 정면. 서로 구분도 안 된다** |
-| 12 (270°, 좌) | 왼쪽 옆모습 | 머리카락에 얼굴이 거의 가림 |
-| 6·7 (135/157.5°) | 오른쪽 아래 | 뒤통수만 보인다 |
-| 0~4 (위~오른쪽) | | 이쪽은 멀쩡하다 |
+| 13·14·15 (292.5/315/337.5°, upper-left) | up and to the left | **nearly front-facing, and indistinguishable from each other** |
+| 12 (270°, left) | left profile | hair covers most of the face |
+| 6·7 (135/157.5°) | down and to the right | back of the head only |
+| 0–4 (up through right) | | these are fine |
 
-**왼쪽 절반이 유독 나쁘다.** 펫을 화면 오른쪽에 두면 커서는 대부분 왼쪽에 있어서
-가장 망가진 프레임을 제일 자주 보게 된다. 지금은 코드의 `LOOK_REMAP`으로 가리고 있다.
+**The left half is markedly worse.** Park the pet on the right of the screen and the cursor
+spends most of its time to the left, so the worst frames are the ones you see most. The
+overlay currently papers over this with `LOOK_REMAP`.
 
-제작 당시의 방향 의미 QA(검사 기록은 비공개)는 이걸 전부 통과시켰다. 4방위는 pass,
-중간 각도는 "blind 검증에서 단서가 미묘함"이라는 warning인데 `"ok": true`로 수용했다.
-**이번에는 warning을 수용하지 않는다.**
+The direction-semantics QA from that production run (the record itself is private) passed
+all of it: the four cardinal directions passed outright, and the intermediate angles came
+back with a "cues are subtle under blind review" warning that was accepted as `"ok": true`.
+**Do not accept that warning this time.**
 
-### 이번에 지킬 것
+### Rules for the redraw
 
-1. **16장을 순서대로 늘어놓았을 때 머리 방향이 한 바퀴 매끄럽게 돌아야 한다.** 튀는 프레임이 없어야 한다.
-2. **모든 프레임에서 얼굴이 보여야 한다.** 뒤통수만 보이는 프레임은 데스크톱 펫으로 쓸 수 없다.
-   시선은 고개를 완전히 돌리지 말고 **눈동자 + 살짝의 고개 각도**로 표현한다.
-3. **좌우가 확실히 구분되어야 한다.** 좌상단 3장이 정면처럼 보이면 실패다.
-4. 라벨을 가리고 봤을 때 상하·좌우가 각각 읽혀야 한다.
+1. **Laid out in order, the sixteen frames must sweep a full turn smoothly.** No frame that jumps.
+2. **The face must be visible in every frame.** A frame showing only the back of the head is
+   unusable for a desktop pet. Convey direction with **the eyes plus a slight head angle**,
+   not a full head turn.
+3. **Left and right must be unmistakable.** If the three upper-left frames read as
+   front-facing, the sheet has failed.
+4. With the labels hidden, up/down and left/right must each still read correctly.
 
 ---
 
-## 4. 정렬 — 애니메이션 품질을 좌우한다
+## 4. Alignment — this is what makes or breaks the animation
 
-원본을 측정한 결과 **발밑 y좌표가 모든 프레임에서 동일**하다. 이건 반드시 지켜야 한다.
+Measuring the original shows **the foot line sits at the same y in every frame.** Match that.
 
 ```
-idle f0    x  45~145   y   5~202   발밑 202
-idle f3    x  46~145   y   5~202   발밑 202
-run-R f0   x  34~156   y   5~202   발밑 202
-wave f0    x  49~141   y   5~202   발밑 202
+idle f0    x  45–145   y   5–202   feet 202
+idle f3    x  46–145   y   5–202   feet 202
+run-R f0   x  34–156   y   5–202   feet 202
+wave f0    x  49–141   y   5–202   feet 202
 ```
 
-- **발밑 기준선 고정** — 셀 높이 208 기준 y=202 (4배면 832 기준 y=808). 프레임마다 흔들리면 걸을 때 위아래로 떤다.
-- **가로 중심 고정** — 캐릭터 중심이 셀 중앙 근처에서 크게 벗어나지 않게. 점프처럼 의도된 이동은 예외.
-- 캐릭터는 셀 폭의 절반 정도만 차지한다(101/192). 좌우 여백은 그대로 둔다 —
-  오버레이가 알파로 클릭 히트박스를 만들기 때문에 여백이 있어도 클릭을 막지 않는다.
+- **Fixed foot line** — y=202 in a 208-tall cell (y=808 at 4×, cell height 832). Let it wobble
+  per frame and the pet bounces vertically as it walks.
+- **Fixed horizontal centre** — keep the character near the middle of the cell. Deliberate
+  displacement, like the jump arc, is the exception.
+- The character occupies about half the cell width (101 of 192). Leave the side margins as
+  they are — the overlay builds its click hitbox from the alpha channel, so empty margin
+  does not swallow clicks.
 
 ---
 
-## 5. 알파 · 색
+## 5. Alpha and colour
 
-- **완전한 알파 채널.** 배경은 투명, 매트(흰/녹색 배경 잔상) 금지.
-- 외곽에 색 테두리가 남으면 안 된다. 크로마키로 뽑았다면 디스필 처리까지 끝낸 상태여야 한다.
-- 반투명 픽셀(머리카락 끝 등)은 괜찮다. 오버레이가 알파를 그대로 쓴다.
-- 무손실로 저장한다 — PNG RGBA, WebP는 lossless 옵션.
-
----
-
-## 6. 캐릭터 일관성
-
-`references/yui/` 와 `deliverables/` 의 고해상 정지 일러스트(912×1724, 1024×1536)를 기준으로 삼는다.
-
-- **기타**: 깁슨 레스폴 스탠다드, 헤리티지 체리 선버스트. **오른손잡이** — 좌우 반전 금지.
-- **머리핀**: 노란색, 오른쪽 머리. 항상 있어야 한다(이마를 가리는 것도 캐릭터 설정).
-- **교복**: 사쿠라가오카 동복 — 남색 블레이저, 흰 셔츠, **하늘색 리본**, 회색 치마, 검은 타이츠, 갈색 구두.
-- 머리는 갈색 단발, 눈은 갈색.
-- 화풍은 기존 시트와 같은 계열로. 새로 그린 티가 나면 안 된다.
+- **A real alpha channel.** Transparent background, no matte (white or green fringing).
+- No coloured halo on the silhouette. If it came off a chroma key, despill it before delivery.
+- Semi-transparent pixels (hair tips and the like) are fine — the overlay uses the alpha directly.
+- Save lossless: PNG RGBA, or WebP with the lossless option.
 
 ---
 
-## 7. QA 체크리스트
+## 6. Character consistency
 
-납품 전에 전부 통과해야 한다. 하나라도 warning이면 다시 그린다.
+Match the high-resolution reference stills produced for the original run (912×1724 and
+1024×1536). **They are not in this repository** — the reference and deliverable artwork is
+private. Redrawing from scratch means establishing your own reference first.
 
-- [ ] 시트 크기가 정확히 6144×9152 (4x) / 1536×2288 (기본)
-- [ ] 셀 경계에 다른 프레임 픽셀이 침범하지 않음
-- [ ] 모든 프레임 발밑 y좌표 동일 (4x 기준 808)
-- [ ] 빈 셀은 완전 투명 (알파 0)
-- [ ] 외곽 색 테두리·매트 없음
-- [ ] 각 애니 행을 지정 타이밍으로 재생했을 때 튀는 프레임 없음
-- [ ] 걷기 좌/우가 서로의 거울이 아니라 각각 자연스러움 (기타가 반전되면 안 됨)
-- [ ] **16방향을 순서대로 재생했을 때 한 바퀴 매끄럽게 돌아감**
-- [ ] **16방향 전부 얼굴이 보임** — 뒤통수만 보이는 프레임 없음
-- [ ] **라벨 가리고 봐도 상하·좌우가 읽힘** (3인 독립 확인)
-- [ ] 파일명에 `@Nx` 없음
-- [ ] 192×208로 축소해도 형태가 뭉개지지 않음 (Codex 규격 확인)
+The written constants for the default character:
+
+- **Guitar**: Gibson Les Paul Standard, heritage cherry sunburst. **Right-handed** — never mirror it.
+- **Hairpins**: yellow, right side of the head. Always present; they are part of the character.
+- **Uniform**: Sakuragaoka winter set — navy blazer, white shirt, **light-blue ribbon**, grey
+  skirt, black tights, brown shoes.
+- Short brown hair, brown eyes.
+- Keep the drawing style in the same family as the existing sheet. It should not look freshly redrawn.
 
 ---
 
-## 8. 작업 환경 메모
+## 7. QA checklist
 
-- 고해상 렌더링·업스케일은 **은행PC(RTX 5090)** 가 홈PC보다 훨씬 빠르다.
-- `tools/upscale_spritesheet.py` 는 CUDA가 필요하다. 새 원단이 나오면 이 도구는 필요 없어진다.
-- 완성되면 `pets/yui/` 를 갱신하고 업스케일본(`spritesheet-4x.png`)은 폐기한다.
-- 오버레이는 셀 크기를 시트 해상도에서 역산하므로, 규격만 맞으면 **코드 수정 없이 그대로 뜬다.**
+All of it has to pass before delivery. One warning means redraw.
+
+- [ ] Sheet is exactly 6144×9152 (4×) / 1536×2288 (base)
+- [ ] No frame's pixels cross a cell boundary
+- [ ] Foot line identical in every frame (y=808 at 4×)
+- [ ] Unused cells fully transparent (alpha 0)
+- [ ] No coloured halo, no matte
+- [ ] Playing each animation row at its stated timing produces no jumping frame
+- [ ] Walk-left and walk-right each look natural in their own right, not mirrored (the guitar must not flip)
+- [ ] **The sixteen look directions sweep a full turn smoothly when played in order**
+- [ ] **The face is visible in all sixteen** — no back-of-head frames
+- [ ] **Up/down and left/right still read with the labels hidden** (three independent reviewers)
+- [ ] No `@Nx` in any filename
+- [ ] Downscaling to 192×208 does not mush the silhouette (checks the Codex format)
+
+---
+
+## 8. Production notes
+
+- High-resolution rendering and upscaling want a machine with a current NVIDIA GPU; on
+  anything less this stage dominates the schedule.
+- `tools/upscale_spritesheet.py` needs CUDA. Once real artwork exists, that tool is obsolete.
+- When the redraw lands, update `pets/yui/` and discard the upscaled `spritesheet-4x.png`.
+- The overlay derives cell size from the sheet resolution, so as long as the format matches
+  it **loads with no code change.**
