@@ -23,9 +23,9 @@
 </p>
 <p align="center"><sub>真实录屏。<b>工作中</b>会显示项目名和已耗时长，<b>等待</b>转为橙色，<b>报错</b>转为红色；同时跑多个会话时角上会出现 <code>≡ N</code>。</sub></p>
 <p align="center">
-  <img src="preview/all-states.gif" width="130" alt="动画状态"/>
+  <img src="preview/all-states.gif" width="240" alt="动画状态"/>
   &nbsp;
-  <img src="preview/16-directions.gif" width="130" alt="十六个朝向"/>
+  <img src="preview/16-directions.gif" width="240" alt="十六个朝向"/>
   <br><sub>九种动画状态，十六个视线朝向。</sub>
 </p>
 
@@ -51,8 +51,7 @@ Codex 本来就在写的日志。两种方式最后都由叠加层轮询并播�
 
 ## 五个人
 
-五个角色是当作一整套画的：图集规格相同，九种状态相同，时序表也相同。右键就能在你手上
-有素材的角色之间切换。
+右键切换。只有你手上有素材的角色才会出现在菜单里。
 
 <p align="center">
   <img src="preview/roster.png" width="720" alt="五只宠物并排"/>
@@ -69,11 +68,11 @@ Codex 本来就在写的日志。两种方式最后都由叠加层轮询并播�
 <details>
 <summary><b>每个角色的九种状态</b></summary>
 <p align="center">
-  <img src="preview/pets/yui-all-states.gif" width="150" alt="唯，九种状态"/>
-  <img src="preview/pets/mio-all-states.gif" width="150" alt="澪，九种状态"/>
-  <img src="preview/pets/ritsu-all-states.gif" width="150" alt="律，九种状态"/>
-  <img src="preview/pets/tsumugi-all-states.gif" width="150" alt="紬，九种状态"/>
-  <img src="preview/pets/azusa-all-states.gif" width="150" alt="梓，九种状态"/>
+  <img src="preview/pets/yui-all-states.gif" width="240" alt="唯，九种状态"/>
+  <img src="preview/pets/mio-all-states.gif" width="240" alt="澪，九种状态"/>
+  <img src="preview/pets/ritsu-all-states.gif" width="240" alt="律，九种状态"/>
+  <img src="preview/pets/tsumugi-all-states.gif" width="240" alt="紬，九种状态"/>
+  <img src="preview/pets/azusa-all-states.gif" width="240" alt="梓，九种状态"/>
 </p>
 <p align="center"><sub>idle · running-right · running-left · waving · jumping · failed · waiting · active-work · review</sub></p>
 </details>
@@ -83,30 +82,28 @@ Codex 本来就在写的日志。两种方式最后都由叠加层轮询并播�
 
 ## 它还会做什么
 
-除了映射智能体，宠物也有自己的生活，还能替你做几件事。
+没事的时候它会在屏幕上四处走动，以不规则的间隔眨眼。它爬到你窗口的上沿并沿着走，也会
+顺着屏幕边缘往上爬。抓住往哪儿拖它就往哪儿跑；拖动中松手，它会沿一条抛物线飞出去，撞到
+屏幕边缘弹一下。
 
-**自己玩。** 没事的时候它会在屏幕上四处走动，以不规则的间隔眨眼，爬到你窗口的上沿并
-沿着走，也会顺着屏幕边缘往上爬。抓住往哪儿拖它就往哪儿跑；拖动中松手，它会沿一条真实的
-抛物线飞出去，撞到屏幕边缘弹一下，然后落定。
+鼠标靠近时它会看过来。光标进入、你点它、状态变化时看三到五秒。不会一直看，你打字的时候
+也不会主动看过来。
 
-**它会看你，但不会一直看。** 十六个朝向只在有事发生时用——光标靠近、你点它、状态变化——
-给你三到五秒，然后收回。你在打字的时候它不会主动看过来：一直盯着就不是"看"而是"盯"了。
+右键菜单里有挥手、跳一下、爬墙、番茄钟（专注 25 分钟、休息 5 分钟）、换宠物和音乐播放器。
+其余都在设置窗口里：语言、大小、透明度、点击行为、各项自主行为的开关、台词与语音、音乐
+目录、状态显示选项。它也常驻托盘——开了鼠标穿透之后，托盘是唯一能关掉它的地方。
 
-**你叫它。** 右键菜单里是挥手、跳一下、爬墙、开始番茄钟（专注 25 分钟、休息 5 分钟）、
-换宠物、打开音乐播放器。其余都收进了设置窗口——语言、大小、透明度、点击行为、各项自主
-行为的开关、台词与语音、音乐目录、状态显示选项。它也常驻托盘——开了鼠标穿透之后，
-托盘是唯一能关掉它的地方。
+播放你自己目录里的音频，带一个播放器窗口，有搜索、随机播放，以及按歌曲、伴奏、背景音乐
+筛选。宠物说话时音乐会自动降低音量。
 
-**音乐。** 播放你自己目录里的音频，带一个播放器窗口：搜索、随机播放，以及按歌曲、伴奏、
-背景音乐筛选。宠物说话时音乐会自动降低音量。
+界面文案和宠物台词可以选韩语、English 或日本語，无需重启，当场生效。
 
-**三种语言。** 韩语、English、日本語。界面文案和宠物台词一起切换，无需重启，当场生效。
+气泡里是任务标题和一行细节。`privacyMode` 默认开启，所以它描述用了什么工具，而不是直接
+引用你的对话。想看真实内容就在 `config.json` 里关掉。打开 `showJapanese`，韩文下面会多
+一行日文。
 
-**气泡。** 气泡里是任务标题和一行细节。`privacyMode` 默认开启，所以它描述用了什么工具，
-而不是直接引用你的对话。想看真实内容就在 `config.json` 里关掉。打开 `showJapanese`，
-韩文下面会多一行日文。
+有全屏程序占据前台时它自动隐藏，结束后再回来。
 
-**全屏。** 有全屏程序占据前台时它自动隐藏，结束后再回来。
 
 ## 工作原理
 
@@ -125,8 +122,6 @@ PetState = {source, session_id, phase, title, detail, transcript, ts, expires_at
 phase    = idle | working | waiting | done | failed
 ```
 
-这个格式里没有任何东西是 Claude 专属的。只要能写 JSON 文件，就能驱动这只宠物——
-下面那个 CLI 干的正是这件事。
 
 ## 安装
 
@@ -140,7 +135,7 @@ Windows 一侧需要 Python 和 PySide6，钩子跑在 WSL 一侧。`settings.js
 
 ## 从你自己的脚本驱动它
 
-随包附带的 `yui` CLI 写的是同一份 `PetState`，所以任何长时间运行的任务都能跟宠物说话。
+随包附带的 `yui` CLI 写的是同一份 `PetState`。用它包住一个长任务，宠物就会显示那个任务的状态。
 
 ```bash
 yui start "训练"                      # 切到工作中
@@ -212,18 +207,9 @@ yui run -t "训练" -- python train.py
 | `install.sh` | 一条命令完成部署 |
 | `README.{ko,ja,zh-CN}.md` | 同一份 README 的韩文、日文、简体中文版 |
 
-## 灵感来源
+## 许可
 
-Codex Pet v2，以及从 Shimeji 一路传下来的桌面看板娘传统。叠加层、钩子驱动的状态架构
-和这套动画，是我在那个想法之上自己做的。
-
-## 许可与素材
-
-**源代码**采用 MIT 许可，© 2026 SeongJin Kim（见 `LICENSE`）。
-
-**字体** `PretendardVariable.ttf` 由 Kil Hyung-jin 制作，采用 SIL 开放字体许可证。
-
-**角色画作是另一回事。** 平泽唯、秋山澪、田井中律、琴吹紬、中野梓出自 *轻音少女*，
-版权归权利方所有（© Kakifly · 芳文社 · TBS · 京都动画）。这里的画是粉丝制作的非商业作品，
-不以任何许可证提供，请勿转用。公开的只有低分辨率的预览动画，素材图集本身并不分发。
-去画你自己的角色吧——`SPRITE_SPEC.md` 就是为此写的。本项目与权利方无关，也未获得其认可。
+- 代码 — MIT © 2026 SeongJin Kim（见 `LICENSE`）
+- 字体 — `PretendardVariable.ttf`，Kil Hyung-jin，SIL 开放字体许可证
+- 角色画作 — 出自 *轻音少女*，版权归权利方所有（© Kakifly · 芳文社 · TBS · 京都动画）。
+  粉丝制作的非商业作品，不以任何许可证提供。公开的只有低分辨率预览，素材图集本身并不分发。

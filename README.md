@@ -25,9 +25,9 @@ in WSL.
 </p>
 <p align="center"><sub>Real capture. <b>Working</b> shows the project name and elapsed time, <b>waiting</b> turns orange, an <b>error</b> turns red, and <code>≡ N</code> appears when several sessions are running at once.</sub></p>
 <p align="center">
-  <img src="preview/all-states.gif" width="130" alt="animation states"/>
+  <img src="preview/all-states.gif" width="240" alt="animation states"/>
   &nbsp;
-  <img src="preview/16-directions.gif" width="130" alt="sixteen look directions"/>
+  <img src="preview/16-directions.gif" width="240" alt="sixteen look directions"/>
   <br><sub>Nine animation states, sixteen look directions.</sub>
 </p>
 
@@ -55,8 +55,7 @@ with a session count in the corner.
 
 ## The cast
 
-Five characters are drawn as one set: same atlas format, same nine states, same timing
-table. Right-click to switch between the ones you have art for.
+Right-click to switch. Only characters you have art for appear in the menu.
 
 <p align="center">
   <img src="preview/roster.png" width="720" alt="the five pets side by side"/>
@@ -73,11 +72,11 @@ table. Right-click to switch between the ones you have art for.
 <details>
 <summary><b>All nine states, per character</b></summary>
 <p align="center">
-  <img src="preview/pets/yui-all-states.gif" width="150" alt="Yui, nine states"/>
-  <img src="preview/pets/mio-all-states.gif" width="150" alt="Mio, nine states"/>
-  <img src="preview/pets/ritsu-all-states.gif" width="150" alt="Ritsu, nine states"/>
-  <img src="preview/pets/tsumugi-all-states.gif" width="150" alt="Tsumugi, nine states"/>
-  <img src="preview/pets/azusa-all-states.gif" width="150" alt="Azusa, nine states"/>
+  <img src="preview/pets/yui-all-states.gif" width="240" alt="Yui, nine states"/>
+  <img src="preview/pets/mio-all-states.gif" width="240" alt="Mio, nine states"/>
+  <img src="preview/pets/ritsu-all-states.gif" width="240" alt="Ritsu, nine states"/>
+  <img src="preview/pets/tsumugi-all-states.gif" width="240" alt="Tsumugi, nine states"/>
+  <img src="preview/pets/azusa-all-states.gif" width="240" alt="Azusa, nine states"/>
 </p>
 <p align="center"><sub>idle · running-right · running-left · waving · jumping · failed · waiting · active-work · review</sub></p>
 </details>
@@ -87,36 +86,33 @@ are not; see [Bring your own sprite](#bring-your-own-sprite).
 
 ## What else it does
 
-Besides mirroring the agent, the pet has a life of its own and a few things it can do
-for you.
+It wanders across the screen when nothing is happening and blinks at irregular intervals.
+It climbs onto the top edge of your windows and walks along them, and scales the screen
+edges. Grab it and it runs in the direction you drag; let go while moving and it flies off
+on an arc and bounces at the edge of the screen.
 
-**On its own.** It wanders across the screen when nothing is happening, blinks at
-irregular intervals, climbs onto the top edge of your windows and walks along them, and
-scales the screen edges. Grab it and it runs in the direction you drag; let go while
-moving and it flies off on a real arc, bounces at the edge of the screen, and settles.
+It looks at you when the mouse comes close. Three to five seconds when the cursor arrives,
+when you click, or when the status changes. Not continuously, and never first while you're
+typing.
 
-**It looks at you, but not constantly.** Sixteen look directions, given for three to five
-seconds when something happens — the cursor arriving, a click, a status change — and never
-while you're typing. Continuous tracking reads as staring, so it doesn't do that.
+The right-click menu has wave, jump, climb a wall, Pomodoro (25 on, 5 off), switch pets and
+the music player. Everything else is in a settings window: language, size, opacity, click
+behaviour, which autonomous behaviours are on, dialogue and voice, music folders,
+agent-status options. It also sits in the system tray, which is how you get click-through
+back off once it's on.
 
-**When you ask.** Right-click for the menu: wave, jump, climb a wall, start a Pomodoro
-(25 on, 5 off), switch pets, open the music player. Everything else lives in a settings
-window — language, size, opacity, click behaviour, which autonomous behaviours are on,
-dialogue and voice, music folders, agent-status options. It also sits in the system tray,
-which is how you get click-through back off once it's on.
+It plays audio from your own folders in a player window, with search, shuffle and filtering
+by song, instrumental or background music. Music ducks while the pet speaks.
 
-**Music.** It plays audio from your own folders, with a player window: search, shuffle, and
-filtering by song, instrumental or background music. Music ducks while the pet speaks.
+The interface and the pet's dialogue can be Korean, English or Japanese, switched live with
+no restart.
 
-**Three languages.** Korean, English and Japanese for the interface *and* the pet's own
-dialogue, switched live with no restart.
+The bubble carries the task title and a line of detail. `privacyMode` is on by default, so it
+describes the tool action rather than quoting your conversation. Turn it off in `config.json`
+to see the real text. Set `showJapanese` and the bubble carries a Japanese line under the
+Korean one.
 
-**Speech bubbles.** The bubble carries the task title and a line of detail.
-`privacyMode` is on by default, so it describes the tool action rather than quoting your
-conversation. Turn it off in `config.json` if you would rather see the real text. Set
-`showJapanese` and the bubble carries a Japanese line under the Korean one.
-
-**Fullscreen.** It hides itself when a fullscreen app takes over, and comes back after.
+It hides itself when a fullscreen app takes over, and comes back after.
 
 ## How it works
 
@@ -135,8 +131,6 @@ PetState = {source, session_id, phase, title, detail, transcript, ts, expires_at
 phase    = idle | working | waiting | done | failed
 ```
 
-Nothing about that format is Claude-specific. Anything that can write a JSON file can
-drive the pet, which is what the CLI below does.
 
 ## Install
 
@@ -151,8 +145,8 @@ your `settings.json` are preserved, and `--uninstall` takes it all back out.
 
 ## Drive it from your own scripts
 
-The bundled `yui` CLI writes the same `PetState`, so any long-running job can talk to
-the pet:
+The bundled `yui` CLI writes the same `PetState`. Wrap a long-running job with it and the
+pet shows that job's state:
 
 ```bash
 yui start "training"                     # switches to working
@@ -226,23 +220,10 @@ sheet you have the rights to.
 | `install.sh` | one-command deploy |
 | `README.{ko,ja,zh-CN}.md` | the same README in Korean, Japanese, and Simplified Chinese |
 
-## Inspiration
+## License
 
-Codex Pet v2, and the desktop-mascot tradition that Shimeji and its descendants come
-from. The overlay, the hook-driven status architecture, and the animation set are my own
-work on top of that idea.
-
-## License and assets
-
-**Source code** is MIT © 2026 SeongJin Kim (see `LICENSE`).
-
-**The font**, `PretendardVariable.ttf` by Kil Hyung-jin, is under the SIL Open Font
-License.
-
-**The character art** is a different matter. Hirasawa Yui, Akiyama Mio, Tainaka Ritsu,
-Kotobuki Tsumugi and Nakano Azusa are from *K-ON!* and belong to their rights holders
-(© Kakifly · Houbunsha · TBS · Kyoto Animation). The drawings here are fan-made and
-non-commercial, are offered under no license at all, and should not be reused. Only
-low-resolution preview animations are published; the spritesheets themselves are not
-distributed. Draw your own character instead — that is what `SPRITE_SPEC.md` is for.
-This project is unaffiliated with the rights holders and is not endorsed by them.
+- Code — MIT © 2026 SeongJin Kim (`LICENSE`)
+- Font — `PretendardVariable.ttf` by Kil Hyung-jin, SIL Open Font License
+- Character art — *K-ON!* characters, rights held by their owners (© Kakifly · Houbunsha ·
+  TBS · Kyoto Animation). Fan-made and non-commercial, offered under no license. Only
+  low-resolution previews are published; the spritesheets are not distributed.

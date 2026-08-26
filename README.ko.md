@@ -25,9 +25,9 @@
 </p>
 <p align="center"><sub>실제 화면. <b>작업 중</b>이면 프로젝트 이름과 경과 시간이, <b>대기</b>면 주황색이, <b>실패</b>면 빨간색이 뜬다. 세션이 여럿이면 <code>≡ N</code>이 붙는다.</sub></p>
 <p align="center">
-  <img src="preview/all-states.gif" width="130" alt="애니메이션 상태"/>
+  <img src="preview/all-states.gif" width="240" alt="애니메이션 상태"/>
   &nbsp;
-  <img src="preview/16-directions.gif" width="130" alt="16방향 시선"/>
+  <img src="preview/16-directions.gif" width="240" alt="16방향 시선"/>
   <br><sub>아홉 가지 애니메이션 상태와 열여섯 방향 시선.</sub>
 </p>
 
@@ -54,8 +54,7 @@ Claude Code 는 훅을 걸어야 하고, Codex 는 따로 설정할 것이 없�
 
 ## 다섯 명
 
-다섯 캐릭터를 한 세트로 그려서 아틀라스 규격도 아홉 가지 상태도 타이밍 표도 같고,
-우클릭하면 스프라이트를 가진 캐릭터끼리 바꿔 낄 수 있다.
+우클릭으로 바꿔 낀다. 스프라이트를 가진 캐릭터만 목록에 뜬다.
 
 <p align="center">
   <img src="preview/roster.png" width="720" alt="다섯 펫을 나란히 놓은 시트"/>
@@ -72,11 +71,11 @@ Claude Code 는 훅을 걸어야 하고, Codex 는 따로 설정할 것이 없�
 <details>
 <summary><b>캐릭터별 아홉 가지 상태 전부</b></summary>
 <p align="center">
-  <img src="preview/pets/yui-all-states.gif" width="150" alt="유이, 아홉 상태"/>
-  <img src="preview/pets/mio-all-states.gif" width="150" alt="미오, 아홉 상태"/>
-  <img src="preview/pets/ritsu-all-states.gif" width="150" alt="리츠, 아홉 상태"/>
-  <img src="preview/pets/tsumugi-all-states.gif" width="150" alt="츠무기, 아홉 상태"/>
-  <img src="preview/pets/azusa-all-states.gif" width="150" alt="아즈사, 아홉 상태"/>
+  <img src="preview/pets/yui-all-states.gif" width="240" alt="유이, 아홉 상태"/>
+  <img src="preview/pets/mio-all-states.gif" width="240" alt="미오, 아홉 상태"/>
+  <img src="preview/pets/ritsu-all-states.gif" width="240" alt="리츠, 아홉 상태"/>
+  <img src="preview/pets/tsumugi-all-states.gif" width="240" alt="츠무기, 아홉 상태"/>
+  <img src="preview/pets/azusa-all-states.gif" width="240" alt="아즈사, 아홉 상태"/>
 </p>
 <p align="center"><sub>idle · running-right · running-left · waving · jumping · failed · waiting · active-work · review</sub></p>
 </details>
@@ -86,32 +85,29 @@ Claude Code 는 훅을 걸어야 하고, Codex 는 따로 설정할 것이 없�
 
 ## 그 밖에 하는 일
 
-에이전트 상태를 보여 주는 것 말고도, 펫은 혼자 하는 행동이 있고 몇 가지는 대신 해 준다.
+아무 일도 없으면 화면을 가로질러 돌아다니고, 불규칙한 간격으로 눈을 깜빡인다. 열려 있는
+창의 윗변에 올라가 그 위를 걷고, 화면 벽을 타고 오른다. 잡아서 끌면 끄는 방향으로 달리고,
+움직이는 채로 놓으면 포물선을 그리며 날아가 화면 끝에서 튕긴다.
 
-**혼자서.** 아무 일도 없으면 화면을 가로질러 돌아다니고, 불규칙한 간격으로 눈을 깜빡이고,
-열려 있는 창의 윗변에 올라가 그 위를 걷고, 화면 벽을 타고 오른다. 잡아서 끌면 끄는 방향으로
-달리고, 움직이는 채로 놓으면 포물선을 그리며 날아가 화면 끝에서 튕기고 자리를 잡는다.
+마우스가 가까이 가면 쳐다본다. 커서가 들어올 때, 클릭할 때, 상태가 바뀔 때 3~5초 눈을 준다.
+계속 보는 건 아니고 타이핑하는 동안에는 먼저 쳐다보지 않는다.
 
-**쳐다보긴 하는데 계속은 아니다.** 열여섯 방향 시선을 쓰되, 커서가 들어오거나 클릭하거나
-상태가 바뀔 때만 3~5초 눈을 주고, 타이핑하는 동안에는 먼저 쳐다보지 않는다. 계속 바라보면
-그건 보는 게 아니라 응시가 된다.
+우클릭 메뉴로 손 흔들기, 점프, 벽 타기, 뽀모도로(25분 집중 5분 휴식), 펫 바꾸기, 음악
+플레이어를 시킬 수 있다. 나머지는 설정 창에 모았다. 언어, 크기, 투명도, 클릭했을 때,
+자율 행동 켜고 끄기, 대사와 목소리, 음악 폴더, 작업 표시 설정이 거기 있다. 트레이에도
+올라가는데, 클릭 통과를 켠 뒤 되돌리는 길이 트레이뿐이다.
 
-**시켜서.** 우클릭 메뉴에는 손 흔들기, 점프, 벽 타기, 뽀모도로 시작(25분 집중 5분 휴식),
-펫 바꾸기, 음악 플레이어 열기가 있다. 나머지는 설정 창 한자리에 모았다 — 언어, 크기,
-투명도, 클릭했을 때, 자율 행동 켜고 끄기, 대사와 목소리, 음악 폴더, 작업 표시 설정.
-트레이에도 올라가는데, 클릭 통과를 켠 뒤 되돌리는 길이 트레이뿐이다.
+내 폴더의 음원을 플레이어 창에서 재생한다. 검색과 무작위, 노래·반주·배경음악 필터가 있고
+펫이 말하는 동안에는 음량이 줄어든다.
 
-**음악.** 내 폴더의 음원을 플레이어 창에서 재생한다. 검색·무작위와 노래·반주·배경음악 필터가
-있고, 펫이 말하는 동안에는 음량이 잠깐 줄어든다.
+화면 문구와 펫이 하는 대사를 한국어·English·日本語 중에 고른다. 다시 켤 필요 없이 그 자리에서
+바뀐다.
 
-**세 가지 언어.** 한국어·English·日本語. 화면 문구뿐 아니라 펫이 하는 대사까지 바뀌고,
-다시 켤 필요 없이 그 자리에서 반영된다.
+말풍선에는 작업 제목과 한 줄 설명이 들어간다. `privacyMode`가 기본으로 켜져 있어서 대화
+내용 대신 무슨 도구를 썼는지로 말한다. 실제 내용을 보려면 `config.json`에서 끄면 된다.
+`showJapanese`를 켜면 한국어 아래 일본어가 한 줄 붙는다.
 
-**말풍선.** 작업 제목과 한 줄짜리 설명이 담긴다. `privacyMode`가 기본으로 켜져 있어서
-대화 내용을 그대로 옮기는 대신 무슨 도구를 썼는지로 말한다. 실제 내용을 보고 싶으면
-`config.json`에서 끄면 된다. `showJapanese`를 켜면 한국어 아래 일본어가 한 줄 붙는다.
-
-**전체화면.** 전체화면 앱이 뜨면 알아서 숨고, 끝나면 돌아온다.
+전체화면 앱이 뜨면 알아서 숨고 끝나면 돌아온다.
 
 ## 동작 구조
 
@@ -130,8 +126,6 @@ PetState = {source, session_id, phase, title, detail, transcript, ts, expires_at
 phase    = idle | working | waiting | done | failed
 ```
 
-이 형식에는 클로드에만 해당하는 게 하나도 없다. JSON 파일을 쓸 수 있는 것이면 무엇이든
-펫을 움직일 수 있고, 아래 CLI가 하는 일이 정확히 그것이다.
 
 ## 설치
 
@@ -145,8 +139,8 @@ Windows 쪽에 Python과 PySide6가, WSL 쪽에 훅이 필요하다. `settings.j
 
 ## 내 스크립트에서 부리기
 
-같이 들어 있는 `yui` CLI가 같은 `PetState`를 쓴다. 오래 도는 작업이면 무엇이든 펫에게
-상태를 보낼 수 있다.
+같이 들어 있는 `yui` CLI가 같은 `PetState`를 쓴다. 오래 도는 작업 앞뒤에 붙이면 펫이
+그 상태를 보여 준다.
 
 ```bash
 yui start "학습"                    # 작업 중으로 바뀐다
@@ -218,21 +212,11 @@ yui run -t "학습" -- python train.py
 | `install.sh` | 한 줄 배포 |
 | `README.{ko,ja,zh-CN}.md` | 같은 README의 한국어·일본어·중국어판 |
 
-## 어디서 왔나
 
-Codex Pet v2, 그리고 Shimeji와 그 후예들이 이어 온 데스크톱 마스코트의 계보에서 출발했다.
-오버레이와 훅으로 상태를 받는 구조, 애니메이션은 내가 만들었다.
+## 라이선스
 
-## 라이선스와 에셋
-
-**소스 코드**는 MIT © 2026 김성진 (`LICENSE` 참고).
-
-**폰트** `PretendardVariable.ttf`는 길형진 님의 작업이고 SIL 오픈 폰트 라이선스를 따른다.
-
-**캐릭터 그림은 이야기가 다르다.** 히라사와 유이, 아키야마 미오, 타이나카 리츠,
-코토부키 츠무기, 나카노 아즈사는 *케이온!*의 캐릭터이고 권리는 권리자에게 있다
-(© Kakifly · 호분샤 · TBS · 교토 애니메이션). 여기 있는 그림은 팬이 만든 비영리물이고,
-어떤 라이선스로도 제공하지 않으며, 가져다 쓰면 안 된다. 저해상 미리보기 애니메이션만
-공개하고 스프라이트시트 자체는 배포하지 않으니, 직접 캐릭터를 그리는 쪽으로 가면 된다.
-`SPRITE_SPEC.md`가 그러라고 있는 문서다. 이 프로젝트는 권리자와 아무 관계가 없고
-승인을 받은 적도 없다.
+- 코드 — MIT © 2026 김성진 (`LICENSE`)
+- 폰트 — `PretendardVariable.ttf`, 길형진, SIL 오픈 폰트 라이선스
+- 캐릭터 그림 — *케이온!* 캐릭터이고 권리는 권리자에게 있다(© Kakifly · 호분샤 · TBS ·
+  교토 애니메이션). 팬이 만든 비영리물이라 어떤 라이선스로도 제공하지 않는다. 저해상
+  미리보기만 공개하고 스프라이트시트는 배포하지 않는다.
