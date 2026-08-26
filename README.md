@@ -2,16 +2,16 @@
 
 # Yui Codex Pet
 
-A desktop pet that mirrors what your **Claude Code** agent is doing.
+A desktop pet that mirrors what your **Claude Code** and **Codex** agents are doing.
 
 **English** · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md)
 
 </div>
 
-A small character lives on your desktop and shows what your **Claude Code** agent is
-doing. When the agent starts working, she starts working. When it stops and waits for
-your answer, she turns and waits too. When something fails, you see it from across the
-room without switching windows.
+A small character lives on your desktop and shows what your coding agent is doing —
+**Claude Code** and **Codex** both. When the agent starts working, she starts working.
+When it stops and waits for your answer, she turns and waits too. When something fails,
+you see it from across the room without switching windows.
 
 The window is transparent and always on top, so it sits over whatever you are doing
 without covering it. Built with **PySide6** (Qt) on Windows; the hooks that feed it run
@@ -32,8 +32,9 @@ in WSL.
 
 ## The status it mirrors
 
-Every Claude Code session writes its phase to a small file through a hook. The overlay
-polls those files and plays the matching animation.
+Claude Code writes its phase to a small file through a hook; Codex needs no setup at all,
+because the overlay reads the logs Codex already keeps. Either way the overlay polls and
+plays the matching animation.
 
 | Your agent | The pet | |
 |---|---|:---:|
@@ -87,14 +88,25 @@ Besides mirroring the agent, the pet has a life of its own and a few things it c
 for you.
 
 **On its own.** It wanders across the screen when nothing is happening, blinks at
-irregular intervals, and follows your cursor with sixteen look directions. Grab it and
-it runs in the direction you drag; let go while moving and it flies off on a real arc,
-bounces at the edge of the screen, and settles.
+irregular intervals, climbs onto the top edge of your windows and walks along them, and
+scales the screen edges. Grab it and it runs in the direction you drag; let go while
+moving and it flies off on a real arc, bounces at the edge of the screen, and settles.
 
-**When you ask.** Right-click for the menu: wave, jump, start a Pomodoro (25 on, 5 off),
-switch pets, turn wandering off, make it click-through so it stops catching your mouse,
-or set it to start with Windows. It also lives in the system tray, which is how you get
-click-through back off once it is on.
+**It looks at you, but not constantly.** Sixteen look directions, given for three to five
+seconds when something happens — the cursor arriving, a click, a status change — and never
+while you're typing. Continuous tracking reads as staring, so it doesn't do that.
+
+**When you ask.** Right-click for the menu: wave, jump, climb a wall, start a Pomodoro
+(25 on, 5 off), switch pets, open the music player. Everything else lives in a settings
+window — language, size, opacity, click behaviour, which autonomous behaviours are on,
+dialogue and voice, music folders, agent-status options. It also sits in the system tray,
+which is how you get click-through back off once it's on.
+
+**Music.** It plays audio from your own folders, with a player window: search, shuffle, and
+filtering by song, instrumental or background music. Music ducks while the pet speaks.
+
+**Three languages.** Korean, English and Japanese for the interface *and* the pet's own
+dialogue, switched live with no restart.
 
 **Speech bubbles.** The bubble carries the task title and a line of detail.
 `privacyMode` is on by default, so it describes the tool action rather than quoting your
@@ -132,7 +144,7 @@ drive the pet, which is what the CLI below does.
 
 You need Python and PySide6 on the Windows side; the hooks run in WSL. Existing hooks in
 your `settings.json` are preserved, and `--uninstall` takes it all back out.
-`claude-overlay/README.md` has the details.
+`overlay/README.md` has the details.
 
 ## Drive it from your own scripts
 
@@ -201,9 +213,9 @@ sheet you have the rights to.
 
 | Path | |
 |---|---|
-| `claude-overlay/yui_pet.py` | the PySide6 transparent overlay |
-| `claude-overlay/config.json`, `lines.json` | display settings and editable dialogue |
-| `hooks/` | the Claude Code hooks that record each session's `PetState` |
+| `overlay/yui_pet.py` | the PySide6 transparent overlay |
+| `overlay/config.json`, `lines.json` | display settings and editable dialogue |
+| `hooks/` | status writers shared by Claude Code and Codex, recording each session's `PetState` |
 | `tools/` | hook registration helper, the `yui` CLI, a sprite upscaler |
 | `pets/*/pet.json` | package manifests for the five characters |
 | `preview/` | state animations, look directions, cast roster |

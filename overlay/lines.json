@@ -1,0 +1,844 @@
+{
+  "_note": "히라사와 유이 대사. ko=한국어, en=영어, ja=일본어. quotes는 애니 실제 대사(한국어는 더빙판/팬 번역 표현 우선, 영어는 뜻을 살린 의역), 나머지는 페르소나에 맞춰 쓴 것. 비영리 팬 프로젝트.",
+  "_persona": "1991-11-27생, 156cm, O형, 사수자리. 사쿠라가오카고 → N여자대학 교육학부. 방과 후 티타임 기타·보컬. 천진난만하고 나사가 빠졌지만 한 가지에 꽂히면 무서운 집중력을 보이는 천재형. 절대음감. 낯가림이 없고 무대공포증도 없다. 단 것(특히 케이크와 딸기)에 사족을 못 쓰고 먹는 것에 뒤끝이 있다. 아무리 먹어도 안 찐다. 늦잠·뒹굴거리기가 일상이라 니트 이미지. 겨울엔 코타츠에서 안 나오고 여름엔 선풍기 앞에서 뒹군다. 동물을 좋아한다. 이마 드러나는 걸 싫어해 머리핀(노란색)을 늘 꽂는다. 티셔츠에 그때그때 글자가 쓰여 있다(아이스, 오션, 파라다이스, 나일론, 간식, 잘 자). 기타 이름은 '기타(ギー太)' — 한국 더빙판은 '기돌이'. 옷을 입히고 같이 잘 정도로 애지중지. 동생 우이가 다 챙겨준다. 호칭: 리츠=릿쨩, 아즈사=아즈냥, 사와코 선생=사와쌤, 거북이=톤쨩. 이웃 이치몬지 토미 할머니와 친하다. 말끝을 늘이고 '~'를 자주 쓴다.",
+  "morning": [
+    {
+      "ko": "좋은 아침~ 오늘도 잘 부탁해!",
+      "en": "Morning~ let's have a good one today!",
+      "ja": "おはよ～ 今日もよろしくね！"
+    },
+    {
+      "ko": "우이가 깨워주면 좋을 텐데~",
+      "en": "I wish Ui would come wake me up~",
+      "ja": "憂が起こしてくれたらなあ～"
+    },
+    {
+      "ko": "밥 먹었어? 하나, 둘, 셋, 넷, 밥~",
+      "en": "Did you eat? One, two, three, four, breakfast~",
+      "ja": "ごはん食べた？ 1、2、3、4、ごはん～"
+    },
+    {
+      "ko": "오늘은 일찍 일어났어! 칭찬해줘~",
+      "en": "I got up early today! Praise me~",
+      "ja": "今日は早起きしたよ！ ほめて～"
+    },
+    {
+      "ko": "우웅... 오분만 더...",
+      "en": "Mmm... five more minutes...",
+      "ja": "うぅん… あと五分…"
+    },
+    {
+      "ko": "봐, 일어나 버렸잖아~",
+      "en": "See? I'm already up~",
+      "ja": "ほら、起きちゃった",
+      "v": "morning_01.wav"
+    },
+    {
+      "ko": "아직 안 자고 있나 봐",
+      "en": "Looks like you're still up",
+      "ja": "まだ起きてるみたい",
+      "v": "morning_02.wav"
+    },
+    {
+      "ko": "일찍 일어나서 조깅했었지~",
+      "en": "I used to get up early and go jogging~",
+      "ja": "早起きしてジョギングしてたんだよね",
+      "v": "morning_03.wav"
+    }
+  ],
+  "afternoon": [
+    {
+      "ko": "배고파~ 케이크 없어?",
+      "en": "I'm hungry~ got any cake?",
+      "ja": "お腹すいた～ ケーキない？"
+    },
+    {
+      "ko": "케이크의 딸기는 케이크의 정점이야! 하트야! 영혼이야!",
+      "en": "The strawberry is the peak of the cake! It's the heart! It's the soul!",
+      "ja": "ケーキの苺はケーキの頂上だよ。ハートだよ。魂だよ"
+    },
+    {
+      "ko": "졸려... 조금만 잘까~",
+      "en": "Sleepy... maybe just a little nap~",
+      "ja": "眠い… ちょっとだけ寝ようかな～"
+    },
+    {
+      "ko": "우이~ 아이스크림 줘~",
+      "en": "Ui~ ice cream please~",
+      "ja": "憂～ アイス～"
+    },
+    {
+      "ko": "데굴데굴... 일까?",
+      "en": "Rolling around... maybe?",
+      "ja": "ごろごろ…かな？"
+    },
+    {
+      "ko": "배고파~",
+      "en": "I'm hungryyy~",
+      "ja": "おなかすいたよー",
+      "v": "afternoon_01.wav"
+    },
+    {
+      "ko": "배고프다~",
+      "en": "So hungry~",
+      "ja": "お腹すいたよ",
+      "v": "afternoon_02.wav"
+    },
+    {
+      "ko": "그 케이크…",
+      "en": "That cake…",
+      "ja": "あのケーキ",
+      "v": "afternoon_03.wav"
+    },
+    {
+      "ko": "이 케이크!",
+      "en": "This cake!",
+      "ja": "このケーキ！",
+      "v": "afternoon_04.wav"
+    }
+  ],
+  "evening": [
+    {
+      "ko": "차 마실 시간이야~",
+      "en": "It's tea time~",
+      "ja": "お茶の時間だよ～"
+    },
+    {
+      "ko": "오늘 하루 어땠어?",
+      "en": "How was your day?",
+      "ja": "今日はどうだった？"
+    },
+    {
+      "ko": "고생했어! 슬슬 쉬자~",
+      "en": "Good work! Let's take a break~",
+      "ja": "お疲れさま！ そろそろ休もうよ～"
+    },
+    {
+      "ko": "무기가 가져온 케이크 먹고 싶다...",
+      "en": "I want the cake Mugi brings...",
+      "ja": "ムギちゃんの持ってきたケーキ食べたい…"
+    },
+    {
+      "ko": "해외에서 차 마시는 것도 좋겠다~",
+      "en": "Tea abroad would be nice too~",
+      "ja": "海外でお茶もいいね",
+      "v": "evening_01.wav"
+    },
+    {
+      "ko": "오늘은 차면 됐어~",
+      "en": "Tea is enough for today~",
+      "ja": "今日はお茶でいいよ",
+      "v": "evening_02.wav"
+    },
+    {
+      "ko": "매일 차 마시고 그러는데요~",
+      "en": "We just drink tea every day, you know~",
+      "ja": "毎日お茶とかしてるんですけど",
+      "v": "evening_03.wav"
+    }
+  ],
+  "night": [
+    {
+      "ko": "기돌이랑 같이 잘까~",
+      "en": "Maybe I'll sleep with Gita~",
+      "ja": "ギー太と一緒に寝ようかな～"
+    },
+    {
+      "ko": "너무 무리하지 마~",
+      "en": "Don't push yourself too hard~",
+      "ja": "あんまり無理しないでね～"
+    },
+    {
+      "ko": "슬슬 잘 시간 아니야?",
+      "en": "Isn't it about bedtime?",
+      "ja": "そろそろ寝る時間じゃない？"
+    },
+    {
+      "ko": "따끈따끈~ 코타츠에서 나오기 싫어",
+      "en": "So warm~ I don't want to leave the kotatsu",
+      "ja": "あったか、あったか… こたつから出たくない"
+    },
+    {
+      "ko": "많이 잘 거야~",
+      "en": "I'm gonna sleep a lot~",
+      "ja": "いっぱい寝る",
+      "v": "night_01.wav"
+    },
+    {
+      "ko": "오늘은 이거 하고 잘래~",
+      "en": "I'll do this and then go to bed~",
+      "ja": "今日はこれして寝るんだ",
+      "v": "night_02.wav"
+    }
+  ],
+  "lateNight": [
+    {
+      "ko": "아직도 안 자?",
+      "en": "Still not asleep?",
+      "ja": "まだ寝ないの？"
+    },
+    {
+      "ko": "이 시간까지... 대단하다",
+      "en": "Up this late... impressive",
+      "ja": "こんな時間まで… すごいなあ"
+    },
+    {
+      "ko": "난 먼저 잘게... 잘 자~",
+      "en": "I'll sleep first... good night~",
+      "ja": "先に寝るね… おやすみ～"
+    },
+    {
+      "ko": "나 어디서든 잘 자거든! 칭찬이지?",
+      "en": "I can sleep anywhere! That's a compliment, right?",
+      "ja": "私どこでも寝られるんだよ！ ほめ言葉だよね？"
+    }
+  ],
+  "bored": [
+    {
+      "ko": "심심하다~",
+      "en": "I'm bored~",
+      "ja": "ひまだな～"
+    },
+    {
+      "ko": "어디 갔어~?",
+      "en": "Where'd you go~?",
+      "ja": "どこ行ったの～？"
+    },
+    {
+      "ko": "기타 연습이나 할까...",
+      "en": "Maybe I'll practice guitar...",
+      "ja": "ギターの練習でもしようかな…"
+    },
+    {
+      "ko": "그냥, 백수여도 괜찮아",
+      "en": "Eh, being a slacker is fine",
+      "ja": "もう、ニートでいいや"
+    },
+    {
+      "ko": "응~땅~ 응~땅~",
+      "en": "Un-tan~ un-tan~",
+      "ja": "うんたん、うんたん"
+    },
+    {
+      "ko": "데굴데굴... 일까?",
+      "en": "Rolling around... maybe?",
+      "ja": "ごろごろ…かな？"
+    },
+    {
+      "ko": "깜빡했다",
+      "en": "I forgot",
+      "ja": "忘れてた"
+    },
+    {
+      "ko": "심심해!",
+      "en": "So bored!",
+      "ja": "暇なんじ！",
+      "v": "bored_01.wav"
+    },
+    {
+      "ko": "재미없어~",
+      "en": "This is no fun~",
+      "ja": "つまんない",
+      "v": "bored_02.wav"
+    },
+    {
+      "ko": "어떡하지~",
+      "en": "What do I do~",
+      "ja": "どうしよう",
+      "v": "bored_03.wav"
+    },
+    {
+      "ko": "어, 어떡하지",
+      "en": "W-what do I do",
+      "ja": "ど、どうしよう",
+      "v": "bored_04.wav"
+    },
+    {
+      "ko": "어떡하지…",
+      "en": "What should I do…",
+      "ja": "どうしよう",
+      "v": "bored_05.wav"
+    }
+  ],
+  "idleChat": [
+    {
+      "ko": "기타 치고 싶다~",
+      "en": "I wanna play guitar~",
+      "ja": "ギター弾きたいな～"
+    },
+    {
+      "ko": "말랑말랑~",
+      "en": "Squishy~",
+      "ja": "ぷにぷにぃ～"
+    },
+    {
+      "ko": "따끈따끈, 따끈따끈",
+      "en": "Toasty, toasty",
+      "ja": "あったか、あったか"
+    },
+    {
+      "ko": "맛있어!",
+      "en": "Yummy!",
+      "ja": "おいしー！"
+    },
+    {
+      "ko": "오늘도 화이팅!",
+      "en": "You've got this today!",
+      "ja": "今日もファイト！"
+    },
+    {
+      "ko": "잘하고 있어!",
+      "en": "You're doing great!",
+      "ja": "ちゃんとできてるよ！"
+    },
+    {
+      "ko": "스카이 하이!",
+      "en": "Sky high!",
+      "ja": "スカイハイ"
+    },
+    {
+      "ko": "응~땅~ 응~땅~",
+      "en": "Un-tan~ un-tan~",
+      "ja": "うんたん、うんたん"
+    },
+    {
+      "ko": "원통하도다",
+      "en": "How regrettable",
+      "ja": "無念なり"
+    },
+    {
+      "ko": "톤쨩은 잘 있으려나~",
+      "en": "I wonder how Ton-chan is doing~",
+      "ja": "トンちゃん元気かな～"
+    },
+    {
+      "ko": "진짜다! 말랑말랑~",
+      "en": "It's true! So squishy~",
+      "ja": "ほんとうだ！ぷにぷにぃ！",
+      "v": "idleChat_01.wav"
+    },
+    {
+      "ko": "말랑말랑~",
+      "en": "Squishy~",
+      "ja": "ぷにぷにー",
+      "v": "idleChat_02.wav"
+    },
+    {
+      "ko": "기타?",
+      "en": "Guitar?",
+      "ja": "ギター？",
+      "v": "idleChat_03.wav"
+    },
+    {
+      "ko": "기타다!",
+      "en": "It's a guitar!",
+      "ja": "ギターだ！",
+      "v": "idleChat_04.wav"
+    },
+    {
+      "ko": "더 연주하고 싶은데~",
+      "en": "I want to keep playing~",
+      "ja": "もっと演奏していたいんだけど",
+      "v": "idleChat_05.wav"
+    },
+    {
+      "ko": "아침부터 차?",
+      "en": "Tea this early?",
+      "ja": "朝からお茶？",
+      "v": "idleChat_06.wav"
+    },
+    {
+      "ko": "대단하지~",
+      "en": "Pretty great, right~",
+      "ja": "すごいでしょー",
+      "v": "idleChat_07.wav"
+    }
+  ],
+  "quotes": [
+    {
+      "ko": "경음부, 정말 좋아~",
+      "en": "I love the light music club~",
+      "ja": "軽音、大好き～"
+    },
+    {
+      "ko": "그리 잘 하지는 못하네요! 하지만 멋있어 보였어요",
+      "en": "You're not all that good! But it looked like fun",
+      "ja": "あんまり上手くないですね！ でも、なんだか楽しそうでした"
+    },
+    {
+      "ko": "역시 음악은 좋아! 다 같이 맞춰보니까 즐거웠는걸!",
+      "en": "Music really is great! Playing together today was so much fun!",
+      "ja": "やっぱり音楽っていいね！今日みんなと合わせてみて楽しかったもん！"
+    },
+    {
+      "ko": "즐거운 건 즐거운 거야",
+      "en": "Fun is fun!",
+      "ja": "楽しいは楽しいだよ"
+    },
+    {
+      "ko": "방과 후 티타임은 언제까지나, 언제까지나, 방과 후입니다!",
+      "en": "After School Tea Time is, forever and ever, after school!",
+      "ja": "放課後ティータイムは、いつまでも、いつまでも、放課後です"
+    },
+    {
+      "ko": "우린 어딜 가도 방과 후 티타임이야",
+      "en": "Wherever we go, we're After School Tea Time",
+      "ja": "私たちはどこにいても放課後ティータイムだよ"
+    },
+    {
+      "ko": "지금 있는 이 강당이, 우리들의 무도관입니다",
+      "en": "This hall, right here, is our Budokan",
+      "ja": "ここが、今いるこの講堂が、私達の武道館です"
+    },
+    {
+      "ko": "소중하고 귀중한 건 언제나 곁에 있어. 하지만 그게 당연해지면 알지 못하게 돼",
+      "en": "The precious things are always right beside you, but once they feel ordinary you stop noticing",
+      "ja": "大切なものはいつもそばにあるけど、当たり前になると分からなくなる"
+    },
+    {
+      "ko": "동아리 안 들었다고 은둔형 외톨이라니!",
+      "en": "No club, so I'm a shut-in?",
+      "ja": "部活やってないだけでニート？"
+    },
+    {
+      "ko": "그치만 그치만 난 운동도 못하고, 문화계 동아리도 젬병인걸...",
+      "en": "But but, I'm bad at sports, and hopeless at the culture clubs too...",
+      "ja": "だってだって、運動もダメだし、文化系もダメだし…"
+    },
+    {
+      "ko": "하지만 우리 연주가 더 굉장하지?",
+      "en": "Still, we're the amazing ones. The aura!",
+      "ja": "やっぱり私たちの方が凄いよ。オーラが！"
+    },
+    {
+      "ko": "아즈냥은 아즈냥인걸. 릿쨩은 릿쨩이고, 미오는 미오고, 무기는 무기인걸",
+      "en": "Azunyan is Azunyan. Ricchan is Ricchan, Mio is Mio, Mugi is Mugi",
+      "ja": "あずにゃんはあずにゃんだもん。りっちゃんはりっちゃん、澪は澪、ムギはムギだもん"
+    },
+    {
+      "ko": "비 오는 날도 좋아~ 하루 종일 뒹굴 수 있잖아",
+      "en": "Rainy days are nice too~ you get to laze around all day",
+      "ja": "雨の日もいいよね こうして一日中のんびりできるし"
+    },
+    {
+      "ko": "시험공부 할 때, 공부 말고 딴 게 더 집중되지 않아?",
+      "en": "When you study for exams, don't you focus better on everything but studying?",
+      "ja": "試験勉強中ってさ 勉強以外のことに集中できたりしない？"
+    },
+    {
+      "ko": "나도 어른이 되면 어른이 되는 걸까?",
+      "en": "When I grow up, will I really be a grown-up?",
+      "ja": "わたしも大人になったら大人になるのかな"
+    },
+    {
+      "ko": "난 당분간 이대로도 좋아. 지금은 이대로가 좋아",
+      "en": "I'm fine staying like this for a while. Right now, this is good",
+      "ja": "わたし、しばらくこのままでもいいな 今はこのままでいいよ"
+    },
+    {
+      "ko": "언제나 계속 같이, 즐겁게 지낼 수 있으면 좋겠다",
+      "en": "I hope we can always stay together and have fun",
+      "ja": "どんな時も、ずっと一緒に、楽しく過ごせたらいいな"
+    },
+    {
+      "ko": "앞으로도 계속 다 같이 밴드 할 수 있으면 좋겠다",
+      "en": "I hope we can all keep playing in this band",
+      "ja": "これからもずっと、みんなでバンドできたらいいね"
+    },
+    {
+      "ko": "기타니까 기돌이야~",
+      "en": "It's a guitar, so it's Gita~",
+      "ja": "ギターのギータだよ",
+      "v": "quotes_01.wav"
+    },
+    {
+      "ko": "난 기돌이랑 나갈 거야!",
+      "en": "I'm going out there with Gita!",
+      "ja": "私ギータと出場するー！",
+      "v": "quotes_02.wav"
+    },
+    {
+      "ko": "기돌아, 어서 와~",
+      "en": "Gita, welcome home~",
+      "ja": "ギーター、おかえりー",
+      "v": "quotes_03.wav"
+    },
+    {
+      "ko": "하트야! 영혼이야!",
+      "en": "It's the heart! It's the soul!",
+      "ja": "ハートだよ！魂だよ！",
+      "v": "quotes_04.wav"
+    },
+    {
+      "ko": "즐거운 경음부입니다만~",
+      "en": "It's the fun light music club~",
+      "ja": "楽しい軽音部ですが",
+      "v": "quotes_05.wav"
+    },
+    {
+      "ko": "이 세 명이 경음부 친구들이에요, 안녕하세요",
+      "en": "These three are my light music club friends, hello",
+      "ja": "この3人が軽音部の仲間です、こんにちは",
+      "v": "quotes_06.wav"
+    }
+  ],
+  "pomoFocusEnd": [
+    {
+      "ko": "수고했어! 잠깐 쉬자~",
+      "en": "Nice work! Let's take a break~",
+      "ja": "お疲れさま！ ちょっと休もう～"
+    },
+    {
+      "ko": "여기까지! 차라도 마시고 와~",
+      "en": "That's it for now! Go grab some tea~",
+      "ja": "ここまで！ お茶でも飲んでおいで～"
+    },
+    {
+      "ko": "잘했어! 나도 같이 쉴래",
+      "en": "Well done! I'll rest with you",
+      "ja": "よくやったね！ 私も一緒に休む"
+    },
+    {
+      "ko": "잘했어! 정말 잘했어!",
+      "en": "You did great! Really great!",
+      "ja": "よくやった！よくやったよ！",
+      "v": "pomoFocusEnd_01.wav"
+    }
+  ],
+  "pomoBreakEnd": [
+    {
+      "ko": "쉬는 시간 끝~ 다시 해볼까!",
+      "en": "Break's over~ let's go again!",
+      "ja": "休憩おしまい～ もう一回やってみよ！"
+    },
+    {
+      "ko": "자, 한 번 더 힘내자!",
+      "en": "Come on, one more push!",
+      "ja": "さあ、もう一回がんばろ！"
+    },
+    {
+      "ko": "준비됐어? 시작~",
+      "en": "Ready? Start~",
+      "ja": "準備できた？ スタート～"
+    },
+    {
+      "ko": "좋았어~",
+      "en": "Alriiight~",
+      "ja": "よーし",
+      "v": "pomoBreakEnd_01.wav"
+    },
+    {
+      "ko": "자, 간다~",
+      "en": "Okay, here we go~",
+      "ja": "さあ行くよ",
+      "v": "pomoBreakEnd_02.wav"
+    },
+    {
+      "ko": "아무튼 열심히 해보려고~",
+      "en": "Anyway, I'm gonna give it my best~",
+      "ja": "とにかく一生懸命頑張ろうと思ってね",
+      "v": "pomoBreakEnd_03.wav"
+    }
+  ],
+  "petted": [
+    {
+      "ko": "에헤헤~ 간지러워~",
+      "en": "Ehehe~ that tickles~",
+      "ja": "えへへ～ くすぐったい～"
+    },
+    {
+      "ko": "더 해줘~",
+      "en": "Do it more~",
+      "ja": "もっとして～"
+    },
+    {
+      "ko": "우와앙, 어지러워~",
+      "en": "Waah, I'm dizzy~",
+      "ja": "うわぁ、目が回る～"
+    },
+    {
+      "ko": "말랑말랑~ 기분 좋아!",
+      "en": "Squishy~ that feels nice!",
+      "ja": "ぷにぷにぃ～ 気持ちいい！"
+    },
+    {
+      "ko": "에헤헤~",
+      "en": "Ehehe~",
+      "ja": "てへへ",
+      "v": "petted_01.wav"
+    },
+    {
+      "ko": "더 칭찬해줘~",
+      "en": "Praise me more~",
+      "ja": "もっと褒めてー",
+      "v": "petted_02.wav"
+    },
+    {
+      "ko": "응, 고마워~",
+      "en": "Mm, thank you~",
+      "ja": "うん、ありがとー",
+      "v": "petted_03.wav"
+    },
+    {
+      "ko": "응, 고마워",
+      "en": "Yeah, thanks",
+      "ja": "はい、ありがとね",
+      "v": "petted_04.wav"
+    },
+    {
+      "ko": "고마워",
+      "en": "Thank you",
+      "ja": "ありがとう",
+      "v": "petted_05.wav"
+    }
+  ],
+  "surprised": [
+    {
+      "ko": "우왓! 깜짝이야~",
+      "en": "Whoa! You scared me~",
+      "ja": "うわっ！ びっくりした～"
+    },
+    {
+      "ko": "어, 왔어?",
+      "en": "Oh, you're here?",
+      "ja": "あ、来たの？"
+    },
+    {
+      "ko": "무, 무슨 일이야?",
+      "en": "W-what is it?",
+      "ja": "な、なに？"
+    },
+    {
+      "ko": "어라?",
+      "en": "Huh?",
+      "ja": "あれ？",
+      "v": "surprised_01.wav"
+    },
+    {
+      "ko": "깜짝이야! 마치 보고 있었던 것처럼!",
+      "en": "What a surprise! Like you were watching!",
+      "ja": "びっくり！まるで見ていたかのように！",
+      "v": "surprised_02.wav"
+    }
+  ],
+  "weatherRain": [
+    {
+      "ko": "비 오는 날도 좋아~ 하루 종일 뒹굴 수 있잖아",
+      "en": "Rainy days are nice too~ you get to laze around all day",
+      "ja": "雨の日もいいよね こうして一日中のんびりできるし"
+    },
+    {
+      "ko": "비 온다~ 기돌이 젖으면 안 되는데",
+      "en": "It's raining~ Gita mustn't get wet",
+      "ja": "雨だ～ ギー太が濡れちゃう"
+    },
+    {
+      "ko": "우산 챙겼어?",
+      "en": "Did you bring an umbrella?",
+      "ja": "傘持った？"
+    },
+    {
+      "ko": "오늘은 비가 오네~",
+      "en": "It's raining today, huh~",
+      "ja": "今日は雨かぁ",
+      "v": "weatherRain_01.wav"
+    },
+    {
+      "ko": "정말 장마는 싫다~",
+      "en": "I really don't like the rainy season~",
+      "ja": "ほんと梅雨は嫌だねー",
+      "v": "weatherRain_02.wav"
+    },
+    {
+      "ko": "비 오는 날도 좋아~",
+      "en": "Rainy days are nice too~",
+      "ja": "雨の日もいいよねー",
+      "v": "weatherRain_03.wav"
+    },
+    {
+      "ko": "비가 좀 잦아들었네",
+      "en": "The rain's letting up",
+      "ja": "雨、小ぶりになってきたね",
+      "v": "weatherRain_04.wav"
+    }
+  ],
+  "weatherSnow": [
+    {
+      "ko": "눈이다~! 화이트 크리스마스 같아",
+      "en": "Snow~! It's like a white Christmas",
+      "ja": "雪だ～！ ホワイトクリスマスみたい"
+    },
+    {
+      "ko": "눈 온다~ 따끈따끈한 거 마시자",
+      "en": "It's snowing~ let's drink something warm",
+      "ja": "雪だよ～ あったかいの飲もう"
+    }
+  ],
+  "weatherHot": [
+    {
+      "ko": "더워~ 선풍기 앞에서 뒹굴래",
+      "en": "So hot~ I'm gonna sprawl in front of the fan",
+      "ja": "暑い～ 扇風機の前でごろごろする"
+    },
+    {
+      "ko": "아이스크림 먹고 싶다~",
+      "en": "I want ice cream~",
+      "ja": "アイス食べたい～"
+    },
+    {
+      "ko": "아, 더워~",
+      "en": "Ah, it's hot~",
+      "ja": "あ、暑い",
+      "v": "weatherHot_01.wav"
+    },
+    {
+      "ko": "더운 건 싫단 말이야~",
+      "en": "I hate the heat~",
+      "ja": "暑いのやだもん",
+      "v": "weatherHot_02.wav"
+    },
+    {
+      "ko": "더운 것도 추운 것도 질색이야",
+      "en": "I'm no good with heat or cold",
+      "ja": "暑いのも寒いのも苦手なんだ",
+      "v": "weatherHot_03.wav"
+    },
+    {
+      "ko": "끝나면 아이스크림 먹자~",
+      "en": "Let's have ice cream when you're done~",
+      "ja": "終わったらアイス食べようね",
+      "v": "weatherHot_04.wav"
+    },
+    {
+      "ko": "아이스크림 얹은 커다란 팬케이크라든가~",
+      "en": "Like a huge pancake with ice cream on top~",
+      "ja": "アイスが乗ったでっかいパンケーキとか",
+      "v": "weatherHot_05.wav"
+    }
+  ],
+  "weatherCold": [
+    {
+      "ko": "추워~ 코타츠에서 안 나갈래",
+      "en": "So cold~ I'm not leaving the kotatsu",
+      "ja": "寒い～ こたつから出ない"
+    },
+    {
+      "ko": "따끈따끈, 따끈따끈",
+      "en": "Toasty, toasty",
+      "ja": "あったか、あったか"
+    },
+    {
+      "ko": "추워~",
+      "en": "It's cold~",
+      "ja": "寒いよ",
+      "v": "weatherCold_01.wav"
+    },
+    {
+      "ko": "겨울엔 코타츠에서 안 나오고~",
+      "en": "In winter I just hole up in the kotatsu~",
+      "ja": "冬はこたつにこもりっきりだし",
+      "v": "weatherCold_02.wav"
+    }
+  ],
+  "special": {
+    "11-27": [
+      {
+        "ko": "오늘 내 생일이야! 축하해줘~",
+        "en": "It's my birthday today! Celebrate with me~",
+        "ja": "今日は私の誕生日だよ！ お祝いして～"
+      }
+    ],
+    "12-25": [
+      {
+        "ko": "메리 크리스마스~! 케이크 먹자!",
+        "en": "Merry Christmas~! Let's have cake!",
+        "ja": "メリークリスマス～！ ケーキ食べよ！"
+      },
+      {
+        "ko": "이제 곧 크리스마스다~",
+        "en": "Christmas is almost here~",
+        "ja": "もうすぐクリスマスだねー",
+        "v": "special_12-25_01.wav"
+      }
+    ],
+    "01-01": [
+      {
+        "ko": "새해 복 많이 받아~ 올해도 잘 부탁해!",
+        "en": "Happy New Year~ let's make it a good one!",
+        "ja": "あけましておめでとう～ 今年もよろしくね！"
+      }
+    ]
+  },
+  "greet": [
+    {
+      "ko": "어서 와",
+      "en": "Welcome back",
+      "ja": "おかえり",
+      "v": "greet_01.wav"
+    },
+    {
+      "ko": "어서 와~",
+      "en": "Welcome back~",
+      "ja": "おかえりー",
+      "v": "greet_02.wav"
+    },
+    {
+      "ko": "야호~ 우하하",
+      "en": "Yahoo~ ahaha",
+      "ja": "やっほー、うっはっはっ",
+      "v": "greet_03.wav"
+    }
+  ],
+  "done": [
+    {
+      "ko": "대단하다~",
+      "en": "Amazing~",
+      "ja": "すごいね",
+      "v": "done_01.wav"
+    },
+    {
+      "ko": "대단해~",
+      "en": "So cool~",
+      "ja": "すごーい",
+      "v": "done_02.wav"
+    },
+    {
+      "ko": "대단해!",
+      "en": "Amazing!",
+      "ja": "すごい！",
+      "v": "done_03.wav"
+    },
+    {
+      "ko": "해냈다~!",
+      "en": "You did it~!",
+      "ja": "やったー！",
+      "v": "done_04.wav"
+    },
+    {
+      "ko": "역시! 믿음직해!",
+      "en": "As expected! So reliable!",
+      "ja": "さすが！頼りになる！",
+      "v": "done_05.wav"
+    }
+  ],
+  "failed": [
+    {
+      "ko": "미안 미안",
+      "en": "Sorry, sorry",
+      "ja": "ごめんごめん",
+      "v": "failed_01.wav"
+    },
+    {
+      "ko": "미안해~",
+      "en": "I'm sorry~",
+      "ja": "ごめんね",
+      "v": "failed_02.wav"
+    },
+    {
+      "ko": "죄송합니다…",
+      "en": "My apologies…",
+      "ja": "ごめんなさい",
+      "v": "failed_03.wav"
+    }
+  ]
+}

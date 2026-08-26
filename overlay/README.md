@@ -1,9 +1,12 @@
 # The overlay (Yui desktop pet)
 
 A transparent overlay that draws a Codex Pet v2 sprite on the Windows desktop and
-**shows what your Claude Code agent is doing**. Rendering is PySide6; the hooks that
-feed it run in WSL and write status to files, which the overlay polls and turns into
-animation and speech bubbles.
+**shows what your coding agent is doing** — both **Claude Code** and **Codex**. Rendering
+is PySide6; status arrives as files the overlay polls and turns into animation and speech
+bubbles.
+
+The rest of the time it behaves like an ordinary desktop mascot: it wanders, climbs onto
+your windows, talks, and plays your music.
 
 ## Files
 
@@ -41,6 +44,29 @@ Phase to animation: working → heads-down work / waiting → waiting, orange / 
 review, green check, wave, back to idle / failed → failure, red dot / idle → breathing
 plus cursor-following gaze.
 
+## Gaze
+
+The pet does not track your cursor continuously. It faces front and breathes, and only
+gives you its eyes for three to five seconds when something actually happens. Sustained
+tracking stops reading as attention and starts reading as staring — comfortable mutual gaze
+between people tops out around three to five seconds, with the eyes breaking away for a
+second or two inside even that, and this copies it.
+
+| What earns a look | Condition |
+| --- | --- |
+| The cursor comes close | Within 1.6× the window size. Caught **on entry only** — hovering there does not extend it. Six-second cooldown |
+| You click the pet | You called it, so it looks |
+| Agent status changes | The moment it crosses into done, failed, or waiting-for-input |
+| A glance when your hands stop | Only after 25 s of no input, 30% chance during a rest |
+
+**It never looks at you first while you're typing.** Move the mouse to it or click it and
+it responds then. Even while looking it breaks away for 0.8–1.6 s every 1.2–2.5 s, so any
+single stretch of eye contact stays under about three seconds.
+
+Turn it off entirely at **설정 → 행동 → 마우스 쳐다보기** (*Settings → Behaviour → Follow the
+mouse*), stored as `gazeEnabled`. Off means it faces front wherever the cursor is; walking,
+being startled and everything else carry on.
+
 ## Setup
 
 1. **Lay out the app and assets** in a deployment folder, e.g. `C:\Users\<user>\.yui-pet\`:
@@ -62,6 +88,40 @@ plus cursor-following gaze.
 4. **Run it** — double-click `유이펫-시작.bat`, or from WSL:
    `setsid pythonw.exe "C:\…\yui_pet.py" </dev/null >/dev/null 2>&1 &`.
    A plain `&` dies with the shell, so it has to be detached.
+
+## Settings window
+
+Open it from the tray or right-click menu — **설정…** (*Settings…*). As the options piled up
+the menu stopped being a place you could find anything, so they live in one panel now.
+Changes save and apply where you make them; there is no OK button. Menu and panel both go
+through the same `set_option`, so the two never disagree about what is on.
+
+| Group | Contains |
+| --- | --- |
+| General | Language, start with Windows, which pet, size, opacity, click action, click-through |
+| Behaviour | Wander, gaze, window climbing, wall climbing, throwing, Pomodoro focus/break minutes |
+| Talk & voice | Dialogue on/off, show the Japanese line, voice and its volume, weather lines and coordinates |
+| Music | Add and remove folders, rescan, volume, shuffle, what to play, open the player |
+| Agent status | Privacy mode, read Codex logs, bubble width, bubble lines, completion display time |
+
+The menu keeps only what you **do right now** — wave, jump, climb a wall, task list — plus
+size and opacity, which you set by eye, and the wander and dialogue toggles you flip often.
+
+Start-with-Windows touches no registry key; it adds and removes a single batch file in the
+startup folder (`%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\유이펫.bat`).
+
+## Languages
+
+Pick 한국어 · English · 日本語 at **설정 → 일반 → 언어** (*Settings → General → Language*),
+stored as `lang`. The change lands immediately without a restart: menus, the settings window,
+the music player, the task list and the agent-status wording all switch, and so does the
+pet's own dialogue.
+
+Interface strings are translated through a table (`TR` in `yui_pet.py`) keyed by the Korean
+original. Anything missing from the table falls through as the Korean, so adding a string and
+forgetting its translation leaves the UI readable rather than blank. Status wording coming
+from hooks and Codex logs passes through the same table; things that aren't in it — project
+names, for instance — are left alone.
 
 ## Wandering
 
@@ -107,6 +167,33 @@ This is a non-commercial fan project, and quotation is limited to short lines.
 
 Time-of-day bands: 05–11 morning, 11–17 afternoon, 17–21 evening, 21–02 night,
 02–05 late night. The pet stays quiet while an agent-status bubble is up.
+
+## Voice
+
+Dialogue lines can carry a `v` key naming a local `.wav`, and when one exists the pet plays
+it as the bubble appears. **No audio ships with this repository** — the files are yours to
+supply, and this project does not extract or clone anyone's recorded voice (see
+`ROADMAP.md` §2-D for the position and for the synthesis design). Enable it and set the
+volume at **설정 → 대사·목소리** (*Settings → Talk & voice*). With no file for a line, the
+bubble appears silently.
+
+## Music
+
+Plays audio from local folders through `MusicPlayer` (`QMediaPlayer`). Open the player from
+the tray or right-click menu — **음악 → 플레이어 열기…** (*Music → Open player…*) — for
+previous/play/next/stop, seeking, volume, shuffle, search, and filtering by song, instrumental
+or background music. Add and remove folders at **설정 → 음악** (*Settings → Music*). While a
+voice line plays, music volume ducks to 30%. With `musicDirs` empty it scans
+`~/.yui-pet/music` and `~/Music`.
+
+## Walking on windows, climbing walls
+
+In free mode — once your hands have stopped — the pet treats the top edge of any visible
+window as a ledge, climbs up and walks along it, or heads for the nearest screen edge and
+climbs that. Move the window and it rides along; close the window and it falls. Each
+behaviour can be turned off separately in the right-click menu, and **벽 타 보기** /
+**창 위로 올라가 보기** (*Try climbing a wall* / *Try getting on a window*) trigger them on
+demand. There are no dedicated sitting frames yet, so on top of a window it stands and walks.
 
 ## Pomodoro
 
@@ -232,9 +319,34 @@ copy and cached, so it stays under 4 ms regardless of size.
 | `pomodoroFocusMin` · `pomodoroBreakMin` | Pomodoro focus and break minutes. |
 | `weatherEnabled` · `weatherLat` · `weatherLon` | Weather lines. Off by default. Coordinates default to the old Toyosato Elementary School; set them to your own location. |
 | `privacyMode` | `true` (default) shows the **project name** as the title and only **filename plus the kind of work** as detail. Prompt text, responses, raw notification text and English tool descriptions never reach the screen. `false` uses the session's first prompt as the title and fills the progress line from the conversation. |
+| `lang` | Interface and dialogue language — `ko` (default), `en`, `ja`. |
+| `chatEnabled` | `false` silences the pet's own dialogue. Agent status still shows. |
+| `gazeEnabled` | `false` stops it looking at the cursor at all. |
+| `voiceEnabled` · `voiceVolume` | Play the `.wav` named by a line's `v` key, and how loudly. No audio ships here. |
+| `musicDirs` · `musicVolume` · `musicShuffle` · `musicFilter` | Folders to scan (empty scans `~/.yui-pet/music` and `~/Music`), volume, shuffle, and which of song / instrumental / background music to play. |
+| `climbWindows` · `climbWalls` | Whether it climbs onto window ledges and up screen edges on its own. |
+| `projectAliases` | Maps an auto-generated working-directory name to something readable in the bubble. Empty by default. |
+| `codexWatch` · `codexHomes` | Read Codex's own logs for status (on by default). Empty `codexHomes` watches this account's `~/.codex` alone. |
 
-## Other agents
+## Agents
 
-Anything that writes the same `PetState` into `sessions/<source>/…` is aggregated
-automatically — Codex, an editor extension, a CI job, your own script. The source name is
-what drives the badge.
+Two are supported out of the box, reached differently:
+
+| Agent | How status arrives | Setup |
+|---|---|---|
+| **Claude Code** | Hooks write `sessions/claude/<session_id>.json` on each event | `install.sh` registers them in `~/.claude/settings.json` |
+| **Codex** | The overlay **reads Codex's own rollout logs** (`sessions/<date>/rollout-*.jsonl`) | None — works for both Codex Desktop and the WSL CLI |
+
+Reading the logs is the primary path for Codex, not a fallback. Codex will not run a
+registered hook until it has been **approved once**, and that approval prompt exists only in
+the TUI, never in the desktop app — so a hook-only integration would show nothing on the
+desktop. `install.sh` registers Codex hooks anyway (`tools/_hookreg_codex.py`); approve them
+in the TUI and the status gets finer-grained, and sessions seen through both paths are
+de-duplicated by session id.
+
+Codex thread titles use the nickname Codex gives each thread; a main thread without one falls
+back to its working-directory name, cleaned up through `projectAliases`. Clicking a Codex row
+in the task list raises the Codex window rather than an editor. Turn it off with `codexWatch`.
+
+Anything else that writes the same `PetState` into `sessions/<source>/…` is aggregated the
+same way — an editor extension, a CI job, your own script. The source name drives the badge.

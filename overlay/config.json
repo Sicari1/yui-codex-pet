@@ -4,6 +4,11 @@
   "bubbleMaxLines": 3,
   "completedDisplaySeconds": 3,
   "privacyMode": true,
+  "projectAliases": {
+    "hirasawa-yui-codex-pet": "k-on-codex-pets",
+    "hirasawa-yui-pet": "k-on-codex-pets",
+    "hirasawa-yui-pet-private": "k-on-codex-pets"
+  },
   "wander": true,
   "showJapanese": true,
   "pomodoroFocusMin": 25,
