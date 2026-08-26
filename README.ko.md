@@ -1,8 +1,8 @@
-# Yui Codex Pet — 클로드 코드 데스크톱 펫 (엔진)
+# Yui Codex Pet — Claude Code 데스크톱 펫 (엔진)
 
 [English](README.md) · **한국어** · [日本語](README.ja.md) · [简体中文](README.zh-CN.md)
 
-바탕화면에 작은 캐릭터가 살면서 **클로드 코드** 에이전트가 지금 뭘 하고 있는지 보여준다.
+바탕화면에 작은 캐릭터가 살면서 **Claude Code** 에이전트가 지금 뭘 하고 있는지 보여준다.
 에이전트가 일을 시작하면 같이 일하고, 멈춰서 답을 기다리면 같이 고개를 돌리고 기다린다.
 뭔가 실패하면 창을 옮기지 않아도 멀리서 눈에 들어온다.
 
@@ -24,7 +24,7 @@ Windows에서 **PySide6**(Qt)로 그리고, 상태를 물어다 주는 훅은 WS
 
 ## 무슨 상태를 비추나
 
-클로드 코드 세션은 훅을 통해 제 상태를 작은 파일로 남긴다. 오버레이가 그 파일들을 폴링해
+Claude Code 세션은 훅을 통해 제 상태를 작은 파일로 남긴다. 오버레이가 그 파일들을 폴링해
 맞는 애니메이션을 튼다.
 
 | 에이전트가 | 펫은 | |
@@ -93,7 +93,7 @@ Windows에서 **PySide6**(Qt)로 그리고, 상태를 물어다 주는 훅은 WS
 ## 동작 구조
 
 ```
-클로드 코드 훅 ──▶ sessions/<source>/<session_id>.json   (작은 PetState 파일)
+Claude Code 훅 ──▶ sessions/<source>/<session_id>.json   (작은 PetState 파일)
                                 │   (세션마다 자기 것을 쓴다)
                                 ▼
                      오버레이가 폴링해 우선순위로 집계
@@ -113,7 +113,7 @@ phase    = idle | working | waiting | done | failed
 ## 설치
 
 ```bash
-./install.sh          # 오버레이를 배치하고 클로드 코드 훅을 등록한다
+./install.sh          # 오버레이를 배치하고 Claude Code 훅을 등록한다
 ./install.sh --dry-run
 ```
 
@@ -136,7 +136,7 @@ yui clear                          # idle로 되돌린다
 yui run -t "학습" -- python train.py
 ```
 
-호출하는 쪽마다 `sessions/cli/<id>.json`에 쓴다. CLI 작업 하나와 클로드 코드 세션 셋이
+호출하는 쪽마다 `sessions/cli/<id>.json`에 쓴다. CLI 작업 하나와 Claude Code 세션 셋이
 서로 밟지 않고 공존한다.
 
 ## 펫 바꾸기
@@ -187,7 +187,7 @@ yui run -t "학습" -- python train.py
 |---|---|
 | `claude-overlay/yui_pet.py` | PySide6 투명 오버레이 |
 | `claude-overlay/config.json`, `lines.json` | 표시 설정과 고쳐 쓸 수 있는 대사 |
-| `hooks/` | 세션마다 `PetState`를 남기는 클로드 코드 훅 |
+| `hooks/` | 세션마다 `PetState`를 남기는 Claude Code 훅 |
 | `tools/` | 훅 등록 도구, `yui` CLI, 스프라이트 업스케일러 |
 | `pets/*/pet.json` | 다섯 캐릭터의 패키지 매니페스트 |
 | `preview/` | 상태 애니메이션, 시선 방향, 로스터 시트 |
@@ -197,7 +197,7 @@ yui run -t "학습" -- python train.py
 
 ## 어디서 왔나
 
-Codex Pet v2, 그리고 시메지와 그 후예들이 이어 온 데스크톱 마스코트의 계보에서 출발했다.
+Codex Pet v2, 그리고 Shimeji와 그 후예들이 이어 온 데스크톱 마스코트의 계보에서 출발했다.
 오버레이와 훅 기반 상태 구조, 애니메이션 세트는 그 위에 얹은 내 작업이다.
 
 ## 라이선스와 에셋
