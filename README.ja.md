@@ -1,6 +1,9 @@
 <div align="center">
 
-# Yui Codex Pet
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="preview/logo-dark.png">
+  <img src="preview/logo-light.png" width="360" alt="Yui Codex Pet">
+</picture>
 
 **Claude Code** と **Codex** の動きをそのまま映すデスクトップペット。
 

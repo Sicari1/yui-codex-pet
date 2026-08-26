@@ -1,6 +1,9 @@
 <div align="center">
 
-# Yui Codex Pet
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="preview/logo-dark.png">
+  <img src="preview/logo-light.png" width="360" alt="Yui Codex Pet">
+</picture>
 
 一只实时映射 **Claude Code** 与 **Codex** 状态的桌面宠物。
 

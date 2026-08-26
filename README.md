@@ -1,6 +1,9 @@
 <div align="center">
 
-# Yui Codex Pet
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="preview/logo-dark.png">
+  <img src="preview/logo-light.png" width="360" alt="Yui Codex Pet">
+</picture>
 
 A desktop pet that mirrors what your **Claude Code** and **Codex** agents are doing.
 
