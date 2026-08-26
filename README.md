@@ -45,6 +45,38 @@ animates the matching state:
 - **Wander · drag-and-throw · transparent · always-on-top · system tray** — it strolls around when idle, and you can grab and fling it.
 - **Swappable pets** — right-click to switch characters (Codex Pet v2 package format).
 
+## The cast
+
+Five characters are animated as one visual set — same atlas format, same nine states,
+same timing table. Right-click the pet to switch between the ones you have art for.
+
+<p align="center">
+  <img src="preview/roster.png" width="720" alt="the five pets side by side"/>
+</p>
+
+| | Pet | Identity | Package |
+|:---:|---|---|---|
+| <img src="preview/pets/yui-idle.gif" width="80"/> | **Hirasawa Yui** | right-handed Gibson Les Paul | `pets/current-yui/` |
+| <img src="preview/pets/mio-idle.gif" width="80"/> | **Akiyama Mio** | left-handed sunburst Jazz Bass | `pets/current-mio/` |
+| <img src="preview/pets/ritsu-idle.gif" width="80"/> | **Tainaka Ritsu** | drumsticks · Mellow Yellow Hipgig kit | `pets/ritsu/` |
+| <img src="preview/pets/tsumugi-idle.gif" width="80"/> | **Kotobuki Tsumugi** | KORG TRITON Extreme 76-key | `pets/tsumugi/` |
+| <img src="preview/pets/azusa-idle.gif" width="80"/> | **Nakano Azusa** | Candy Apple Red Fender Mustang | `pets/azusa/` |
+
+<details>
+<summary><b>All nine states, per character</b> — click to expand</summary>
+<p align="center">
+  <img src="preview/pets/yui-all-states.gif" width="120" alt="Yui, nine states"/>
+  <img src="preview/pets/mio-all-states.gif" width="120" alt="Mio, nine states"/>
+  <img src="preview/pets/ritsu-all-states.gif" width="120" alt="Ritsu, nine states"/>
+  <img src="preview/pets/tsumugi-all-states.gif" width="120" alt="Tsumugi, nine states"/>
+  <img src="preview/pets/azusa-all-states.gif" width="120" alt="Azusa, nine states"/>
+</p>
+<p align="center"><sub>idle → running-right → running-left → waving → jumping → failed → waiting → active-work → review</sub></p>
+</details>
+
+> The `pet.json` **manifests** are here so you can see the package format. The
+> **spritesheets are not** — see [Bring your own sprite](#bring-your-own-sprite).
+
 ## How it works
 
 ```
@@ -69,13 +101,71 @@ Claude Code hook ──▶ sessions/<source>/<session_id>.json   (a small PetSta
 The overlay needs Python + PySide6 on the Windows side; the hooks run in WSL. See
 `claude-overlay/README.md` for details.
 
+## Drive it from your own scripts
+
+Claude Code hooks are only one producer. The bundled `yui` CLI writes the same
+`PetState`, so **any** long job can talk to the pet:
+
+```bash
+yui start "training"                     # pet switches to working
+yui done  "training" "3 epochs finished" # green check, then waves
+yui fail  "build"    "tests failed"      # red dot
+yui wait  "needs a decision"             # orange, looks over at you
+yui clear                                # back to idle
+
+# or wrap a command — the exit code decides done/fail, and is passed through
+yui run -t "training" -- python train.py
+```
+
+Each caller writes `sessions/cli/<id>.json`; the overlay merges every producer by
+priority, so a CLI job and three Claude Code sessions coexist without stepping on
+each other.
+
+## Switching pets
+
+Right-click the pet → **펫 바꾸기** (*Change pet*). The choice persists in `config.json`:
+
+```jsonc
+{ "pet": "" }        // "" = the default sheet at the deploy root
+{ "pet": "ritsu" }   // = pets/ritsu/spritesheet.webp
+```
+
+The overlay discovers packages by scanning the deployed `pets/*/` for a `pet.json`
+plus a sheet:
+
+```text
+~/.yui-pet/
+├── spritesheet.webp        ← default pet, deploy root
+├── config.json
+└── pets/
+    ├── mio/{pet.json, spritesheet.webp}
+    ├── ritsu/{pet.json, spritesheet.webp}
+    └── …
+```
+
+A manifest is five fields:
+
+```json
+{
+  "id": "ritsu",
+  "displayName": "Tainaka Ritsu",
+  "description": "…",
+  "spriteVersionNumber": 2,
+  "spritesheetPath": "spritesheet.webp"
+}
+```
+
+Drop in a folder with those two files and it shows up in the menu — no code change.
+All pets share one `lines.json` and one timing table, so a new package needs no tuning.
+
 ## What's in here
 
 - `claude-overlay/yui_pet.py` — the PySide6 transparent overlay (renderer).
 - `claude-overlay/config.json`, `lines.json` — display settings and editable dialogue.
 - `hooks/` — the Claude Code hooks that record per-session `PetState`.
 - `tools/` — hook registration helper, a `yui` notification CLI, a sprite upscaler.
-- `pets/*/pet.json` — pet package manifests (Codex Pet v2 format).
+- `pets/*/pet.json` — pet package manifests for the five characters (Codex Pet v2 format).
+- `preview/` — state animations, the sixteen look directions, and the cast roster.
 - `SPRITE_SPEC.md` — the full sprite-atlas spec so you can **draw your own** character.
 - `install.sh` — one-command deploy.
 
@@ -95,8 +185,10 @@ are my own work on top of that idea.
 
 - **Source code** — MIT © 2026 SeongJin Kim (see `LICENSE`).
 - **Font** — `PretendardVariable.ttf` by Kil Hyung-jin, under the SIL Open Font License.
-- **Character art (previews & sprites)** — these depict **Hirasawa Yui** from *K-ON!*,
-  a character owned by its rights holders (© Kakifly · Houbunsha · TBS · Kyoto Animation).
-  The drawings here are **fan-made and non-commercial**, are **not offered under any
-  license**, and shouldn't be reused — please make your own character instead. This
+- **Character art (previews)** — these depict **Hirasawa Yui, Akiyama Mio, Tainaka Ritsu,
+  Kotobuki Tsumugi and Nakano Azusa** from *K-ON!*, characters owned by their rights
+  holders (© Kakifly · Houbunsha · TBS · Kyoto Animation). The drawings here are
+  **fan-made and non-commercial**, are **not offered under any license**, and shouldn't
+  be reused — please make your own character instead. Only low-resolution preview
+  animations are published; the spritesheets themselves are not distributed. This
   project is unaffiliated with and not endorsed by the rights holders.
