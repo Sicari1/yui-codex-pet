@@ -1,7 +1,7 @@
 # The overlay (Yui desktop pet)
 
 A transparent overlay that draws a Codex Pet v2 sprite on the Windows desktop and
-**shows what your coding agent is doing** — both **Claude Code** and **Codex**. Rendering
+**shows what your coding agent is doing**, both **Claude Code** and **Codex**. Rendering
 is PySide6; status arrives as files the overlay polls and turns into animation and speech
 bubbles.
 
@@ -35,7 +35,7 @@ PetState = {source, session_id, phase, title, detail, transcript, ts, expires_at
 phase    = idle | working | waiting | done | failed
 ```
 
-A badge on the left of the bubble says **which tool produced the status** — Claude Code
+A badge on the left of the bubble says **which tool produced the status**. Claude Code
 gets its logo plus `Claude`, the `yui` CLI gets `CLI`. The icon comes from
 `icons/claude.png`; without it you get the text alone. Things the pet says on its own
 carry no badge.
@@ -48,13 +48,13 @@ plus cursor-following gaze.
 
 The pet does not track your cursor continuously. It faces front and breathes, and only
 gives you its eyes for three to five seconds when something actually happens. Sustained
-tracking stops reading as attention and starts reading as staring — comfortable mutual gaze
+tracking stops reading as attention and starts reading as staring. Comfortable mutual gaze
 between people tops out around three to five seconds, with the eyes breaking away for a
 second or two inside even that, and this copies it.
 
 | What earns a look | Condition |
 | --- | --- |
-| The cursor comes close | Within 1.6× the window size. Caught **on entry only** — hovering there does not extend it. Six-second cooldown |
+| The cursor comes close | Within 1.6× the window size. Caught **on entry only**; hovering there does not extend it. Six-second cooldown |
 | You click the pet | You called it, so it looks |
 | Agent status changes | The moment it crosses into done, failed, or waiting-for-input |
 | A glance when your hands stop | Only after 25 s of no input, 30% chance during a rest |
@@ -63,9 +63,9 @@ second or two inside even that, and this copies it.
 it responds then. Even while looking it breaks away for 0.8–1.6 s every 1.2–2.5 s, so any
 single stretch of eye contact stays under about three seconds.
 
-Turn it off entirely at **설정 → 행동 → 마우스 쳐다보기** (*Settings → Behaviour → Follow the
-mouse*), stored as `gazeEnabled`. Off means it faces front wherever the cursor is; walking,
-being startled and everything else carry on.
+Turn it off entirely at **Settings → Behavior → Follow the cursor**, stored as
+`gazeEnabled`. Off means it faces front wherever the cursor is; walking, being startled
+and everything else carry on.
 
 ## Setup
 
@@ -85,13 +85,13 @@ being startled and everything else carry on.
    - `Stop` → `… done` / `StopFailure` → `… error` / `SessionStart` → `… idle`
    - Point the writer at the deployment folder with the script's second argument or the
      `YUI_PET_DIR` environment variable. With neither, it looks for `/mnt/c/Users/*/.yui-pet`.
-4. **Run it** — double-click `유이펫-시작.bat`, or from WSL:
+4. **Run it.** Double-click `유이펫-시작.bat`, or from WSL:
    `setsid pythonw.exe "C:\…\yui_pet.py" </dev/null >/dev/null 2>&1 &`.
    A plain `&` dies with the shell, so it has to be detached.
 
 ## Settings window
 
-Open it from the tray or right-click menu — **설정…** (*Settings…*). As the options piled up
+Open it from the tray or right-click menu, **Settings…**. As the options piled up
 the menu stopped being a place you could find anything, so they live in one panel now.
 Changes save and apply where you make them; there is no OK button. Menu and panel both go
 through the same `set_option`, so the two never disagree about what is on.
@@ -99,12 +99,12 @@ through the same `set_option`, so the two never disagree about what is on.
 | Group | Contains |
 | --- | --- |
 | General | Language, start with Windows, which pet, size, opacity, click action, click-through |
-| Behaviour | Wander, gaze, window climbing, wall climbing, throwing, Pomodoro focus/break minutes |
-| Talk & voice | Dialogue on/off, show the Japanese line, voice and its volume, weather lines and coordinates |
+| Behavior | Wander, gaze, window climbing, wall climbing, throwing, Pomodoro focus/break minutes |
+| Talk & Voice | Dialogue on/off, show the Japanese line, voice and its volume, weather lines and coordinates |
 | Music | Add and remove folders, rescan, volume, shuffle, what to play, open the player |
-| Agent status | Privacy mode, read Codex logs, bubble width, bubble lines, completion display time |
+| Work status | Privacy mode, read Codex logs, bubble width, bubble lines, completion display time |
 
-The menu keeps only what you **do right now** — wave, jump, climb a wall, task list — plus
+The menu keeps only what you **do right now** (wave, jump, climb a wall, task list), plus
 size and opacity, which you set by eye, and the wander and dialogue toggles you flip often.
 
 Start-with-Windows touches no registry key; it adds and removes a single batch file in the
@@ -112,33 +112,32 @@ startup folder (`%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\유이�
 
 ## Languages
 
-Pick 한국어 · English · 日本語 at **설정 → 일반 → 언어** (*Settings → General → Language*),
-stored as `lang`. The change lands immediately without a restart: menus, the settings window,
+Pick 한국어 · English · 日本語 at **Settings → General → Language**, stored as `lang`. The change lands immediately without a restart: menus, the settings window,
 the music player, the task list and the agent-status wording all switch, and so does the
 pet's own dialogue.
 
 Interface strings are translated through a table (`TR` in `yui_pet.py`) keyed by the Korean
 original. Anything missing from the table falls through as the Korean, so adding a string and
 forgetting its translation leaves the UI readable rather than blank. Status wording coming
-from hooks and Codex logs passes through the same table; things that aren't in it — project
-names, for instance — are left alone.
+from hooks and Codex logs passes through the same table; things that aren't in it, project
+names for instance, are left alone.
 
 ## Wandering
 
-While `idle` — that is, when the agent isn't working — the pet moves around on its own:
+While `idle`, meaning the agent isn't working, the pet moves around on its own:
 rest, pick a direction, walk, arrive, rest again. Now and then it jumps or waves. The
 blink interval is jittered between 2 and 5.5 seconds so it doesn't look mechanical.
 
 **Not interrupting you comes first, so it reads your input and behaves two different ways.**
 
-| Situation | Test | Behaviour |
+| Situation | Test | Behavior |
 | --- | --- | --- |
 | You're working | Keyboard or mouse input within the last 25 s | Rests 40–110 s, walks only short hops (60–170 px), 26% chance of walking at all |
 | Your hands stopped | No input for over 25 s | Rests 9–30 s, walks 90–340 px, 55% chance |
 
 It doesn't move at all while showing agent status, while held, or while hidden.
-Turn it off from the right-click menu or the tray — **자유롭게 돌아다니기** (*Wander freely*),
-stored as `wander` in `config.json`.
+Turn it off from the right-click menu or the tray, **Wander freely**, stored as `wander`
+in `config.json`.
 
 ## Dialogue
 
@@ -146,7 +145,7 @@ While `idle` the pet occasionally says something. Four seconds after launch it g
 according to the time of day; after that, talking is just one of the things wandering can
 pick, at low probability. With no input for over ten minutes it switches to the bored lines.
 
-Lines live in `lines.json` and are yours to edit — delete it and the defaults are written
+Lines live in `lines.json` and are yours to edit. Delete it and the defaults are written
 back. Each entry is `{"ko": "…", "ja": "…"}`, and the bubble shows the Korean in bold with
 the Japanese under it in grey. Set `showJapanese` to `false` in `config.json` for Korean only.
 
@@ -156,7 +155,7 @@ the Japanese under it in grey. Set `showJapanese` to `false` in `config.json` fo
 | `bored` | No input for over ten minutes |
 | `idleChat` | Ordinary day-to-day lines |
 | `quotes` | **Actual lines from the show.** Mixed with the ordinary ones at roughly 4:6 |
-| `special` | Anniversaries, keyed `"MM-DD"` — the character's birthday on 11-27, Christmas, New Year |
+| `special` | Anniversaries, keyed `"MM-DD"`: the character's birthday on 11-27, Christmas, New Year |
 
 The dialogue and persona were written against the source material, and the Korean prefers
 the dub and established fan translations. There is no voice playback in this build; the
@@ -171,37 +170,34 @@ Time-of-day bands: 05–11 morning, 11–17 afternoon, 17–21 evening, 21–02 
 ## Voice
 
 Dialogue lines can carry a `v` key naming a local `.wav`, and when one exists the pet plays
-it as the bubble appears. **No audio ships with this repository** — the files are yours to
+it as the bubble appears. **No audio ships with this repository.** The files are yours to
 supply, and this project does not extract or clone anyone's recorded voice (see
 `ROADMAP.md` §2-D for the position and for the synthesis design). Enable it and set the
-volume at **설정 → 대사·목소리** (*Settings → Talk & voice*). With no file for a line, the
-bubble appears silently.
+volume at **Settings → Talk & Voice**. With no file for a line, the bubble appears
+silently.
 
 ## Music
 
 Plays audio from local folders through `MusicPlayer` (`QMediaPlayer`). Open the player from
-the tray or right-click menu — **음악 → 플레이어 열기…** (*Music → Open player…*) — for
-previous/play/next/stop, seeking, volume, shuffle, search, and filtering by song, instrumental
-or background music. Add and remove folders at **설정 → 음악** (*Settings → Music*). While a
-voice line plays, music volume ducks to 30%. With `musicDirs` empty it scans
+the tray or right-click menu, **Music → Open player…**, for previous/play/next/stop,
+seeking, volume, shuffle, search, and filtering by song, instrumental or background music.
+Add and remove folders at **Settings → Music**. While a voice line plays, music volume ducks to 30%. With `musicDirs` empty it scans
 `~/.yui-pet/music` and `~/Music`.
 
 ## Walking on windows, climbing walls
 
-In free mode — once your hands have stopped — the pet treats the top edge of any visible
+In free mode, once your hands have stopped, the pet treats the top edge of any visible
 window as a ledge, climbs up and walks along it, or heads for the nearest screen edge and
 climbs that. Move the window and it rides along; close the window and it falls. Each
-behaviour can be turned off separately in the right-click menu, and **벽 타 보기** /
-**창 위로 올라가 보기** (*Try climbing a wall* / *Try getting on a window*) trigger them on
-demand. There are no dedicated sitting frames yet, so on top of a window it stands and walks.
+behavior can be turned off separately in the right-click menu, and **Climb a wall** and **Hop onto a window** trigger them on demand. There are no dedicated sitting frames yet, so on top of a window it stands and walks.
 
 ## Pomodoro
 
-Start it from the tray menu — **뽀모도로 시작** (*Start Pomodoro*). It alternates 25 minutes
-of focus with a 5-minute break (`pomodoroFocusMin` and `pomodoroBreakMin` in `config.json`).
+Start it from the tray menu, **Start Pomodoro**. It alternates 25 minutes of focus with a 5-minute break (`pomodoroFocusMin` and `pomodoroBreakMin` in `config.json`).
 
 During focus the pet says nothing at all. The remaining time appears **only in the tray
-tooltip** — a bubble that never goes away is exactly the interruption you were avoiding.
+tooltip**, because a bubble that never goes away is exactly the interruption you were
+avoiding.
 It speaks and waves only when an interval ends.
 
 ## Notification CLI
@@ -226,15 +222,14 @@ in seconds.
 
 The pet lives in the tray so you can get it back after losing it off-screen or behind a
 window. Double-click the icon to toggle hidden/shown; the right-click menu has
-**펫 보이기** (*Show pet*), **자유롭게 돌아다니기** (*Wander freely*),
-**부팅 시 자동 실행** (*Start with Windows*) and **종료** (*Quit*).
+**Show pet**, **Wander freely**, **Start with Windows** and **Quit**.
 
-Start-with-Windows touches no registry key — it adds and removes a single batch file in the
+Start-with-Windows touches no registry key. It adds and removes a single batch file in the
 startup folder (`%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\유이펫.bat`).
 
 ## Fullscreen apps
 
-When a window covers the whole screen — a game, a video — the pet hides itself within
+When a window covers the whole screen (a game, a video) the pet hides itself within
 1.5 seconds and comes back when you leave. The desktop and the taskbar don't count as
 fullscreen.
 
@@ -257,21 +252,21 @@ not necessarily have a window each.
 
 | Action | Result |
 | --- | --- |
-| Click | Depends on `clickAction` — `panel` (task list, default), `app` (raise the app window), `talk` (say something), `none`. A line triggered by clicking appears **even while agent status is showing** |
+| Click | Depends on `clickAction`: `panel` (task list, default), `app` (raise the app window), `talk` (say something), `none`. A line triggered by clicking appears **even while agent status is showing** |
 | Click again mid-line | Ends the line immediately and returns to the status display. No waiting |
 | Three clicks within 1.4 s | Delighted, jumps |
 | Cursor arriving very close | Startled. A 25-second cooldown keeps it from being annoying |
-| Drag and throw | Only flies **if you really fling it** — over 1400 px/s and still moving when you let go. Ordinary repositioning won't trigger it. Can be disabled from the right-click menu |
-| Right-click | Menu — wave, jump, wander, size, opacity, change pet, click action, click-through, quit |
+| Drag and throw | Only flies **if you really fling it**: over 1400 px/s and still moving when you let go. Ordinary repositioning won't trigger it. Can be disabled from the right-click menu |
+| Right-click | Menu: wave, jump, wander, size, opacity, change pet, click action, click-through, quit |
 
-Turning on **클릭 통과** (*click-through*) makes the pet pure decoration. The mouse passes
-through it, which means the right-click menu is gone too — the tray icon is the only way back.
+Turning on **Click-through** makes the pet pure decoration. The mouse passes
+through it, which means the right-click menu is gone too, and the tray icon is the only way back.
 
 ## Changing pets
 
 Put a `pet.json` and a sprite sheet in `.yui-pet/pets/<id>/` and the pet appears in the
 right-click menu automatically. `pet.json` files whose `displayName` collide (two entries
-both called "유이", say) are disambiguated in the menu with the folder name in parentheses —
+both called "유이", say) are disambiguated in the menu with the folder name in parentheses,
 "유이 (기본)", "유이 (치비)". Add a friendlier label to `PET_LABELS` in `yui_pet.py`.
 
 ## Weather lines
@@ -279,7 +274,7 @@ both called "유이", say) are disambiguated in the menu with the folder name in
 Set `weatherEnabled` to `true` in `config.json`. Lines that react to rain, snow, heat and
 cold are then mixed into the ordinary dialogue. It uses Open-Meteo, which needs no API key,
 calls once an hour, and fails silently. `weatherLat` and `weatherLon` default to the old
-Toyosato Elementary School in Shiga — the building Sakuragaoka High is drawn from. Set them
+Toyosato Elementary School in Shiga, the building Sakuragaoka High is drawn from. Set them
 to where you actually are.
 
 ## Resizing
@@ -288,13 +283,13 @@ Right-click the pet and drag the **size bar**; it grows and shrinks live. Releas
 value is saved to `config.json` and survives a restart. It grows from a fixed foot line, so
 it never gets pushed off screen.
 
-The ceiling is whatever the sheet supports — 1.7× with only the base (1×) sheet, up to 4×
+The ceiling is whatever the sheet supports: 1.7× with only the base (1×) sheet, up to 4×
 (832 px) with `spritesheet-4x.png` present.
 
 Clicks are only accepted on the character silhouette. The window keeps the cell aspect
 (192×208), which leaves wide transparent margins on either side; at 832 px that's 180 px a
 side of empty space that would otherwise swallow clicks meant for the window behind. A mask
-built from the alpha channel lets the margin through — it is generated from a downscaled
+built from the alpha channel lets the margin through, because it is generated from a downscaled
 copy and cached, so it stays under 4 ms regardless of size.
 
 > **Filename trap:** never suffix the high-resolution sheet `@2x` or `@4x`. Qt reads it as a
@@ -312,14 +307,14 @@ copy and cached, so it stays under 4 ms regardless of size.
 | `completedDisplaySeconds` | How long the green completion check stays up. |
 | `wander` | `true` (default) lets it walk around while idle. |
 | `opacity` | 0.2–1.0. Tied to the opacity bar in the right-click menu. |
-| `clickAction` | On click — `panel` (default), `app`, `talk`, `none`. |
+| `clickAction` | On click: `panel` (default), `app`, `talk`, `none`. |
 | `clickThrough` | `true` lets the mouse pass through. Only the tray can undo it. |
 | `pet` | Which pet to use. Empty means the default sheet at the deploy root; otherwise `pets/<id>/`. |
 | `throwEnabled` | `false` means no fling, however hard you throw. |
 | `pomodoroFocusMin` · `pomodoroBreakMin` | Pomodoro focus and break minutes. |
 | `weatherEnabled` · `weatherLat` · `weatherLon` | Weather lines. Off by default. Coordinates default to the old Toyosato Elementary School; set them to your own location. |
 | `privacyMode` | `true` (default) shows the **project name** as the title and only **filename plus the kind of work** as detail. Prompt text, responses, raw notification text and English tool descriptions never reach the screen. `false` uses the session's first prompt as the title and fills the progress line from the conversation. |
-| `lang` | Interface and dialogue language — `ko` (default), `en`, `ja`. |
+| `lang` | Interface and dialogue language: `ko` (default), `en`, `ja`. |
 | `chatEnabled` | `false` silences the pet's own dialogue. Agent status still shows. |
 | `gazeEnabled` | `false` stops it looking at the cursor at all. |
 | `voiceEnabled` · `voiceVolume` | Play the `.wav` named by a line's `v` key, and how loudly. No audio ships here. |
@@ -335,11 +330,11 @@ Two are supported out of the box, reached differently:
 | Agent | How status arrives | Setup |
 |---|---|---|
 | **Claude Code** | Hooks write `sessions/claude/<session_id>.json` on each event | `install.sh` registers them in `~/.claude/settings.json` |
-| **Codex** | The overlay **reads Codex's own rollout logs** (`sessions/<date>/rollout-*.jsonl`) | None — works for both Codex Desktop and the WSL CLI |
+| **Codex** | The overlay **reads Codex's own rollout logs** (`sessions/<date>/rollout-*.jsonl`) | None. Works for both Codex Desktop and the WSL CLI |
 
 Reading the logs is the primary path for Codex, not a fallback. Codex will not run a
 registered hook until it has been **approved once**, and that approval prompt exists only in
-the TUI, never in the desktop app — so a hook-only integration would show nothing on the
+the TUI, never in the desktop app, so a hook-only integration would show nothing on the
 desktop. `install.sh` registers Codex hooks anyway (`tools/_hookreg_codex.py`); approve them
 in the TUI and the status gets finer-grained, and sessions seen through both paths are
 de-duplicated by session id.
@@ -349,4 +344,4 @@ back to its working-directory name, cleaned up through `projectAliases`. Clickin
 in the task list raises the Codex window rather than an editor. Turn it off with `codexWatch`.
 
 Anything else that writes the same `PetState` into `sessions/<source>/…` is aggregated the
-same way — an editor extension, a CI job, your own script. The source name drives the badge.
+same way: an editor extension, a CI job, your own script. The source name drives the badge.

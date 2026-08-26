@@ -5,20 +5,20 @@
   <img src="preview/logo-light.png" width="360" alt="Yui Codex Pet">
 </picture>
 
-A desktop pet that mirrors what your **Claude Code** and **Codex** agents are doing.
+A desktop pet that shows what your **Claude Code** and **Codex** agents are doing.
 
 **English** · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md)
 
 </div>
 
-A small character lives on your desktop and shows what your coding agent is doing —
-**Claude Code** and **Codex** both. When the agent starts working, she starts working.
-When it stops and waits for your answer, she turns and waits too. When something fails,
-you see it from across the room without switching windows.
+A small character lives on your desktop and shows what your coding agent is doing.
+It watches both **Claude Code** and **Codex**.
 
-The window is transparent and always on top, so it sits over whatever you are doing
-without covering it. Built with **PySide6** (Qt) on Windows; the hooks that feed it run
-in WSL.
+When the agent starts working, the pet works too. When it waits for your answer, the pet
+turns and stops. When it fails, the pet turns red, so you notice without moving windows.
+
+The window is transparent and always on top, so it never covers what you are doing. It is
+a **PySide6**(Qt) app for Windows, and the hooks that record status run in WSL.
 
 <p align="center">
   <img src="preview/overlay-states.gif" width="420" alt="pet reacting to agent status: working, waiting, error"/>
@@ -33,11 +33,11 @@ in WSL.
 
 ---
 
-## The status it mirrors
+## What it shows
 
-Claude Code writes its phase to a small file through a hook; Codex needs no setup at all,
-because the overlay reads the logs Codex already keeps. Either way the overlay polls and
-plays the matching animation.
+Claude Code needs a hook, Codex needs no setup at all. The overlay reads the logs Codex
+already keeps. It checks those files periodically and plays the animation for the state
+it finds.
 
 | Your agent | The pet | |
 |---|---|:---:|
@@ -98,7 +98,7 @@ typing.
 The right-click menu has wave, jump, climb a wall, Pomodoro (25 on, 5 off), switch pets and
 the music player. Everything else is in a settings window: language, size, opacity, click
 behaviour, which autonomous behaviours are on, dialogue and voice, music folders,
-agent-status options. It also sits in the system tray, which is how you get click-through
+work-status options. It also sits in the system tray, which is how you get click-through
 back off once it's on.
 
 It plays audio from your own folders in a player window, with search, shuffle and filtering
@@ -107,8 +107,8 @@ by song, instrumental or background music. Music ducks while the pet speaks.
 The interface and the pet's dialogue can be Korean, English or Japanese, switched live with
 no restart.
 
-The bubble carries the task title and a line of detail. `privacyMode` is on by default, so it
-describes the tool action rather than quoting your conversation. Turn it off in `config.json`
+The bubble carries the task title and a line of detail. `privacyMode` is on by default,
+so it describes the tool action rather than quoting your conversation. Turn it off in `config.json`
 to see the real text. Set `showJapanese` and the bubble carries a Japanese line under the
 Korean one.
 
@@ -164,7 +164,7 @@ coexist without stepping on each other.
 
 ## Switching pets
 
-Right-click the pet, then **펫 바꾸기** (*Change pet*). The choice is saved to
+Right-click the pet, then **Change pet**. The choice is saved to
 `config.json`:
 
 ```jsonc
@@ -197,14 +197,14 @@ A manifest is five fields:
 ```
 
 Drop in a folder with those two files and it appears in the menu. No code change, and no
-per-pet tuning: every pet shares one timing table and one `lines.json`.
+per-pet tuning, because every pet shares one timing table and one `lines.json`.
 
 ## Bring your own sprite
 
 The runtime loads a Codex Pet v2 atlas named in `pet.json`. **That art is not shipped
-here.** `SPRITE_SPEC.md` has the full spec — 1536×2288, 8×11 cells of 192×208, nine state
-rows and two look rows — so you can draw your own character, or point the loader at any
-sheet you have the rights to.
+here.** `SPRITE_SPEC.md` has the full spec (1536×2288, 8×11 cells of 192×208, nine state rows and
+two look rows), so you can draw your own character or point the loader at any sheet you
+have the rights to.
 
 ## What's in here
 
@@ -212,7 +212,7 @@ sheet you have the rights to.
 |---|---|
 | `overlay/yui_pet.py` | the PySide6 transparent overlay |
 | `overlay/config.json`, `lines.json` | display settings and editable dialogue |
-| `hooks/` | status writers shared by Claude Code and Codex, recording each session's `PetState` |
+| `hooks/` | status writers shared by Claude Code and Codex |
 | `tools/` | hook registration helper, the `yui` CLI, a sprite upscaler |
 | `pets/*/pet.json` | package manifests for the five characters |
 | `preview/` | state animations, look directions, cast roster |

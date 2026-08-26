@@ -1,4 +1,4 @@
-# Roadmap — growing this into a desktop pet
+# Roadmap: growing this into a desktop pet
 
 Last updated: 2026-08-26 (translated to English; private-repo references removed)
 
@@ -24,28 +24,28 @@ which is why the order is:
 
 ## 1. Reachable now (no new sprites)
 
-### 1-A. Feeling alive — biggest effect per line of code
+### 1-A. Feeling alive: biggest effect per line of code
 
 | Item | What | Effort |
 |---|---|---|
 | ~~**Jittered blinking**~~ ✅ | The idle loop was a fixed `dur = 2800`, so it blinked like a metronome. Jitter between 2.0 and 5.5 s alone is a big improvement. Cheapest win available. | 5 min |
-| ~~**Autonomous wandering**~~ ✅ | Quiet while you're typing, free once your hands stop — decided from input-idle time. Walks along the bottom of the screen. `running-left`/`running-right` already exist. A probabilistic state machine (stand → pick a target → walk → arrive → stand) is enough. | half a day |
+| ~~**Autonomous wandering**~~ ✅ | Quiet while you're typing, free once your hands stop, decided from input-idle time. Walks along the bottom of the screen. `running-left`/`running-right` already exist. A probabilistic state machine (stand → pick a target → walk → arrive → stand) is enough. | half a day |
 | ~~**Occasional idling about**~~ ✅ | Low chance of a jump or a wave while wandering. Reuses `jumping` and `waving`. | 30 min |
 | ~~**Throw physics**~~ ✅ | On release, build an arc from the last few frames of drag velocity. Bounce off walls, land on the floor. No landing frames yet, so the last `jumping` frame stands in. | half a day |
 | ~~**Stronger cursor reaction**~~ ✅ | It only looked at the cursor from a distance. Make it flinch or wave when the cursor comes right up to it. | 1 hour |
 
-### 1-B. Not being irritating — required for daily use
+### 1-B. Not being irritating: required for daily use
 
 | Item | What |
 |---|---|
 | ~~**Tray icon**~~ ✅ | Quit lived only in the right-click menu, so losing the pet off-screen or behind a window meant opening Task Manager. `QSystemTrayIcon` for show/hide, settings and quit. **High priority** |
 | ~~**Fullscreen detection**~~ ✅ | Hide during games, video and presentations. Win32 will tell you whether the foreground window covers the screen. |
-| ~~**Click-through mode**~~ ✅ | `WA_TransparentForMouseEvents` turns it into pure decoration. Toggle from the right-click menu — note that once on, only the tray can turn it back off. |
+| ~~**Click-through mode**~~ ✅ | `WA_TransparentForMouseEvents` turns it into pure decoration. Toggle from the right-click menu. Note that once on, only the tray can turn it back off. |
 | ~~**Opacity**~~ ✅ | One more slider. Fade it while working. |
 | ~~**Configurable click action**~~ ✅ | Clicking used to toggle the VS Code window, which is odd for a desktop pet. Offer none / toggle app / say something. |
 | **Multi-monitor** | `_screen()` exists, but repositioning after the pet moves between monitors needs checking. |
 
-### 1-C. Cute — dialogue and a sense of time
+### 1-C. Cute: dialogue and a sense of time
 
 | Item | What |
 |---|---|
@@ -55,24 +55,24 @@ which is why the order is:
 | ~~**Rapid-click reaction**~~ ✅ | Several fast clicks and it's delighted, or dizzy. Works with dialogue plus `jumping` even without expression frames. |
 | ~~**Anniversaries**~~ ✅ | The character's birthday (27 November), Christmas, New Year. Special lines on the day only. |
 | ~~**Weather**~~ ✅ | Lines reacting to rain, snow and heat. Dialogue only, no props, so one API call covers it. |
-| **Sound effects** | Footsteps and jumps, roughly. No voice clips lifted from the show — that's a rights problem. |
+| **Sound effects** | Footsteps and jumps, roughly. No voice clips lifted from the show, which is a rights problem. |
 
-### 1-D. Useful — reusing the speech bubble
+### 1-D. Useful: reusing the speech bubble
 
 | Item | What |
 |---|---|
 | ~~**Pomodoro**~~ ✅ | 25 focus / 5 break. Silent during focus, waves when the interval ends. Existing bubble. |
 | **Break reminder** | Suggest a stretch after a long sitting stretch. |
 | **Timers and alarms** | "Tell me in 20 minutes" level. |
-| ~~**General notification CLI**~~ ✅ | `yui done "training finished"` — a thin wrapper writing `sessions/cli/*.json`. Long scripts, renders and builds can all report in. **Nearly free by construction and gets used constantly** |
+| ~~**General notification CLI**~~ ✅ | `yui done "training finished"`, a thin wrapper writing `sessions/cli/*.json`. Long scripts, renders and builds can all report in. **Nearly free by construction and gets used constantly** |
 | **System warnings** | Low battery, low disk, CPU heat. Reuses the `failed` animation. |
 | **Calendar reminders** | Google Calendar integration. |
 | **Small to-do list** | A few todo lines in the right-click menu; congratulate on completion. |
 
-### 1-E. More status sources — the extension point already exists
+### 1-E. More status sources: the extension point already exists
 
 Write the same `PetState` into `sessions/<source>/<id>.json` and it is aggregated
-automatically. Codex, an editor extension, cron jobs, CI, any pipeline you run — all of them
+automatically. Codex, an editor extension, cron jobs, CI, any pipeline you run, and all of them
 can report in the same way. Splitting priority or assigning a character per source is the
 path toward the band arrangement.
 
@@ -103,7 +103,7 @@ far cheaper.** Adding a few later means the style drifts and they never quite si
 | **Hanging / climbing** | Screen edges and window corners. The Shimeji signature, but lower priority than the above | 4 each |
 | **Mouth flaps** | Adding voice makes a motionless mouth jarring (see 2-D). Real lip-sync is not needed | 2–3 |
 
-### 2-B. ⚠ Sheet layout — don't break Codex compatibility
+### 2-B. ⚠ Sheet layout: don't break Codex compatibility
 
 The current sheet is **8 columns × 11 rows**, which is the Codex Pet v2 format
 (`spriteVersionNumber: 2` in `pet.json`). Adding rows can fail Codex's own validation.
@@ -115,10 +115,10 @@ The current sheet is **8 columns × 11 rows**, which is the Codex Pet v2 format
   this overlay alone.
 
 The overlay derives cell size from the sheet resolution, so the only requirement is that
-both sheets use the same cell size. Add a sheet discriminator to `ROW_DEF` and you're done —
+both sheets use the same cell size. Add a sheet discriminator to `ROW_DEF` and you're done,
 something like `("extra", row, durs)`.
 
-### 2-C. Fix during the redraw — the sixteen-direction failure, measured (2026-07-25)
+### 2-C. Fix during the redraw: the sixteen-direction failure, measured (2026-07-25)
 
 Checked by cropping each of the sixteen faces at 1:1 against the original. **This is a
 generation-quality problem, not a resolution problem**, so upscaling cannot fix it.
@@ -136,7 +136,7 @@ spends most of its time to the left, so the worst frames are the ones you see mo
 The direction-semantics QA from that production run (the record itself is private) passed
 all of it: the four cardinal directions passed, and the intermediate angles came back with a
 "cues are subtle under blind review" warning that was accepted as `"ok": true`. Meanwhile the
-overlay carries a `LOOK_REMAP` that snaps 13·14·15 away — QA passed them, using it did not,
+overlay carries a `LOOK_REMAP` that snaps 13·14·15 away. QA passed them, using it did not,
 and the code quietly covered for it. **The redraw's QA should treat this as the precedent and
 accept no warnings.**
 
@@ -146,7 +146,7 @@ stops being visible.
 
 ---
 
-## 2-D. Voice — designed, not built
+## 2-D. Voice: designed, not built
 
 Attaching a voice to the dialogue is structurally easy. **Which voice to use is the open
 question**, so what follows is a design that stays independent of the audio source. Once a
@@ -162,7 +162,7 @@ What is usable:
 
 | Option | Notes |
 |---|---|
-| **VOICEVOX** | Free, offline, local HTTP API. The character voices exist for other people to use, so following the terms is the whole requirement. No paid tier as of 2026; credit attribution is the condition. **Terms differ per character — check that character's page before use** |
+| **VOICEVOX** | Free, offline, local HTTP API. The character voices exist for other people to use, so following the terms is the whole requirement. No paid tier as of 2026; credit attribution is the condition. **Terms differ per character; check that character's page before use** |
 | COEIROINK / AquesTalk | Same family of alternatives |
 | A Korean TTS | Reads the `ko` text directly. May sit better than a Japanese voice |
 | Sound effects only | Footsteps, jumps, a short sound when the bubble appears. Lightest and safest |
@@ -205,7 +205,7 @@ _say(ko, ja) ──▶ show bubble (today)
 }
 ```
 
-Put an on/off toggle and a volume control in the tray menu. Default off — sound is far
+Put an on/off toggle and a volume control in the tray menu. Default off, because sound is far
 easier to find irritating than wandering is. Stay silent while a fullscreen app is up or the
 pet is hidden.
 
@@ -217,7 +217,7 @@ while audio plays is enough.
 
 ---
 
-## 3. Sitting on windows — implementation notes
+## 3. Sitting on windows: implementation notes
 
 The most characteristically "desktop pet" feature, so it gets its own section.
 

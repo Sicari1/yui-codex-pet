@@ -4,21 +4,21 @@ What a **high-resolution redraw** of the pet sprites has to satisfy. Written so 
 handed to an image-generation run as-is.
 
 The high-resolution sheet in use today was upscaled by AI from the 192×208 original, so it
-is invented detail — the bigger you draw it, the further it drifts from the source. This
+is invented detail. The bigger you draw it, the further it drifts from the source. This
 document exists to replace it with real artwork.
 
 ---
 
-## 1. Deliverables — three sheets
+## 1. Deliverables: three sheets
 
 | File | Size | Purpose |
 |---|---|---|
 | `spritesheet.png` / `.webp` | **1536 × 2288** (192×208 cells, 8 cols × 11 rows) | The Codex Pet v2 format. Change this size and Codex's own validation rejects it |
-| `spritesheet-4x.png` | **6144 × 9152** (768×832 cells, 8 × 11) | For the overlay — stays sharp when scaled up |
+| `spritesheet-4x.png` | **6144 × 9152** (768×832 cells, 8 × 11) | For the overlay; stays sharp when scaled up |
 | `spritesheet-extra-4x.png` | 768×832 cells, 8 columns fixed, as many rows as needed | Extra motions (§2). **Kept separate so the Codex format stays intact** |
 
 **Draw at 4× (768×832 cells) and downscale to 1536×2288.** The other direction does not
-work — you cannot upscale back.
+work, because you cannot upscale back.
 
 > **Never put an `@2x` / `@4x` suffix in the filename.** Qt reads it as a high-density
 > asset, raises `devicePixelRatio`, and you get a window that grows while the artwork is
@@ -70,7 +70,7 @@ Motions a desktop pet really wants, in priority order.
 
 ---
 
-## 3. Sixteen look directions — this is what failed last time
+## 3. Sixteen look directions: this is what failed last time
 
 Rows 9 and 10 are the sixteen stills of the pet looking toward the cursor.
 **0° is up, then clockwise in 22.5° steps.**
@@ -113,7 +113,7 @@ back with a "cues are subtle under blind review" warning that was accepted as `"
 
 ---
 
-## 4. Alignment — this is what makes or breaks the animation
+## 4. Alignment: this is what makes or breaks the animation
 
 Measuring the original shows **the foot line sits at the same y in every frame.** Match that.
 
@@ -129,7 +129,7 @@ wave f0    x  49–141   y   5–202   feet 202
 - **Fixed horizontal centre** — keep the character near the middle of the cell. Deliberate
   displacement, like the jump arc, is the exception.
 - The character occupies about half the cell width (101 of 192). Leave the side margins as
-  they are — the overlay builds its click hitbox from the alpha channel, so empty margin
+  they are, because the overlay builds its click hitbox from the alpha channel, so empty margin
   does not swallow clicks.
 
 ---
@@ -138,7 +138,7 @@ wave f0    x  49–141   y   5–202   feet 202
 
 - **A real alpha channel.** Transparent background, no matte (white or green fringing).
 - No coloured halo on the silhouette. If it came off a chroma key, despill it before delivery.
-- Semi-transparent pixels (hair tips and the like) are fine — the overlay uses the alpha directly.
+- Semi-transparent pixels (hair tips and the like) are fine, since the overlay uses the alpha directly.
 - Save lossless: PNG RGBA, or WebP with the lossless option.
 
 ---
@@ -146,14 +146,14 @@ wave f0    x  49–141   y   5–202   feet 202
 ## 6. Character consistency
 
 Match the high-resolution reference stills produced for the original run (912×1724 and
-1024×1536). **They are not in this repository** — the reference and deliverable artwork is
+1024×1536). **They are not in this repository.** The reference and deliverable artwork is
 private. Redrawing from scratch means establishing your own reference first.
 
 The written constants for the default character:
 
-- **Guitar**: Gibson Les Paul Standard, heritage cherry sunburst. **Right-handed** — never mirror it.
+- **Guitar**: Gibson Les Paul Standard, heritage cherry sunburst. **Right-handed**; never mirror it.
 - **Hairpins**: yellow, right side of the head. Always present; they are part of the character.
-- **Uniform**: Sakuragaoka winter set — navy blazer, white shirt, **light-blue ribbon**, grey
+- **Uniform**: Sakuragaoka winter set: navy blazer, white shirt, **light-blue ribbon**, grey
   skirt, black tights, brown shoes.
 - Short brown hair, brown eyes.
 - Keep the drawing style in the same family as the existing sheet. It should not look freshly redrawn.
