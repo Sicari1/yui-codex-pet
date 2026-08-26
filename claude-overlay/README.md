@@ -191,8 +191,9 @@ both called "유이", say) are disambiguated in the menu with the folder name in
 
 Set `weatherEnabled` to `true` in `config.json`. Lines that react to rain, snow, heat and
 cold are then mixed into the ordinary dialogue. It uses Open-Meteo, which needs no API key,
-calls once an hour, and fails silently. **Set `weatherLat` and `weatherLon` to your own
-location** — the shipped values are the author's.
+calls once an hour, and fails silently. `weatherLat` and `weatherLon` default to the old
+Toyosato Elementary School in Shiga — the building Sakuragaoka High is drawn from. Set them
+to where you actually are.
 
 ## Resizing
 
@@ -229,7 +230,7 @@ copy and cached, so it stays under 4 ms regardless of size.
 | `pet` | Which pet to use. Empty means the default sheet at the deploy root; otherwise `pets/<id>/`. |
 | `throwEnabled` | `false` means no fling, however hard you throw. |
 | `pomodoroFocusMin` · `pomodoroBreakMin` | Pomodoro focus and break minutes. |
-| `weatherEnabled` · `weatherLat` · `weatherLon` | Weather lines. Off by default; set the coordinates to your location. |
+| `weatherEnabled` · `weatherLat` · `weatherLon` | Weather lines. Off by default. Coordinates default to the old Toyosato Elementary School; set them to your own location. |
 | `privacyMode` | `true` (default) shows the **project name** as the title and only **filename plus the kind of work** as detail. Prompt text, responses, raw notification text and English tool descriptions never reach the screen. `false` uses the session's first prompt as the title and fills the progress line from the conversation. |
 
 ## Other agents

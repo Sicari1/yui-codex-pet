@@ -123,7 +123,7 @@ DEFAULTS = {"petHeight": 208, "bubbleWidth": 400, "bubbleMaxLines": 3,
             "completedDisplaySeconds": 3, "privacyMode": True, "wander": True,
             "showJapanese": True, "pomodoroFocusMin": 25, "pomodoroBreakMin": 5,
             "clickAction": "panel", "clickThrough": False, "opacity": 1.0, "pet": "",
-            "weatherEnabled": False, "weatherLat": 35.2281, "weatherLon": 128.6811,
+            "weatherEnabled": False, "weatherLat": 35.202944, "weatherLon": 136.233694,
             "throwEnabled": True}
 
 
