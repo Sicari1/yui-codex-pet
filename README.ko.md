@@ -1,6 +1,12 @@
-# Yui Codex Pet — Claude Code 데스크톱 펫 (엔진)
+<div align="center">
+
+# Yui Codex Pet
+
+**Claude Code** 에이전트가 지금 하는 일을 그대로 비추는 데스크톱 펫.
 
 [English](README.md) · **한국어** · [日本語](README.ja.md) · [简体中文](README.zh-CN.md)
+
+</div>
 
 바탕화면에 작은 캐릭터가 살면서 **Claude Code** 에이전트가 지금 뭘 하고 있는지 보여준다.
 에이전트가 일을 시작하면 같이 일하고, 멈춰서 답을 기다리면 같이 고개를 돌리고 기다린다.

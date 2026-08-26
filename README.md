@@ -1,6 +1,12 @@
-# Yui Codex Pet — a Claude Code desktop pet (engine)
+<div align="center">
+
+# Yui Codex Pet
+
+A desktop pet that mirrors what your **Claude Code** agent is doing.
 
 **English** · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md)
+
+</div>
 
 A small character lives on your desktop and shows what your **Claude Code** agent is
 doing. When the agent starts working, she starts working. When it stops and waits for

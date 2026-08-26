@@ -1,6 +1,12 @@
-# Yui Codex Pet — Claude Code 桌面宠物（引擎）
+<div align="center">
+
+# Yui Codex Pet
+
+一只实时映射 **Claude Code** 智能体状态的桌面宠物。
 
 [English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · **简体中文**
+
+</div>
 
 桌面上住着一个小角色，它会告诉你 **Claude Code** 智能体此刻在做什么。智能体开始干活，
 它就跟着干活；智能体停下来等你回话，它也转过身来等。出错的时候，你不用切窗口，

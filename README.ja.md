@@ -1,6 +1,12 @@
-# Yui Codex Pet — Claude Code のデスクトップペット（エンジン）
+<div align="center">
+
+# Yui Codex Pet
+
+**Claude Code** のエージェントの動きをそのまま映すデスクトップペット。
 
 [English](README.md) · [한국어](README.ko.md) · **日本語** · [简体中文](README.zh-CN.md)
+
+</div>
 
 デスクトップに小さなキャラクターが住みつき、**Claude Code** のエージェントが今なにを
 しているかを見せてくれる。エージェントが作業を始めれば一緒に働き、手を止めて返事を待って
