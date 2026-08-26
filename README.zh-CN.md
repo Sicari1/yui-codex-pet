@@ -38,13 +38,13 @@ Codex 本来就在写的日志。两种方式最后都由叠加层轮询并播�
 
 | 智能体 | 宠物 | |
 |---|---|:---:|
-| 空闲，或者没有会话 | 歇着 | <img src="preview/states/00-idle.gif" width="90"/> |
-| 正在干活 | 埋头忙活 | <img src="preview/states/07-active-work.gif" width="90"/> |
-| 等你输入 | 转过来等着 | <img src="preview/states/06-waiting.gif" width="90"/> |
-| 收尾复查 | 从头看一遍 | <img src="preview/states/08-review.gif" width="90"/> |
-| 撞上错误 | 有反应 | <img src="preview/states/05-failed.gif" width="90"/> |
-| 切换任务 | 横穿屏幕跑过去 | <img src="preview/states/01-running-right.gif" width="90"/> |
-| 跟你打招呼 | 挥手 | <img src="preview/states/03-waving.gif" width="90"/> |
+| 空闲，或者没有会话 | 歇着 | <img src="preview/states/00-idle.png" width="90"/> |
+| 正在干活 | 埋头忙活 | <img src="preview/states/07-active-work.png" width="90"/> |
+| 等你输入 | 转过来等着 | <img src="preview/states/06-waiting.png" width="90"/> |
+| 收尾复查 | 从头看一遍 | <img src="preview/states/08-review.png" width="90"/> |
+| 撞上错误 | 有反应 | <img src="preview/states/05-failed.png" width="90"/> |
+| 切换任务 | 横穿屏幕跑过去 | <img src="preview/states/01-running-right.png" width="90"/> |
+| 跟你打招呼 | 挥手 | <img src="preview/states/03-waving.png" width="90"/> |
 
 开四个会话，宠物还是一只。叠加层按 `等待 > 失败 > 工作中 > 完成 > idle` 排序，
 显示最需要你的那个，并在角落标出会话数。
@@ -60,20 +60,20 @@ Codex 本来就在写的日志。两种方式最后都由叠加层轮询并播�
 
 | | 宠物 | 身份标识 | 包 |
 |:---:|---|---|---|
-| <img src="preview/pets/yui-idle.gif" width="80"/> | **平泽唯** | 右手持吉普森 Les Paul | `pets/yui/` |
-| <img src="preview/pets/mio-idle.gif" width="80"/> | **秋山澪** | 左手持渐层色 Jazz Bass | `pets/mio/` |
-| <img src="preview/pets/ritsu-idle.gif" width="80"/> | **田井中律** | 鼓棒与 Mellow Yellow Hipgig 鼓组 | `pets/ritsu/` |
-| <img src="preview/pets/tsumugi-idle.gif" width="80"/> | **琴吹紬** | KORG TRITON Extreme 76 键 | `pets/tsumugi/` |
-| <img src="preview/pets/azusa-idle.gif" width="80"/> | **中野梓** | 糖果苹果红 Fender Mustang | `pets/azusa/` |
+| <img src="preview/pets/yui-idle.png" width="80"/> | **平泽唯** | 右手持吉普森 Les Paul | `pets/yui/` |
+| <img src="preview/pets/mio-idle.png" width="80"/> | **秋山澪** | 左手持渐层色 Jazz Bass | `pets/mio/` |
+| <img src="preview/pets/ritsu-idle.png" width="80"/> | **田井中律** | 鼓棒与 Mellow Yellow Hipgig 鼓组 | `pets/ritsu/` |
+| <img src="preview/pets/tsumugi-idle.png" width="80"/> | **琴吹紬** | KORG TRITON Extreme 76 键 | `pets/tsumugi/` |
+| <img src="preview/pets/azusa-idle.png" width="80"/> | **中野梓** | 糖果苹果红 Fender Mustang | `pets/azusa/` |
 
 <details>
 <summary><b>每个角色的九种状态</b></summary>
 <p align="center">
-  <img src="preview/pets/yui-all-states.gif" width="120" alt="唯，九种状态"/>
-  <img src="preview/pets/mio-all-states.gif" width="120" alt="澪，九种状态"/>
-  <img src="preview/pets/ritsu-all-states.gif" width="120" alt="律，九种状态"/>
-  <img src="preview/pets/tsumugi-all-states.gif" width="120" alt="紬，九种状态"/>
-  <img src="preview/pets/azusa-all-states.gif" width="120" alt="梓，九种状态"/>
+  <img src="preview/pets/yui-all-states.gif" width="150" alt="唯，九种状态"/>
+  <img src="preview/pets/mio-all-states.gif" width="150" alt="澪，九种状态"/>
+  <img src="preview/pets/ritsu-all-states.gif" width="150" alt="律，九种状态"/>
+  <img src="preview/pets/tsumugi-all-states.gif" width="150" alt="紬，九种状态"/>
+  <img src="preview/pets/azusa-all-states.gif" width="150" alt="梓，九种状态"/>
 </p>
 <p align="center"><sub>idle · running-right · running-left · waving · jumping · failed · waiting · active-work · review</sub></p>
 </details>

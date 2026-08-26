@@ -39,13 +39,13 @@ Codex が自分で残しているログをオーバーレイが直接読むか�
 
 | エージェントが | ペットは | |
 |---|---|:---:|
-| 何もしていない、セッションがない | くつろぐ | <img src="preview/states/00-idle.gif" width="90"/> |
-| 作業中 | 黙々と働く | <img src="preview/states/07-active-work.gif" width="90"/> |
-| 入力を待っている | こちらを向いて待つ | <img src="preview/states/06-waiting.gif" width="90"/> |
-| 見直して締めくくっている | ざっと目を通す | <img src="preview/states/08-review.gif" width="90"/> |
-| エラーを踏んだ | 反応する | <img src="preview/states/05-failed.gif" width="90"/> |
-| 作業を切り替えた | 横切って走る | <img src="preview/states/01-running-right.gif" width="90"/> |
-| 挨拶するとき | 手を振る | <img src="preview/states/03-waving.gif" width="90"/> |
+| 何もしていない、セッションがない | くつろぐ | <img src="preview/states/00-idle.png" width="90"/> |
+| 作業中 | 黙々と働く | <img src="preview/states/07-active-work.png" width="90"/> |
+| 入力を待っている | こちらを向いて待つ | <img src="preview/states/06-waiting.png" width="90"/> |
+| 見直して締めくくっている | ざっと目を通す | <img src="preview/states/08-review.png" width="90"/> |
+| エラーを踏んだ | 反応する | <img src="preview/states/05-failed.png" width="90"/> |
+| 作業を切り替えた | 横切って走る | <img src="preview/states/01-running-right.png" width="90"/> |
+| 挨拶するとき | 手を振る | <img src="preview/states/03-waving.png" width="90"/> |
 
 セッションを 4 つ開いてもペットは 1 匹だ。オーバーレイが
 `待機 > 失敗 > 作業中 > 完了 > idle` の順で並べ替え、いちばん急ぐものを見せる。隅にセッション数が出る。
@@ -61,20 +61,20 @@ Codex が自分で残しているログをオーバーレイが直接読むか�
 
 | | ペット | アイデンティティ | パッケージ |
 |:---:|---|---|---|
-| <img src="preview/pets/yui-idle.gif" width="80"/> | **平沢唯** | 右利きのギブソン・レスポール | `pets/yui/` |
-| <img src="preview/pets/mio-idle.gif" width="80"/> | **秋山澪** | 左利きのサンバースト・ジャズベース | `pets/mio/` |
-| <img src="preview/pets/ritsu-idle.gif" width="80"/> | **田井中律** | スティックとメロウイエローの Hipgig | `pets/ritsu/` |
-| <img src="preview/pets/tsumugi-idle.gif" width="80"/> | **琴吹紬** | KORG TRITON Extreme 76 鍵 | `pets/tsumugi/` |
-| <img src="preview/pets/azusa-idle.gif" width="80"/> | **中野梓** | キャンディアップルレッドのフェンダー・ムスタング | `pets/azusa/` |
+| <img src="preview/pets/yui-idle.png" width="80"/> | **平沢唯** | 右利きのギブソン・レスポール | `pets/yui/` |
+| <img src="preview/pets/mio-idle.png" width="80"/> | **秋山澪** | 左利きのサンバースト・ジャズベース | `pets/mio/` |
+| <img src="preview/pets/ritsu-idle.png" width="80"/> | **田井中律** | スティックとメロウイエローの Hipgig | `pets/ritsu/` |
+| <img src="preview/pets/tsumugi-idle.png" width="80"/> | **琴吹紬** | KORG TRITON Extreme 76 鍵 | `pets/tsumugi/` |
+| <img src="preview/pets/azusa-idle.png" width="80"/> | **中野梓** | キャンディアップルレッドのフェンダー・ムスタング | `pets/azusa/` |
 
 <details>
 <summary><b>キャラクターごとの 9 状態すべて</b></summary>
 <p align="center">
-  <img src="preview/pets/yui-all-states.gif" width="120" alt="唯、9 状態"/>
-  <img src="preview/pets/mio-all-states.gif" width="120" alt="澪、9 状態"/>
-  <img src="preview/pets/ritsu-all-states.gif" width="120" alt="律、9 状態"/>
-  <img src="preview/pets/tsumugi-all-states.gif" width="120" alt="紬、9 状態"/>
-  <img src="preview/pets/azusa-all-states.gif" width="120" alt="梓、9 状態"/>
+  <img src="preview/pets/yui-all-states.gif" width="150" alt="唯、9 状態"/>
+  <img src="preview/pets/mio-all-states.gif" width="150" alt="澪、9 状態"/>
+  <img src="preview/pets/ritsu-all-states.gif" width="150" alt="律、9 状態"/>
+  <img src="preview/pets/tsumugi-all-states.gif" width="150" alt="紬、9 状態"/>
+  <img src="preview/pets/azusa-all-states.gif" width="150" alt="梓、9 状態"/>
 </p>
 <p align="center"><sub>idle · running-right · running-left · waving · jumping · failed · waiting · active-work · review</sub></p>
 </details>

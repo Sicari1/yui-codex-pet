@@ -41,13 +41,13 @@ plays the matching animation.
 
 | Your agent | The pet | |
 |---|---|:---:|
-| idle, or no session open | relaxes | <img src="preview/states/00-idle.gif" width="90"/> |
-| working | works away | <img src="preview/states/07-active-work.gif" width="90"/> |
-| waiting for your input | looks over and waits | <img src="preview/states/06-waiting.gif" width="90"/> |
-| reviewing, wrapping up | reads through | <img src="preview/states/08-review.gif" width="90"/> |
-| hit an error | reacts | <img src="preview/states/05-failed.gif" width="90"/> |
-| switching tasks | runs across | <img src="preview/states/01-running-right.gif" width="90"/> |
-| greeting you | waves | <img src="preview/states/03-waving.gif" width="90"/> |
+| idle, or no session open | relaxes | <img src="preview/states/00-idle.png" width="90"/> |
+| working | works away | <img src="preview/states/07-active-work.png" width="90"/> |
+| waiting for your input | looks over and waits | <img src="preview/states/06-waiting.png" width="90"/> |
+| reviewing, wrapping up | reads through | <img src="preview/states/08-review.png" width="90"/> |
+| hit an error | reacts | <img src="preview/states/05-failed.png" width="90"/> |
+| switching tasks | runs across | <img src="preview/states/01-running-right.png" width="90"/> |
+| greeting you | waves | <img src="preview/states/03-waving.png" width="90"/> |
 
 Run four sessions and you get one pet, not four. The overlay ranks them
 `waiting > failed > working > done > idle` and shows the one that needs you soonest,
@@ -64,20 +64,20 @@ table. Right-click to switch between the ones you have art for.
 
 | | Pet | Identity | Package |
 |:---:|---|---|---|
-| <img src="preview/pets/yui-idle.gif" width="80"/> | **Hirasawa Yui** | right-handed Gibson Les Paul | `pets/yui/` |
-| <img src="preview/pets/mio-idle.gif" width="80"/> | **Akiyama Mio** | left-handed sunburst Jazz Bass | `pets/mio/` |
-| <img src="preview/pets/ritsu-idle.gif" width="80"/> | **Tainaka Ritsu** | drumsticks, Mellow Yellow Hipgig kit | `pets/ritsu/` |
-| <img src="preview/pets/tsumugi-idle.gif" width="80"/> | **Kotobuki Tsumugi** | KORG TRITON Extreme 76-key | `pets/tsumugi/` |
-| <img src="preview/pets/azusa-idle.gif" width="80"/> | **Nakano Azusa** | Candy Apple Red Fender Mustang | `pets/azusa/` |
+| <img src="preview/pets/yui-idle.png" width="80"/> | **Hirasawa Yui** | right-handed Gibson Les Paul | `pets/yui/` |
+| <img src="preview/pets/mio-idle.png" width="80"/> | **Akiyama Mio** | left-handed sunburst Jazz Bass | `pets/mio/` |
+| <img src="preview/pets/ritsu-idle.png" width="80"/> | **Tainaka Ritsu** | drumsticks, Mellow Yellow Hipgig kit | `pets/ritsu/` |
+| <img src="preview/pets/tsumugi-idle.png" width="80"/> | **Kotobuki Tsumugi** | KORG TRITON Extreme 76-key | `pets/tsumugi/` |
+| <img src="preview/pets/azusa-idle.png" width="80"/> | **Nakano Azusa** | Candy Apple Red Fender Mustang | `pets/azusa/` |
 
 <details>
 <summary><b>All nine states, per character</b></summary>
 <p align="center">
-  <img src="preview/pets/yui-all-states.gif" width="120" alt="Yui, nine states"/>
-  <img src="preview/pets/mio-all-states.gif" width="120" alt="Mio, nine states"/>
-  <img src="preview/pets/ritsu-all-states.gif" width="120" alt="Ritsu, nine states"/>
-  <img src="preview/pets/tsumugi-all-states.gif" width="120" alt="Tsumugi, nine states"/>
-  <img src="preview/pets/azusa-all-states.gif" width="120" alt="Azusa, nine states"/>
+  <img src="preview/pets/yui-all-states.gif" width="150" alt="Yui, nine states"/>
+  <img src="preview/pets/mio-all-states.gif" width="150" alt="Mio, nine states"/>
+  <img src="preview/pets/ritsu-all-states.gif" width="150" alt="Ritsu, nine states"/>
+  <img src="preview/pets/tsumugi-all-states.gif" width="150" alt="Tsumugi, nine states"/>
+  <img src="preview/pets/azusa-all-states.gif" width="150" alt="Azusa, nine states"/>
 </p>
 <p align="center"><sub>idle · running-right · running-left · waving · jumping · failed · waiting · active-work · review</sub></p>
 </details>

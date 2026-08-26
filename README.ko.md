@@ -5,19 +5,20 @@
   <img src="preview/logo-light.png" width="360" alt="Yui Codex Pet">
 </picture>
 
-**Claude Code** 와 **Codex** 가 지금 하는 일을 그대로 비추는 데스크톱 펫.
+**Claude Code** 와 **Codex** 가 지금 무슨 일을 하는지 보여 주는 데스크톱 펫.
 
 [English](README.md) · **한국어** · [日本語](README.ja.md) · [简体中文](README.zh-CN.md)
 
 </div>
 
-바탕화면에 작은 캐릭터가 살면서 코딩 에이전트가 지금 뭘 하고 있는지 보여준다 —
-**Claude Code** 와 **Codex** 둘 다.
-에이전트가 일을 시작하면 같이 일하고, 멈춰서 답을 기다리면 같이 고개를 돌리고 기다린다.
-실패하면 창을 옮기지 않고도 멀리서 보인다.
+바탕화면에 작은 캐릭터가 살면서 코딩 에이전트가 지금 무슨 일을 하는지 보여 준다.
+**Claude Code** 와 **Codex** 를 둘 다 본다.
 
-창이 투명하고 항상 위에 있어서 하던 일을 가리지 않는다. 화면은 Windows 의
-**PySide6**(Qt)가 그리고, 상태를 남기는 훅은 WSL 에서 돈다.
+에이전트가 일을 시작하면 펫도 일하는 동작을 하고, 답을 기다리면 이쪽을 보고 멈춘다.
+실패하면 빨간색이 되니까 창을 옮기지 않아도 눈에 띈다.
+
+창은 투명하고 항상 위에 있어서 하던 일을 가리지 않는다. Windows 용 **PySide6**(Qt) 앱이고,
+상태를 남기는 훅은 WSL 에서 실행된다.
 
 <p align="center">
   <img src="preview/overlay-states.gif" width="420" alt="작업 중·대기·실패 상태에 반응하는 펫"/>
@@ -32,21 +33,21 @@
 
 ---
 
-## 무슨 상태를 비추나
+## 어떤 상태를 보여 주나
 
-Claude Code 는 훅으로 제 상태를 작은 파일에 남긴다. Codex 는 설정할 게 아무것도 없다 —
-Codex 가 이미 남기는 기록을 오버레이가 직접 읽는다. 어느 쪽이든 오버레이가 폴링해
-맞는 애니메이션을 재생한다.
+Claude Code 는 훅을 걸어야 하고, Codex 는 따로 설정할 것이 없다. Codex 가 이미 쓰고
+있는 기록을 오버레이가 직접 읽기 때문이다. 오버레이는 그 파일들을 주기적으로 확인해
+해당 상태의 애니메이션을 보여 준다.
 
 | 에이전트가 | 펫은 | |
 |---|---|:---:|
-| 놀고 있거나 세션이 없으면 | 쉰다 | <img src="preview/states/00-idle.gif" width="90"/> |
-| 작업 중이면 | 집중해서 일한다 | <img src="preview/states/07-active-work.gif" width="90"/> |
-| 입력을 기다리면 | 이쪽을 보며 기다린다 | <img src="preview/states/06-waiting.gif" width="90"/> |
-| 검토하며 마무리하면 | 훑어본다 | <img src="preview/states/08-review.gif" width="90"/> |
-| 오류를 만나면 | 반응한다 | <img src="preview/states/05-failed.gif" width="90"/> |
-| 작업을 옮기면 | 가로질러 달린다 | <img src="preview/states/01-running-right.gif" width="90"/> |
-| 인사할 때 | 손을 흔든다 | <img src="preview/states/03-waving.gif" width="90"/> |
+| 아무것도 안 하거나 세션이 없으면 | 쉰다 | <img src="preview/states/00-idle.png" width="90"/> |
+| 작업 중이면 | 집중해서 일한다 | <img src="preview/states/07-active-work.png" width="90"/> |
+| 입력을 기다리면 | 이쪽을 보며 기다린다 | <img src="preview/states/06-waiting.png" width="90"/> |
+| 검토하며 마무리하면 | 훑어본다 | <img src="preview/states/08-review.png" width="90"/> |
+| 오류를 만나면 | 반응한다 | <img src="preview/states/05-failed.png" width="90"/> |
+| 작업을 옮기면 | 가로질러 달린다 | <img src="preview/states/01-running-right.png" width="90"/> |
+| 인사할 때 | 손을 흔든다 | <img src="preview/states/03-waving.png" width="90"/> |
 
 세션을 네 개 띄워도 펫은 하나여서, 오버레이가 `대기 > 실패 > 작업중 > 완료 > idle` 순으로
 따져 가장 급한 것만 보여주고 구석에 세션 수를 적는다.
@@ -62,20 +63,20 @@ Codex 가 이미 남기는 기록을 오버레이가 직접 읽는다. 어느 �
 
 | | 펫 | 정체성 | 패키지 |
 |:---:|---|---|---|
-| <img src="preview/pets/yui-idle.gif" width="80"/> | **히라사와 유이** | 오른손잡이 깁슨 레스폴 | `pets/yui/` |
-| <img src="preview/pets/mio-idle.gif" width="80"/> | **아키야마 미오** | 왼손잡이 선버스트 재즈베이스 | `pets/mio/` |
-| <img src="preview/pets/ritsu-idle.gif" width="80"/> | **타이나카 리츠** | 드럼스틱, 멜로우 옐로 힙긱 키트 | `pets/ritsu/` |
-| <img src="preview/pets/tsumugi-idle.gif" width="80"/> | **코토부키 츠무기** | KORG TRITON Extreme 76키 | `pets/tsumugi/` |
-| <img src="preview/pets/azusa-idle.gif" width="80"/> | **나카노 아즈사** | 캔디 애플 레드 펜더 머스탱 | `pets/azusa/` |
+| <img src="preview/pets/yui-idle.png" width="80"/> | **히라사와 유이** | 오른손잡이 깁슨 레스폴 | `pets/yui/` |
+| <img src="preview/pets/mio-idle.png" width="80"/> | **아키야마 미오** | 왼손잡이 선버스트 재즈베이스 | `pets/mio/` |
+| <img src="preview/pets/ritsu-idle.png" width="80"/> | **타이나카 리츠** | 드럼스틱, 멜로우 옐로 힙긱 키트 | `pets/ritsu/` |
+| <img src="preview/pets/tsumugi-idle.png" width="80"/> | **코토부키 츠무기** | KORG TRITON Extreme 76키 | `pets/tsumugi/` |
+| <img src="preview/pets/azusa-idle.png" width="80"/> | **나카노 아즈사** | 캔디 애플 레드 펜더 머스탱 | `pets/azusa/` |
 
 <details>
 <summary><b>캐릭터별 아홉 가지 상태 전부</b></summary>
 <p align="center">
-  <img src="preview/pets/yui-all-states.gif" width="120" alt="유이, 아홉 상태"/>
-  <img src="preview/pets/mio-all-states.gif" width="120" alt="미오, 아홉 상태"/>
-  <img src="preview/pets/ritsu-all-states.gif" width="120" alt="리츠, 아홉 상태"/>
-  <img src="preview/pets/tsumugi-all-states.gif" width="120" alt="츠무기, 아홉 상태"/>
-  <img src="preview/pets/azusa-all-states.gif" width="120" alt="아즈사, 아홉 상태"/>
+  <img src="preview/pets/yui-all-states.gif" width="150" alt="유이, 아홉 상태"/>
+  <img src="preview/pets/mio-all-states.gif" width="150" alt="미오, 아홉 상태"/>
+  <img src="preview/pets/ritsu-all-states.gif" width="150" alt="리츠, 아홉 상태"/>
+  <img src="preview/pets/tsumugi-all-states.gif" width="150" alt="츠무기, 아홉 상태"/>
+  <img src="preview/pets/azusa-all-states.gif" width="150" alt="아즈사, 아홉 상태"/>
 </p>
 <p align="center"><sub>idle · running-right · running-left · waving · jumping · failed · waiting · active-work · review</sub></p>
 </details>
@@ -85,7 +86,7 @@ Codex 가 이미 남기는 기록을 오버레이가 직접 읽는다. 어느 �
 
 ## 그 밖에 하는 일
 
-에이전트를 비추는 것 말고도, 펫은 제 나름의 생활이 있고 몇 가지는 대신 해 준다.
+에이전트 상태를 보여 주는 것 말고도, 펫은 혼자 하는 행동이 있고 몇 가지는 대신 해 준다.
 
 **혼자서.** 아무 일도 없으면 화면을 가로질러 돌아다니고, 불규칙한 간격으로 눈을 깜빡이고,
 열려 있는 창의 윗변에 올라가 그 위를 걷고, 화면 벽을 타고 오른다. 잡아서 끌면 끄는 방향으로
@@ -220,7 +221,7 @@ yui run -t "학습" -- python train.py
 ## 어디서 왔나
 
 Codex Pet v2, 그리고 Shimeji와 그 후예들이 이어 온 데스크톱 마스코트의 계보에서 출발했다.
-오버레이와 훅 기반 상태 구조, 애니메이션 세트는 그 위에 얹은 내 작업이다.
+오버레이와 훅으로 상태를 받는 구조, 애니메이션은 내가 만들었다.
 
 ## 라이선스와 에셋
 
