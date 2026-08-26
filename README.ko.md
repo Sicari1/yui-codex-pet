@@ -1,6 +1,6 @@
 # Yui Codex Pet — 클로드 코드 데스크톱 펫 (엔진)
 
-[English](README.md) · **한국어** · [日本語](README.ja.md) · [简体中文](README.zh.md)
+[English](README.md) · **한국어** · [日本語](README.ja.md) · [简体中文](README.zh-CN.md)
 
 바탕화면에 작은 캐릭터가 살면서 **클로드 코드** 에이전트가 지금 뭘 하고 있는지 보여준다.
 에이전트가 일을 시작하면 같이 일하고, 멈춰서 답을 기다리면 같이 고개를 돌리고 기다린다.
@@ -193,7 +193,7 @@ yui run -t "학습" -- python train.py
 | `preview/` | 상태 애니메이션, 시선 방향, 로스터 시트 |
 | `SPRITE_SPEC.md` | 직접 그릴 때 볼 아틀라스 규격 |
 | `install.sh` | 한 줄 배포 |
-| `README.{ko,ja,zh}.md` | 같은 README의 한국어·일본어·중국어판 |
+| `README.{ko,ja,zh-CN}.md` | 같은 README의 한국어·일본어·중국어판 |
 
 ## 어디서 왔나
 

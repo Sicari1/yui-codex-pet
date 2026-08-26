@@ -192,7 +192,7 @@ yui run -t "训练" -- python train.py
 | `preview/` | 状态动画、视线朝向、角色合影 |
 | `SPRITE_SPEC.md` | 自己作画时用的图集规格 |
 | `install.sh` | 一条命令完成部署 |
-| `README.{ko,ja,zh}.md` | 同一份 README 的韩文、日文、简体中文版 |
+| `README.{ko,ja,zh-CN}.md` | 同一份 README 的韩文、日文、简体中文版 |
 
 ## 灵感来源
 

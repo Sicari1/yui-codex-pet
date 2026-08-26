@@ -1,6 +1,6 @@
 # Yui Codex Pet — a Claude Code desktop pet (engine)
 
-**English** · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh.md)
+**English** · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md)
 
 A small character lives on your desktop and shows what your **Claude Code** agent is
 doing. When the agent starts working, she starts working. When it stops and waits for
@@ -203,7 +203,7 @@ sheet you have the rights to.
 | `preview/` | state animations, look directions, cast roster |
 | `SPRITE_SPEC.md` | the atlas spec, for drawing your own |
 | `install.sh` | one-command deploy |
-| `README.{ko,ja,zh}.md` | the same README in Korean, Japanese, and Simplified Chinese |
+| `README.{ko,ja,zh-CN}.md` | the same README in Korean, Japanese, and Simplified Chinese |
 
 ## Inspiration
 

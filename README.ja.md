@@ -1,6 +1,6 @@
 # Yui Codex Pet — Claude Code のデスクトップペット（エンジン）
 
-[English](README.md) · [한국어](README.ko.md) · **日本語** · [简体中文](README.zh.md)
+[English](README.md) · [한국어](README.ko.md) · **日本語** · [简体中文](README.zh-CN.md)
 
 デスクトップに小さなキャラクターが住みつき、**Claude Code** のエージェントが今なにを
 しているかを見せてくれる。エージェントが作業を始めれば一緒に働き、手を止めて返事を待って
@@ -192,7 +192,7 @@ yui run -t "学習" -- python train.py
 | `preview/` | 状態アニメーション、視線方向、ロスター |
 | `SPRITE_SPEC.md` | 自分で描くためのアトラス規格 |
 | `install.sh` | ワンコマンド配置 |
-| `README.{ko,ja,zh}.md` | 同じ README の韓国語・日本語・簡体中国語版 |
+| `README.{ko,ja,zh-CN}.md` | 同じ README の韓国語・日本語・簡体中国語版 |
 
 ## 元ネタ
 
