@@ -57,8 +57,8 @@
 
 | | 宠物 | 身份标识 | 包 |
 |:---:|---|---|---|
-| <img src="preview/pets/yui-idle.gif" width="80"/> | **平泽唯** | 右手持吉普森 Les Paul | `pets/current-yui/` |
-| <img src="preview/pets/mio-idle.gif" width="80"/> | **秋山澪** | 左手持渐层色 Jazz Bass | `pets/current-mio/` |
+| <img src="preview/pets/yui-idle.gif" width="80"/> | **平泽唯** | 右手持吉普森 Les Paul | `pets/yui/` |
+| <img src="preview/pets/mio-idle.gif" width="80"/> | **秋山澪** | 左手持渐层色 Jazz Bass | `pets/mio/` |
 | <img src="preview/pets/ritsu-idle.gif" width="80"/> | **田井中律** | 鼓棒与 Mellow Yellow Hipgig 鼓组 | `pets/ritsu/` |
 | <img src="preview/pets/tsumugi-idle.gif" width="80"/> | **琴吹紬** | KORG TRITON Extreme 76 键 | `pets/tsumugi/` |
 | <img src="preview/pets/azusa-idle.gif" width="80"/> | **中野梓** | 糖果苹果红 Fender Mustang | `pets/azusa/` |

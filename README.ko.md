@@ -57,8 +57,8 @@ Claude Code 세션은 훅을 통해 제 상태를 작은 파일로 남긴다. �
 
 | | 펫 | 정체성 | 패키지 |
 |:---:|---|---|---|
-| <img src="preview/pets/yui-idle.gif" width="80"/> | **히라사와 유이** | 오른손잡이 깁슨 레스폴 | `pets/current-yui/` |
-| <img src="preview/pets/mio-idle.gif" width="80"/> | **아키야마 미오** | 왼손잡이 선버스트 재즈베이스 | `pets/current-mio/` |
+| <img src="preview/pets/yui-idle.gif" width="80"/> | **히라사와 유이** | 오른손잡이 깁슨 레스폴 | `pets/yui/` |
+| <img src="preview/pets/mio-idle.gif" width="80"/> | **아키야마 미오** | 왼손잡이 선버스트 재즈베이스 | `pets/mio/` |
 | <img src="preview/pets/ritsu-idle.gif" width="80"/> | **타이나카 리츠** | 드럼스틱, 멜로우 옐로 힙긱 키트 | `pets/ritsu/` |
 | <img src="preview/pets/tsumugi-idle.gif" width="80"/> | **코토부키 츠무기** | KORG TRITON Extreme 76키 | `pets/tsumugi/` |
 | <img src="preview/pets/azusa-idle.gif" width="80"/> | **나카노 아즈사** | 캔디 애플 레드 펜더 머스탱 | `pets/azusa/` |

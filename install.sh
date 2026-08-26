@@ -84,15 +84,15 @@ fi
 echo "스프라이트"
 if [ -e "$DIR/spritesheet.webp" ]; then
   say "spritesheet.webp — 이미 있어 그대로 둡니다"
-elif [ -e "$REPO/pets/current-yui/spritesheet.webp" ]; then
-  run cp "$REPO/pets/current-yui/spritesheet.webp" "$DIR/spritesheet.webp"; say "spritesheet.webp"
+elif [ -e "$REPO/pets/yui/spritesheet.webp" ]; then
+  run cp "$REPO/pets/yui/spritesheet.webp" "$DIR/spritesheet.webp"; say "spritesheet.webp"
 else
   say "스프라이트 미포함(공개본) — SPRITE_SPEC.md 규격으로 직접 만들어 $DIR/spritesheet.webp 에 두어라"
 fi
 # 갈아탈 수 있는 다른 펫들 (우클릭 → 펫 바꾸기)
 for pd in "$REPO"/pets/*/; do
   pid="$(basename "$pd")"
-  [ "$pid" = "current-yui" ] && continue
+  [ "$pid" = "yui" ] && continue
   run mkdir -p "$DIR/pets/$pid"
   [ -e "$pd/pet.json" ] && run cp "$pd/pet.json" "$DIR/pets/$pid/pet.json"
   for sh in spritesheet.webp spritesheet.png; do

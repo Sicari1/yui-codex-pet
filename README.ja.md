@@ -57,8 +57,8 @@ Claude Code のセッションは、フックを通じて自分の状態を小�
 
 | | ペット | アイデンティティ | パッケージ |
 |:---:|---|---|---|
-| <img src="preview/pets/yui-idle.gif" width="80"/> | **平沢唯** | 右利きのギブソン・レスポール | `pets/current-yui/` |
-| <img src="preview/pets/mio-idle.gif" width="80"/> | **秋山澪** | 左利きのサンバースト・ジャズベース | `pets/current-mio/` |
+| <img src="preview/pets/yui-idle.gif" width="80"/> | **平沢唯** | 右利きのギブソン・レスポール | `pets/yui/` |
+| <img src="preview/pets/mio-idle.gif" width="80"/> | **秋山澪** | 左利きのサンバースト・ジャズベース | `pets/mio/` |
 | <img src="preview/pets/ritsu-idle.gif" width="80"/> | **田井中律** | スティックとメロウイエローの Hipgig | `pets/ritsu/` |
 | <img src="preview/pets/tsumugi-idle.gif" width="80"/> | **琴吹紬** | KORG TRITON Extreme 76 鍵 | `pets/tsumugi/` |
 | <img src="preview/pets/azusa-idle.gif" width="80"/> | **中野梓** | キャンディアップルレッドのフェンダー・ムスタング | `pets/azusa/` |

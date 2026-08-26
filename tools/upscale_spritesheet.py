@@ -6,7 +6,7 @@
 셀 단위로 초해상 모델을 돌려 고해상 시트를 만들어 두면 어느 크기에서도 선명하다.
 
   python3 tools/upscale_spritesheet.py \
-      --src pets/current-yui/spritesheet.png \
+      --src pets/yui/spritesheet.png \
       --dst spritesheet-4x.png \
       --model 4x-AnimeSharp.pth --scale 4
 

@@ -60,8 +60,8 @@ table. Right-click to switch between the ones you have art for.
 
 | | Pet | Identity | Package |
 |:---:|---|---|---|
-| <img src="preview/pets/yui-idle.gif" width="80"/> | **Hirasawa Yui** | right-handed Gibson Les Paul | `pets/current-yui/` |
-| <img src="preview/pets/mio-idle.gif" width="80"/> | **Akiyama Mio** | left-handed sunburst Jazz Bass | `pets/current-mio/` |
+| <img src="preview/pets/yui-idle.gif" width="80"/> | **Hirasawa Yui** | right-handed Gibson Les Paul | `pets/yui/` |
+| <img src="preview/pets/mio-idle.gif" width="80"/> | **Akiyama Mio** | left-handed sunburst Jazz Bass | `pets/mio/` |
 | <img src="preview/pets/ritsu-idle.gif" width="80"/> | **Tainaka Ritsu** | drumsticks, Mellow Yellow Hipgig kit | `pets/ritsu/` |
 | <img src="preview/pets/tsumugi-idle.gif" width="80"/> | **Kotobuki Tsumugi** | KORG TRITON Extreme 76-key | `pets/tsumugi/` |
 | <img src="preview/pets/azusa-idle.gif" width="80"/> | **Nakano Azusa** | Candy Apple Red Fender Mustang | `pets/azusa/` |

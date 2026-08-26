@@ -165,5 +165,5 @@ wave f0    x  49~141   y   5~202   발밑 202
 
 - 고해상 렌더링·업스케일은 **은행PC(RTX 5090)** 가 홈PC보다 훨씬 빠르다.
 - `tools/upscale_spritesheet.py` 는 CUDA가 필요하다. 새 원단이 나오면 이 도구는 필요 없어진다.
-- 완성되면 `pets/current-yui/` 를 갱신하고 업스케일본(`spritesheet-4x.png`)은 폐기한다.
+- 완성되면 `pets/yui/` 를 갱신하고 업스케일본(`spritesheet-4x.png`)은 폐기한다.
 - 오버레이는 셀 크기를 시트 해상도에서 역산하므로, 규격만 맞으면 **코드 수정 없이 그대로 뜬다.**
