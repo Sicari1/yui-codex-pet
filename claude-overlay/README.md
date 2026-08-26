@@ -35,7 +35,8 @@ Claude Code 훅 ──▶ sessions/<source>/<session_id>.json (공통 PetState)
 
 1. **에셋·앱 배치** — 배포 폴더(예 `C:\Users\<user>\.yui-pet\`)에 다음을 둔다.
    - `yui_pet.py`, `config.json`, `fonts/`
-   - `spritesheet.png`(또는 `.webp`) — `pets/current-yui/`의 v2 스프라이트를 복사
+   - `spritesheet.png`(또는 `.webp`) — **이 저장소에는 없다.** `SPRITE_SPEC.md`를 보고
+     직접 그리거나, 권리를 가진 v2 규격 시트를 가져다 둔다
    - (선택) 고해상 시트 `spritesheet-4x.png` — 크게 띄워도 선명하다. `tools/upscale_spritesheet.py`로 생성.
      시트가 있으면 `-4x` → `-3x` → `-2x` → 원본 순으로 자동 선택한다.
 2. **PySide6 설치** — `"%LOCALAPPDATA%\Programs\Python\Python312\python.exe" -m pip install PySide6`
